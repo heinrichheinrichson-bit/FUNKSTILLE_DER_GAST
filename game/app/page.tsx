@@ -31,6 +31,14 @@ type Redirect = {
   effects?: Effect[];
   next: string;
 };
+type InputSpec = {
+  kind: "code";
+  prompt: string;
+  placeholder?: string;
+  answers: string[];
+  choiceId: string;
+  errorText?: string;
+};
 type StoryNode = {
   id: string;
   chapter: number;
@@ -44,6 +52,7 @@ type StoryNode = {
   next?: string;
   handoff?: string;
   ending?: string;
+  input?: InputSpec;
 };
 type StoryDocument = {
   chapter: { id: string; number: number; title: string; startNode: string };
@@ -81,6 +90,51 @@ const ENDING_TITLES: Record<string, string> = {
   ending_all_rescued: "Alle gerettet",
   ending_clean_rescue: "Saubere Rettung",
 };
+const ARCHIVE_ITEMS = [
+  { id: "thal07", title: "THAL · TAG −7", state: "log_thal_07", text: "Kader nennt die Probe inert. Im unbearbeiteten Sensorstream bewegt sie sich trotzdem. Warnbericht: 14.04." },
+  { id: "freight", title: "FRACHTMANIFEST", state: "log_freight_complete", text: "Medikamente und Atemfilter wurden zwischen Labor und Generator umgebucht. Empfänger: A. Berg." },
+  { id: "kader07", title: "KADER · PROBE 14C", state: "log_kader_07", text: "Probe 14C biologisch inert. Verworfene Passage: Strukturbildung nach Erwärmung." },
+  { id: "varga", title: "AUSWEIS · EMIL VARGA", state: "patient_zero_clue", text: "Dr. Emil Varga, Glaziologie. Auf der Rückseite befindet sich ein unvollständiges Koordinatenfragment." },
+  { id: "old", title: "ALTES PROJEKT", state: "old_project_log", text: "Es übernimmt nichts. Es verbindet. Nach einer Weile weiß keiner mehr, welcher Gedanke zuerst da war." },
+];
+const MAP_AREAS = [
+  { id: "quarters", label: "WOHNTRAKT", x: 8, y: 35, state: null },
+  { id: "labor", label: "LABOR", x: 36, y: 14, state: "lab_visited" },
+  { id: "generator", label: "GENERATOR", x: 37, y: 60, state: "generator_visited" },
+  { id: "outpost", label: "AUSSENPOSTEN", x: 68, y: 12, state: "weather_window_known" },
+  { id: "tower", label: "BOHRTURM", x: 67, y: 57, state: "bohrturm_access" },
+  { id: "shelter", label: "NOTUNTERKUNFT", x: 67, y: 82, state: "old_project_log" },
+];
+
+function normalizeCode(value: string) {
+  return value.toLowerCase().replace(/[\s._-]/g, "");
+}
+
+function mapNotes(areaId: string, state: GameState) {
+  const notes: string[] = [];
+  if (areaId === "quarters") {
+    if (state.aksel_restrained === true) notes.push("AKSEL · EINGESPERRT");
+    if (state.relay_confiscated === true && state.relay_recovered !== true)
+      notes.push("RELAIS · ENTWENDET");
+  }
+  if (areaId === "labor") {
+    if (state.item_sample_data === true) notes.push("PROBENDATEN GESICHERT");
+    if (state.lab_sample_state === "sealed") notes.push("KAMMER 3 · VERSIEGELT");
+  }
+  if (areaId === "generator") {
+    if (state.generator_state === "unstable") notes.push("! BESCHÄDIGT");
+    if (state.item_generator_tool === true) notes.push("WERKZEUG GEFUNDEN");
+  }
+  if (areaId === "outpost" && state.thal_state)
+    notes.push(`THAL · ${String(state.thal_state).toUpperCase()}`);
+  if (areaId === "tower" && state.kader_state)
+    notes.push(`KADER · ${String(state.kader_state).toUpperCase()}`);
+  if (areaId === "shelter") {
+    if (state.old_sample_secured === true) notes.push("ALTPROBE GESICHERT");
+    if (state.old_evidence_secured === true) notes.push("ARCHIV ÜBERTRAGEN");
+  }
+  return notes;
+}
 
 function requirementMatches(requirement: Requirement, state: GameState) {
   const actual = state[requirement.state];
@@ -169,6 +223,15 @@ export default function Home() {
   const [waiting, setWaiting] = useState(false);
   const [pendingNode, setPendingNode] = useState<string | null>(null);
   const [restored, setRestored] = useState(false);
+  const [playerName, setPlayerName] = useState("");
+  const [profileReady, setProfileReady] = useState(false);
+  const [overlay, setOverlay] = useState<"archive" | "map" | "test" | null>(null);
+  const [archiveItem, setArchiveItem] = useState<(typeof ARCHIVE_ITEMS)[number] | null>(null);
+  const [textInput, setTextInput] = useState("");
+  const [inputError, setInputError] = useState("");
+  const [gearDraft, setGearDraft] = useState<string[]>([]);
+  const [testMode, setTestMode] = useState(false);
+  const [saveTransfer, setSaveTransfer] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const story = chapters[currentChapterId] ?? null;
@@ -177,6 +240,11 @@ export default function Home() {
     [story],
   );
   const currentNode = nodeMap.get(currentNodeId);
+  const gearCapacity =
+    gameState.thal_returning === true ||
+    gameState.expedition_companion === "aksel"
+      ? 3
+      : 2;
 
   const enterNode = useCallback(
     (nodeId: string, baseState: GameState, baseTimeline: TimelineItem[]) => {
@@ -205,7 +273,7 @@ export default function Home() {
           kind: "message",
           id: `${node.id}-${index}-${baseTimeline.length}`,
           speaker: message.speaker,
-          text: message.text,
+          text: message.text.replaceAll("{{player_name}}", playerName || "du"),
         }),
       );
       setGameState(nextState);
@@ -214,8 +282,12 @@ export default function Home() {
       setWaiting(false);
       setPendingNode(null);
     },
-    [nodeMap, schema],
+    [nodeMap, playerName, schema],
   );
+
+  useEffect(() => {
+    setTestMode(new URLSearchParams(window.location.search).has("test"));
+  }, []);
 
   useEffect(() => {
     Promise.all([
@@ -250,6 +322,8 @@ export default function Home() {
         setCurrentChapterId(snapshot.currentChapterId ?? storyIndex.startChapter);
         setCurrentNodeId(snapshot.currentNodeId);
         setTimeline(snapshot.timeline);
+        setPlayerName(snapshot.playerName ?? "");
+        setProfileReady(true);
         setRestored(true);
         return;
       } catch {
@@ -262,16 +336,18 @@ export default function Home() {
     setRestored(true);
     setGameState(initialState);
     setTimeline([]);
+    setProfileReady(false);
   }, [restored, schema, storyIndex]);
 
   useEffect(() => {
-    if (!restored || !story || !schema || currentNodeId) return;
+    if (!restored || !profileReady || !story || !schema || currentNodeId) return;
     enterNode(story.chapter.startNode, gameState, timeline);
   }, [
     currentNodeId,
     enterNode,
     gameState,
     restored,
+    profileReady,
     schema,
     story,
     timeline,
@@ -286,9 +362,24 @@ export default function Home() {
         currentChapterId,
         currentNodeId,
         timeline,
+        playerName,
       }),
     );
-  }, [currentChapterId, currentNodeId, gameState, restored, timeline]);
+  }, [currentChapterId, currentNodeId, gameState, playerName, restored, timeline]);
+
+  useEffect(() => {
+    if (currentNodeId !== "k5_010_pack") return;
+    const selected = [
+      ["protection", "pack_protection"],
+      ["sealant", "pack_sealant"],
+      ["container", "pack_container"],
+      ["heat", "pack_heat"],
+      ["battery", "pack_relay_battery"],
+    ]
+      .filter(([, state]) => gameState[state] === true)
+      .map(([id]) => id);
+    setGearDraft(selected);
+  }, [currentNodeId, gameState]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -342,6 +433,138 @@ export default function Home() {
     enterNode(pendingNode, gameState, timeline);
   }
 
+  function finishProfile() {
+    if (!schema) return;
+    const name = playerName.trim().slice(0, 24);
+    setPlayerName(name);
+    setGameState((state) => ({
+      ...state,
+      player_name_known: Boolean(name),
+    }));
+    setProfileReady(true);
+  }
+
+  function submitNodeInput() {
+    if (!currentNode?.input) return;
+    const valid = currentNode.input.answers.some(
+      (answer) => normalizeCode(answer) === normalizeCode(textInput),
+    );
+    if (!valid) {
+      setInputError(currentNode.input.errorText ?? "Code abgelehnt.");
+      return;
+    }
+    const choice = availableChoices.find(
+      ({ id }) => id === currentNode.input?.choiceId,
+    );
+    if (!choice) {
+      setInputError("Diese Eingabe ist mit den bisherigen Funden nicht belegbar.");
+      return;
+    }
+    setTextInput("");
+    setInputError("");
+    selectChoice(choice);
+  }
+
+  function toggleGear(id: string) {
+    setGearDraft((current) =>
+      current.includes(id)
+        ? current.filter((item) => item !== id)
+        : current.length < gearCapacity
+          ? [...current, id]
+          : current,
+    );
+  }
+
+  function confirmGear() {
+    if (!schema || gearDraft.length < 2) return;
+    const nextState = {
+      ...gameState,
+      pack_protection: gearDraft.includes("protection"),
+      pack_sealant: gearDraft.includes("sealant"),
+      pack_container: gearDraft.includes("container"),
+      pack_heat: gearDraft.includes("heat"),
+      pack_relay_battery: gearDraft.includes("battery"),
+      pack_count: gearDraft.length,
+    };
+    const nextTimeline: TimelineItem[] = [
+      ...timeline,
+      {
+        kind: "reply",
+        id: `gear-${timeline.length}`,
+        text: `Ausrüstung bestätigen (${gearDraft.length} Gegenstände).`,
+      },
+    ];
+    setGameState(nextState);
+    setTimeline(nextTimeline);
+    enterNode("k5_020_tower", nextState, nextTimeline);
+  }
+
+  function jumpToChapter(chapterId: string) {
+    const target = chapters[chapterId];
+    if (!target) return;
+    setWaiting(false);
+    setPendingNode(null);
+    setCurrentChapterId(chapterId);
+    setCurrentNodeId("");
+    setTimeline([]);
+    setOverlay(null);
+  }
+
+  function jumpToNode(nodeId: string) {
+    setWaiting(false);
+    setPendingNode(null);
+    setTimeline([]);
+    enterNode(nodeId, gameState, []);
+    setOverlay(null);
+  }
+
+  function applyTestPreset(kind: "max" | "infected" | "finale") {
+    const next = { ...gameState };
+    if (kind === "max" || kind === "finale") {
+      Object.assign(next, {
+        lab_visited: true,
+        generator_visited: true,
+        generator_state: "stable",
+        item_sample_data: true,
+        evidence_level: 6,
+        weather_window_known: true,
+        rescue_coordinates: true,
+        bohrturm_access: true,
+        old_project_log: true,
+        cure_material: 4,
+        containment: "ready",
+        aksel_inside_after_return: true,
+        thal_returning: true,
+        kader_state: "cooperative",
+      });
+    }
+    if (kind === "infected") {
+      Object.assign(next, {
+        infection_source: "lab_aerosol",
+        clarity: 1,
+        aksel_state: "infected",
+      });
+    }
+    setGameState(next);
+    if (kind === "finale") jumpToChapter("chapter_07");
+  }
+
+  function importSave() {
+    try {
+      const snapshot = JSON.parse(saveTransfer);
+      setGameState(snapshot.gameState);
+      setCurrentChapterId(snapshot.currentChapterId);
+      setCurrentNodeId(snapshot.currentNodeId);
+      setTimeline(snapshot.timeline ?? []);
+      setPlayerName(snapshot.playerName ?? playerName);
+      setWaiting(false);
+      setPendingNode(null);
+      setOverlay(null);
+    } catch {
+      setSaveTransfer("UNGÜLTIGER SPIELSTAND");
+    }
+  }
+
   function restart() {
     if (!storyIndex || !schema) return;
     localStorage.removeItem(SAVE_KEY);
@@ -352,6 +575,8 @@ export default function Home() {
     setPendingNode(null);
     setCurrentChapterId(storyIndex.startChapter);
     setCurrentNodeId("");
+    setPlayerName("");
+    setProfileReady(false);
   }
 
   function continueChapter() {
@@ -371,6 +596,29 @@ export default function Home() {
     );
   }
 
+  if (!profileReady) {
+    return (
+      <main className="loading-screen profile-screen">
+        <div className="profile-card">
+          <span className="eyebrow">UNBEKANNTER KONTAKT</span>
+          <h1>MIRA: Wie soll ich dich nennen?</h1>
+          <p>Der Name ist optional und bleibt ausschließlich Teil dieses lokalen Spielstands.</p>
+          <input
+            autoFocus
+            maxLength={24}
+            value={playerName}
+            onChange={(event) => setPlayerName(event.target.value)}
+            onKeyDown={(event) => event.key === "Enter" && finishProfile()}
+            placeholder="Name oder Rufzeichen"
+          />
+          <button type="button" onClick={finishProfile}>
+            {playerName.trim() ? "Verbindung herstellen" : "Anonym bleiben"}
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   const connectionEnded = Boolean(currentNode?.handoff || currentNode?.ending);
 
   return (
@@ -381,9 +629,16 @@ export default function Home() {
             <span className="eyebrow">ELF-NOTRELAIS</span>
             <h1>Station Kaldstad</h1>
           </div>
-          <div className="connection">
-            <span className="connection-dot" />
-            VERBUNDEN
+          <div className="top-actions">
+            <div className="connection">
+              <span className="connection-dot" />
+              VERBUNDEN
+            </div>
+            <nav className="utility-nav" aria-label="Relaiswerkzeuge">
+              <button type="button" onClick={() => setOverlay("archive")}>LOGS</button>
+              <button type="button" onClick={() => setOverlay("map")}>KARTE</button>
+              {testMode && <button type="button" onClick={() => setOverlay("test")}>TEST</button>}
+            </nav>
           </div>
         </header>
 
@@ -414,19 +669,26 @@ export default function Home() {
                   <span className="speaker">
                     {item.speaker === "mira"
                       ? "MIRA"
-                      : item.speaker.toUpperCase()}
+                      : item.speaker === "log"
+                        ? "DOKUMENT"
+                        : `MIRA · WÖRTLICH: ${item.speaker.toUpperCase()}`}
                   </span>
                 )}
                 <div
                   className={`bubble ${
                     item.speaker === "system"
                       ? "bubble-system"
-                      : item.speaker === "log"
+                      : item.speaker === "log" || item.speaker !== "mira"
                         ? "bubble-log"
                         : "bubble-mira"
                   }`}
                 >
                   {item.text}
+                  {item.speaker === "log" && (
+                    <button className="inline-archive" type="button" onClick={() => setOverlay("archive")}>
+                      Im Archiv öffnen
+                    </button>
+                  )}
                 </div>
               </div>
             ),
@@ -460,8 +722,57 @@ export default function Home() {
         </section>
 
         <footer className="response-panel">
+          {!waiting && currentNode?.input && (
+            <form className="code-entry" onSubmit={(event) => { event.preventDefault(); submitNodeInput(); }}>
+              <label htmlFor="story-code">{currentNode.input.prompt}</label>
+              <div>
+                <input
+                  id="story-code"
+                  inputMode="text"
+                  autoComplete="off"
+                  value={textInput}
+                  placeholder={currentNode.input.placeholder ?? "Code"}
+                  onChange={(event) => { setTextInput(event.target.value); setInputError(""); }}
+                />
+                <button type="submit">Senden</button>
+              </div>
+              {inputError && <small>{inputError}</small>}
+            </form>
+          )}
+
+          {!waiting && currentNodeId === "k5_010_pack" && (
+            <div className="gear-picker">
+              <div className="gear-heading">
+                <strong>Ausrüstung wählen</strong>
+                <span>{gearDraft.length}/{gearCapacity}</span>
+              </div>
+              {[
+                ["protection", "Schutzanzug"],
+                ["sealant", "Versiegelungsschaum und Bolzen"],
+                ["container", "Großer Probenbehälter"],
+                ["heat", "Wärmeakku"],
+                ["battery", "Relais-Ersatzakku"],
+              ].map(([id, label]) => (
+                <button
+                  className={gearDraft.includes(id) ? "gear selected" : "gear"}
+                  key={id}
+                  type="button"
+                  onClick={() => toggleGear(id)}
+                >
+                  <span>{label}</span><b>{gearDraft.includes(id) ? "✓" : "+"}</b>
+                </button>
+              ))}
+              <button className="gear-confirm" disabled={gearDraft.length < 2} type="button" onClick={confirmGear}>
+                Auswahl bestätigen und aufbrechen
+              </button>
+            </div>
+          )}
+
           {!waiting &&
-            availableChoices.map((choice) => (
+            currentNodeId !== "k5_010_pack" &&
+            availableChoices
+              .filter((choice) => choice.id !== currentNode?.input?.choiceId)
+              .map((choice) => (
               <button
                 className="choice"
                 key={choice.id}
@@ -500,6 +811,88 @@ export default function Home() {
           )}
         </footer>
       </section>
+
+      {overlay && (
+        <div className="overlay" role="dialog" aria-modal="true">
+          <section className="overlay-card">
+            <header>
+              <div>
+                <span className="eyebrow">ELF-NOTRELAIS</span>
+                <h2>{overlay === "archive" ? "Archiv" : overlay === "map" ? "Stationskarte" : "Testmodus"}</h2>
+              </div>
+              <button type="button" onClick={() => { setOverlay(null); setArchiveItem(null); }}>×</button>
+            </header>
+
+            {overlay === "archive" && (
+              archiveItem ? (
+                <article className="archive-detail">
+                  <button type="button" onClick={() => setArchiveItem(null)}>‹ Zurück</button>
+                  <h3>{archiveItem.title}</h3>
+                  <p>{archiveItem.text}</p>
+                </article>
+              ) : (
+                <div className="archive-list">
+                  {ARCHIVE_ITEMS.map((item) => {
+                    const unlocked = gameState[item.state] === true;
+                    return (
+                      <button disabled={!unlocked} key={item.id} type="button" onClick={() => setArchiveItem(item)}>
+                        <span>{unlocked ? item.title : "VERSCHLÜSSELTER EINTRAG"}</span>
+                        <b>{unlocked ? "ÖFFNEN" : "GESPERRT"}</b>
+                      </button>
+                    );
+                  })}
+                </div>
+              )
+            )}
+
+            {overlay === "map" && (
+              <div className="map-panel">
+                <div className="map-grid">
+                  {MAP_AREAS.map((area) => {
+                    const known = area.state === null || gameState[area.state] === true;
+                    return (
+                      <div className={known ? "map-room known" : "map-room"} key={area.id} style={{ left: `${area.x}%`, top: `${area.y}%` }}>
+                        <span>{known ? area.label : "?"}</span>
+                        {known && mapNotes(area.id, gameState).map((note) => <i key={note}>{note}</i>)}
+                      </div>
+                    );
+                  })}
+                </div>
+                <p>Gestrichelte Bereiche sind nur aus Protokollen rekonstruiert. Personenmarkierungen zeigen den letzten bekannten Ort.</p>
+              </div>
+            )}
+
+            {overlay === "test" && (
+              <div className="test-panel">
+                <label>Kapitel direkt öffnen</label>
+                <select value={currentChapterId} onChange={(event) => jumpToChapter(event.target.value)}>
+                  {storyIndex.chapters.map((chapter) => <option key={chapter.id} value={chapter.id}>{chapter.number}. {chapter.title}</option>)}
+                </select>
+                <label>Node im aktuellen Kapitel</label>
+                <select value={currentNodeId} onChange={(event) => jumpToNode(event.target.value)}>
+                  {story.nodes.map((node) => <option key={node.id} value={node.id}>{node.id}</option>)}
+                </select>
+                <label>Testzustände</label>
+                <div className="test-actions">
+                  <button type="button" onClick={() => applyTestPreset("max")}>Maximale Funde</button>
+                  <button type="button" onClick={() => applyTestPreset("infected")}>Infiziert</button>
+                  <button type="button" onClick={() => applyTestPreset("finale")}>Finale vorbereiten</button>
+                </div>
+                <div className="test-actions">
+                  <button type="button" onClick={skipWait} disabled={!waiting}>Wartezeit überspringen</button>
+                  <button type="button" onClick={() => setSaveTransfer(localStorage.getItem(SAVE_KEY) ?? "")}>Spielstand exportieren</button>
+                </div>
+                <textarea value={saveTransfer} onChange={(event) => setSaveTransfer(event.target.value)} placeholder="Spielstand JSON" />
+                <button type="button" onClick={importSave}>Spielstand importieren</button>
+                <details>
+                  <summary>Verborgene Zustände</summary>
+                  <pre>{JSON.stringify(gameState, null, 2)}</pre>
+                </details>
+              </div>
+            )}
+          </section>
+        </div>
+      )}
     </main>
   );
 }

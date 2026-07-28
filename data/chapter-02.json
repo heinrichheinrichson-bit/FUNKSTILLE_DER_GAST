@@ -111,6 +111,14 @@
         { "speaker": "mira", "text": "Thal könnte ihren Zugang irgendwo notiert haben. Kader hat Stationsleiterrechte." },
         { "speaker": "mira", "text": "Oder Aksel kann die Verriegelung überbrücken." }
       ],
+      "input": {
+        "kind": "code",
+        "prompt": "Sende Mira den vierstelligen Zugangscode.",
+        "placeholder": "••••",
+        "answers": ["0414", "14.04", "1404"],
+        "choiceId": "thal_code",
+        "errorText": "ZUGANG VERWEIGERT · Der Code stimmt nicht."
+      },
       "choices": [
         {
           "id": "thal_code",

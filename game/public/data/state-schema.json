@@ -72,6 +72,27 @@
       "default": false,
       "visibility": "hidden"
     },
+    "player_name_known": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "relay_privacy": {
+      "type": "enum",
+      "default": "careful",
+      "values": ["careful", "mentioned", "exposed"],
+      "visibility": "hidden"
+    },
+    "relay_confiscated": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "relay_recovered": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "player_tone": {
       "type": "enum",
       "default": "unset",

@@ -16,6 +16,16 @@
         { "speaker": "mira", "text": "Das zeigt verbunden an." },
         { "speaker": "mira", "text": "Bitte schreib irgendwas, wenn du das lesen kannst." }
       ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "player_name_known", "operator": "eq", "value": true }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Dein Gerät nennt dich {{player_name}}. Ist das in Ordnung?" }
+          ]
+        }
+      ],
       "choices": [
         {
           "id": "check_self",
@@ -212,7 +222,7 @@
         { "speaker": "mira", "text": "Gut." },
         { "speaker": "mira", "text": "Schritt für Schritt kann ich." }
       ],
-      "next": "k1_060_hub_first",
+      "next": "k1_055_relay_privacy",
       "nextDelaySeconds": 20
     },
     {
@@ -223,7 +233,7 @@
         { "speaker": "mira", "text": "Ich höre mir deinen Rat an." },
         { "speaker": "mira", "text": "Verwechsel das bitte nicht mit einem Kommandoverhältnis." }
       ],
-      "next": "k1_060_hub_first",
+      "next": "k1_055_relay_privacy",
       "nextDelaySeconds": 20
     },
     {
@@ -238,9 +248,47 @@
         {
           "id": "stay",
           "label": "Ich gehe nicht. Sieh dich um.",
-          "next": "k1_060_hub_first",
+          "next": "k1_055_relay_privacy",
           "requires": [],
           "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k1_055_relay_privacy",
+      "chapter": 1,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Noch etwas: Das Relais ist das einzige funktionierende Gerät hier." },
+        { "speaker": "mira", "text": "Wenn jemand fragt, mit wem ich schreibe – was soll ich sagen?" }
+      ],
+      "choices": [
+        {
+          "id": "hide_relay",
+          "label": "Verheimliche Verbindung und Funktion des Relais.",
+          "next": "k1_060_hub_first",
+          "requires": [],
+          "effects": [
+            { "state": "relay_privacy", "operation": "set", "value": "careful" }
+          ]
+        },
+        {
+          "id": "mention_contact",
+          "label": "Sag nur, dass du einen unbekannten Kontakt erreicht hast.",
+          "next": "k1_060_hub_first",
+          "requires": [],
+          "effects": [
+            { "state": "relay_privacy", "operation": "set", "value": "mentioned" }
+          ]
+        },
+        {
+          "id": "show_relay",
+          "label": "Sei offen. Ein funktionierendes Relais schafft Vertrauen.",
+          "next": "k1_060_hub_first",
+          "requires": [],
+          "effects": [
+            { "state": "relay_privacy", "operation": "set", "value": "exposed" }
+          ]
         }
       ]
     },
@@ -496,7 +544,7 @@
         { "speaker": "mira", "text": "Er nickt. Sieht ehrlich erleichtert aus." },
         { "speaker": "mira", "text": "Oder erschöpft." }
       ],
-      "next": "k1_120_double_crisis",
+      "next": "k1_115_relay_question",
       "nextDelaySeconds": 30
     },
     {
@@ -507,7 +555,7 @@
         { "speaker": "mira", "text": "Er bleibt auf der anderen Seite des Gangs." },
         { "speaker": "mira", "text": "Findet er übertrieben. Macht es aber." }
       ],
-      "next": "k1_120_double_crisis",
+      "next": "k1_115_relay_question",
       "nextDelaySeconds": 30
     },
     {
@@ -519,6 +567,77 @@
         { "speaker": "mira", "text": "Er hat erst gelacht. Dann gemerkt, dass ich es ernst meine." },
         { "speaker": "aksel", "text": "Wenn der Generator stoppt, brauchst du mich." },
         { "speaker": "mira", "text": "Tür ist zu. Mechanisch verriegelt." }
+      ],
+      "next": "k1_115_relay_question",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k1_115_relay_question",
+      "chapter": 1,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Aksel hat gefragt, warum ich ständig auf das Relais sehe." }
+      ],
+      "choices": [
+        {
+          "id": "keep_hidden",
+          "label": "Sag, das Gerät protokolliert nur Sensordaten.",
+          "next": "k1_120_double_crisis",
+          "requires": [
+            { "state": "relay_privacy", "operator": "neq", "value": "exposed" }
+          ],
+          "effects": [
+            { "state": "relay_privacy", "operation": "set", "value": "careful" }
+          ]
+        },
+        {
+          "id": "admit_chat",
+          "label": "Sag, dass du mit jemandem verbunden bist. Nicht mit wem.",
+          "next": "k1_120_double_crisis",
+          "requires": [],
+          "effects": [
+            { "state": "relay_privacy", "operation": "set", "value": "mentioned" }
+          ]
+        },
+        {
+          "id": "hand_over",
+          "label": "Zeig ihm das Gerät, damit er die Verbindung prüfen kann.",
+          "next": "k1_116_confiscated",
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "relay_privacy", "operation": "set", "value": "exposed" },
+            { "state": "relay_confiscated", "operation": "set", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k1_116_confiscated",
+      "chapter": 1,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Er hat das Relais genommen." },
+        { "speaker": "mira", "text": "Nicht gewaltsam. Er sagte nur, er müsse prüfen, ob die Verbindung den Stationsfunk stört." },
+        { "speaker": "system", "text": "[VERBINDUNG UNTERBROCHEN]" }
+      ],
+      "next": "k1_117_recovered",
+      "nextDelaySeconds": 7200
+    },
+    {
+      "id": "k1_117_recovered",
+      "chapter": 1,
+      "delaySeconds": 7200,
+      "messages": [
+        { "speaker": "system", "text": "[VERBINDUNG WIEDERHERGESTELLT]" },
+        { "speaker": "mira", "text": "Ich habe es zurück." },
+        { "speaker": "mira", "text": "Zwei Stunden. Aksel war irgendwann nicht mehr bei dem Gerät. Es lag in seiner Jacke." },
+        { "speaker": "mira", "text": "In der Zwischenzeit ist die Netzspannung weiter gefallen. Ich erzähle dir unterwegs den Rest." }
+      ],
+      "effects": [
+        { "state": "relay_recovered", "operation": "set", "value": true },
+        { "state": "global_time", "operation": "add", "value": 2 }
       ],
       "next": "k1_120_double_crisis",
       "nextDelaySeconds": 30

@@ -247,6 +247,7 @@ function makeSession() {
   session.advance();
   session.choose("supportive");
   session.advance();
+  session.choose("hide_relay");
   session.choose("quarters_first");
 
   let view = session.view();
@@ -271,6 +272,7 @@ function makeSession() {
   session.advance();
   session.choose("supportive");
   session.advance();
+  session.choose("hide_relay");
   session.choose("canteen_first");
   session.choose("search_quarters");
   session.choose("continue_after_both");

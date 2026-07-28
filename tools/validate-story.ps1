@@ -169,6 +169,18 @@ foreach ($file in $storyFiles) {
             Test-Effects $choice.effects $states "$choiceContext / Effekte"
         }
 
+        if ($node.input) {
+            if ($node.input.kind -ne 'code') {
+                Add-ValidationError "$context verwendet unbekannte Eingabeart '$($node.input.kind)'."
+            }
+            if (-not $node.input.prompt -or $node.input.answers.Count -eq 0) {
+                Add-ValidationError "$context benoetigt Prompt und mindestens eine gueltige Eingabe."
+            }
+            if (-not $choiceIds.ContainsKey($node.input.choiceId)) {
+                Add-ValidationError "$context verweist mit der Eingabe auf unbekannte Choice '$($node.input.choiceId)'."
+            }
+        }
+
         foreach ($variant in @($node.variants)) {
             if ($null -eq $variant) { continue }
             Test-Conditions $variant.requires $states "$context / Variante"

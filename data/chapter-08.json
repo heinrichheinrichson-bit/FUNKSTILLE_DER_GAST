@@ -359,6 +359,17 @@
             { "speaker": "mira", "text": "Danke." },
             { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
           ]
+        },
+        {
+          "requires": [
+            { "state": "player_name_known", "operator": "eq", "value": true }
+          ],
+          "replaceMessages": [
+            { "speaker": "mira", "text": "Ich kenne deinen Namen, {{player_name}}. Mehr eigentlich nicht." },
+            { "speaker": "mira", "text": "Du hast nicht immer richtiggelegen. Ich auch nicht." },
+            { "speaker": "mira", "text": "Aber du bist geblieben. Danke." },
+            { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
+          ]
         }
       ],
       "next": "k8_090_uncontrolled_mira",

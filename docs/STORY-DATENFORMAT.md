@@ -132,6 +132,29 @@ Varianten ergänzen oder ersetzen Nachrichten anhand strukturierter Bedingungen:
 
 Varianten dürfen Darstellung ändern, aber keine versteckten Effekte auslösen. Spielzustände ändern sich ausschließlich durch Node- oder Choice-Effekte.
 
+## Freie Codeeingaben
+
+Ein Node kann eine bereits vorhandene Choice durch ein Eingabefeld auslösen.
+Die Choice bleibt die einzige Quelle für Übergang und Effekte; `input` beschreibt
+nur die zulässigen Schreibweisen:
+
+```json
+{
+  "input": {
+    "kind": "code",
+    "prompt": "Sende Mira den vierstelligen Zugangscode.",
+    "placeholder": "••••",
+    "answers": ["0414", "14.04", "1404"],
+    "choiceId": "thal_code",
+    "errorText": "ZUGANG VERWEIGERT"
+  }
+}
+```
+
+Leerzeichen, Bindestriche, Punkte und Unterstriche werden beim Vergleich
+ignoriert. Die zugehörige Choice darf weiterhin Voraussetzungen besitzen, damit
+ein erratener Code keinen Fund vortäuscht, den der Spieler nie gemacht hat.
+
 ## Enden
 
 Ending-Nodes besitzen statt `next`:

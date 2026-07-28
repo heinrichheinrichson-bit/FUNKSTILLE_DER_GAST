@@ -63,6 +63,35 @@
         { "speaker": "mira", "text": "Aksel läuft vom Wohntrakt weg. Ohne Maske. Ohne Sicherungsleine." },
         { "speaker": "mira", "text": "Er geht gleichmäßig, als könnte er durch den Whiteout sehen." }
       ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": true }
+          ],
+          "prependMessages": [
+            { "speaker": "mira", "text": "Das sieht aus wie Aksel. Aber ich habe ihn selbst eingeschlossen." },
+            { "speaker": "mira", "text": "Die Tür war mechanisch verriegelt. Wie ist er nach draußen gekommen?" }
+          ]
+        },
+        {
+          "requires": [
+            { "state": "player_name_known", "operator": "eq", "value": true },
+            { "state": "relay_privacy", "operator": "eq", "value": "mentioned" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Bevor er ging, hat Aksel gefragt, wer {{player_name}} ist. Ich habe deinen Namen nie laut gesagt." }
+          ]
+        },
+        {
+          "requires": [
+            { "state": "player_name_known", "operator": "eq", "value": true },
+            { "state": "relay_privacy", "operator": "eq", "value": "exposed" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Bevor er ging, hat Aksel gefragt, wer {{player_name}} ist. Auf dem Relais war dein Name nicht zu sehen." }
+          ]
+        }
+      ],
       "choices": [
         {
           "id": "call_first",

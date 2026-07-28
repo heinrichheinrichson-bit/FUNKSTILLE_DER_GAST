@@ -62,8 +62,12 @@ test("ships chapter data and production metadata", async () => {
   const schemaData = JSON.parse(schema);
 
   assert.equal(chapterData.chapter.startNode, "k1_001_signal");
-  assert.equal(chapterData.nodes.length, 27);
+  assert.equal(chapterData.nodes.length, 31);
   assert.equal(chapterTwoData.nodes.length, 36);
+  assert.deepEqual(
+    chapterTwoData.nodes.find(({ id }) => id === "k2_l_020_locked").input.answers,
+    ["0414", "14.04", "1404"],
+  );
   assert.equal(chapterThreeData.nodes.length, 31);
   assert.equal(chapterFourData.nodes.length, 38);
   assert.equal(chapterFiveData.nodes.length, 30);
@@ -78,6 +82,9 @@ test("ships chapter data and production metadata", async () => {
   assert.match(page, /Station Kaldstad/);
   assert.match(page, /localStorage/);
   assert.match(page, /Dein Ende/);
+  assert.match(page, /Stationskarte/);
+  assert.match(page, /Ausrüstung wählen/);
+  assert.match(page, /Testmodus/);
   assert.match(layout, /lang="de"/);
   assert.doesNotMatch(page, /SkeletonPreview|codex-preview/);
 });
