@@ -1,0 +1,38 @@
+name: Validate story
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate story data
+        shell: powershell
+        run: .\tools\validate-story.ps1
+
+      - name: Audit story paths
+        shell: powershell
+        run: .\tools\audit-paths.ps1
+
+      - name: Test story engine
+        run: npm test
+
+      - name: Install game dependencies
+        working-directory: game
+        run: npm ci
+
+      - name: Build game prototype
+        working-directory: game
+        run: npm run build

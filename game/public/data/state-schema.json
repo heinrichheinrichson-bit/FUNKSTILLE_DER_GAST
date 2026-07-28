@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "states": {
+    "trust_mira": {
+      "type": "integer",
+      "default": 0,
+      "minimum": -2,
+      "maximum": 2,
+      "visibility": "hidden"
+    },
+    "trust_aksel": {
+      "type": "integer",
+      "default": 0,
+      "minimum": -2,
+      "maximum": 2,
+      "visibility": "hidden"
+    },
+    "trust_thal": {
+      "type": "integer",
+      "default": 0,
+      "minimum": -2,
+      "maximum": 2,
+      "visibility": "hidden"
+    },
+    "kader_relation": {
+      "type": "integer",
+      "default": 0,
+      "minimum": -2,
+      "maximum": 2,
+      "visibility": "hidden"
+    },
+    "clarity": {
+      "type": "integer",
+      "default": 3,
+      "minimum": 0,
+      "maximum": 3,
+      "visibility": "narrative"
+    },
+    "temperature": {
+      "type": "integer",
+      "default": 3,
+      "minimum": 0,
+      "maximum": 3,
+      "visibility": "narrative"
+    },
+    "cold_exposure": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 6,
+      "visibility": "hidden"
+    },
+    "global_time": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 20,
+      "visibility": "hidden"
+    },
+    "mira_wound_known": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "mira_wound_treated": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "player_location_shared": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "player_tone": {
+      "type": "enum",
+      "default": "unset",
+      "values": ["unset", "supportive", "commanding", "distant"],
+      "visibility": "hidden"
+    },
+    "quarters_searched": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "canteen_searched": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "log_thal_07": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "item_sealed_ration": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "item_damaged_bandage": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "item_freight_manifest_a": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "aksel_intro_context": {
+      "type": "enum",
+      "default": "unset",
+      "values": ["unset", "called", "observed", "confronted"],
+      "visibility": "hidden"
+    },
+    "aksel_restrained": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "aksel_released_for_generator": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "first_route": {
+      "type": "enum",
+      "default": "unset",
+      "values": ["unset", "labor", "generator"],
+      "visibility": "hidden"
+    },
+    "chapter_01_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "generator_state": {
+      "type": "enum",
+      "default": "unknown",
+      "values": ["unknown", "stable", "unstable", "failed"],
+      "visibility": "narrative"
+    },
+    "lab_sample_state": {
+      "type": "enum",
+      "default": "unknown",
+      "values": ["unknown", "sealed", "analyzed", "degraded"],
+      "visibility": "hidden"
+    },
+    "infection_source": {
+      "type": "enum",
+      "default": "none",
+      "values": ["none", "lab_aerosol", "contaminated_dressing", "aksel_contact", "drill_sample", "deep_core", "kader_contact"],
+      "visibility": "secret"
+    },
+    "mira_treated": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "secret"
+    },
+    "weather_window_known": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "rescue_coordinates": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "evidence_level": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 6,
+      "visibility": "hidden"
+    },
+    "cure_material": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 4,
+      "visibility": "hidden"
+    },
+    "containment": {
+      "type": "enum",
+      "default": "none",
+      "values": ["none", "partial", "unstable", "ready", "failed"],
+      "visibility": "hidden"
+    },
+    "report_honesty": {
+      "type": "enum",
+      "default": "unset",
+      "values": ["unset", "full", "partial", "false"],
+      "visibility": "hidden"
+    },
+    "dose_hoarded": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    }
+  }
+}

@@ -10,6 +10,7 @@ Desktop.ini
 savegames/
 tmp/
 temp/
+game/.git-init-backup/
 
 # Environment files and secrets
 .env
@@ -20,4 +21,3 @@ temp/
 dist/
 build/
 coverage/
-

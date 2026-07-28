@@ -1,0 +1,13 @@
+{
+  "name": "funkstille-der-gast",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/story-engine.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
+
