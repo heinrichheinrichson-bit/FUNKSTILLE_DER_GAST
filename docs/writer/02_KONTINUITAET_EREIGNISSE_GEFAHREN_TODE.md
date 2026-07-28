@@ -271,7 +271,7 @@ Niko darf nur sterben, wenn eine ausdrücklich als tragisch und vermeidbar marki
 ## Ereignis E06 – Livs Fund
 
 **Muss geschehen:** Krankenstation.  
-**Folge:** Trauer, medizinische Hinweise, Niko-Bezug. Mira benötigt anschließend einen kurzen emotionalen Moment.
+**Folge:** Trauer und medizinische Hinweise. Niko wird in dieser Szene ausdrücklich noch nicht erwähnt. Mira benötigt anschließend einen kurzen emotionalen Moment.
 
 ## Ereignis E07 – Generatorarbeit
 

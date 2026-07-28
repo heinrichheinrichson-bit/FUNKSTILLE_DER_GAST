@@ -1151,11 +1151,28 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Thal erstellt das Rettungsmanifest: Menschen, biologische Proben, Beweiskisten und ein Tiertransport."
+          "text": "Thal erstellt das Rettungsmanifest: Menschen, biologische Proben und Beweiskisten."
         },
         {
           "speaker": "mira",
-          "text": "Der Helikopter kann die Menschen aufnehmen. Für Niko müssen wir einen Frachtplatz freihalten; sonst müssten wir an der Landezone Material zurücklassen."
+          "text": "Der Helikopter kann die Menschen aufnehmen. Bei zusätzlicher Fracht müssen wir an der Landezone möglicherweise Material zurücklassen."
+        }
+      ],
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Niko braucht eine gesicherte Transportposition. Dafür können wir jetzt einen Frachtplatz reservieren."
+            }
+          ]
         }
       ],
       "choices": [
@@ -1163,7 +1180,13 @@
           "id": "reserve_niko_slot",
           "label": "Transportplatz für Niko reservieren.",
           "next": "k7_090_departure",
-          "requires": [],
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            }
+          ],
           "effects": [
             {
               "state": "niko_transport_slot",
@@ -1282,7 +1305,7 @@
           "appendMessages": [
             {
               "speaker": "mira",
-              "text": "Von Niko fehlt jede Spur. Ich habe Wasser stehen lassen und zweimal gerufen. Wir können das Wetterfenster nicht länger halten."
+              "text": "Im Vorratsraum ist es wieder still. Wir können das Wetterfenster nicht länger halten."
             }
           ]
         }

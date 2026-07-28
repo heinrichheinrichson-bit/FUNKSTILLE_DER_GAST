@@ -172,7 +172,7 @@ def rebuild_chapter_1(doc):
         [
             msg("Im Vorratsraum ist gerade etwas Metallisches umgefallen."),
             msg("Die Tür ist zu. Dahinter kratzt etwas, dann ist es wieder still."),
-            msg("Niko schläft normalerweise bei Liv oder im Gewächshaus. Das eben klang trotzdem zu schwer für eine Katze."),
+            msg("Ich kann nicht erkennen, was dort drin ist. Für eine lockere Dose klang es zu schwer."),
         ]
     )
 
@@ -325,8 +325,8 @@ def rebuild_chapter_4(doc):
     hub["messages"].extend(
         [
             msg("Aus dem Vorratsraum kommt wieder dieses Kratzen."),
-            msg("Diesmal höre ich ein kurzes, heiseres Miauen."),
-            msg("Das ist Niko. Livs Kater. Ich dachte, er wäre bei ihr gewesen."),
+            msg("Diesmal folgt ein kurzer, gepresster Laut. Dann stößt von innen etwas gegen die Schranktür."),
+            msg("Ich kann nicht sagen, ob dort ein verletzter Mensch, ein Tier oder nur lose Fracht eingeschlossen ist."),
         ]
     )
     hub["choices"] = [
@@ -360,7 +360,8 @@ def rebuild_chapter_4(doc):
                 "chapter": 4,
                 "delaySeconds": 0,
                 "messages": [
-                    msg("Ich habe ihn."),
+                    msg("Ich sehe ihn. Es ist Niko."),
+                    msg("Livs Kater. Ich dachte, er wäre bei ihr gewesen."),
                     msg("Der kleine Idiot ist mir beim Öffnen auf die Schulter gesprungen. Deshalb hat es so lange gedauert."),
                     msg("Er ist staubig und eine Pfote ist wund, aber er lebt. Er schnurrt so laut, dass du es durch das Relais hören müsstest."),
                     msg("Liv hat ihm diese rote Decke gekauft. Ich wickle ihn darin ein."),
@@ -381,7 +382,7 @@ def rebuild_chapter_4(doc):
                 "delaySeconds": 3,
                 "messages": [
                     msg("Du hast recht. Wenn ich jetzt alles aufreiße, verlieren wir Zeit."),
-                    msg("Ich stelle Wasser vor die Tür und markiere den Vorratsraum. Niko, falls du mich hörst: Bleib bitte einmal in deinem Leben vernünftig."),
+                    msg("Ich stelle Wasser vor die Tür und markiere den Vorratsraum. Was immer dort drin ist, muss noch warten."),
                 ],
                 "next": "k4_320_transition",
                 "nextDelaySeconds": 5,
@@ -500,14 +501,20 @@ def rebuild_chapter_7(doc):
             "delaySeconds": 15,
             "messages": [
                 msg("Thal erstellt das Rettungsmanifest: Menschen, biologische Proben, Beweiskisten und ein Tiertransport."),
-                msg("Der Helikopter kann die Menschen aufnehmen. Für Niko müssen wir einen Frachtplatz freihalten; sonst müssten wir an der Landezone Material zurücklassen."),
+                msg("Der Helikopter kann die Menschen aufnehmen. Bei zusätzlicher Fracht müssen wir an der Landezone möglicherweise Material zurücklassen."),
+            ],
+            "variants": [
+                {
+                    "requires": [req("niko_found", "eq", True)],
+                    "appendMessages": [msg("Niko braucht eine gesicherte Transportposition. Dafür können wir jetzt einen Frachtplatz reservieren.")],
+                }
             ],
             "choices": [
                 {
                     "id": "reserve_niko_slot",
                     "label": "Transportplatz für Niko reservieren.",
                     "next": "k7_090_departure",
-                    "requires": [],
+                    "requires": [req("niko_found", "eq", True)],
                     "effects": [effect("niko_transport_slot", True)],
                 },
                 {
@@ -532,7 +539,7 @@ def rebuild_chapter_7(doc):
             },
             {
                 "requires": [req("niko_found", "eq", False)],
-                "appendMessages": [msg("Von Niko fehlt jede Spur. Ich habe Wasser stehen lassen und zweimal gerufen. Wir können das Wetterfenster nicht länger halten.")],
+                "appendMessages": [msg("Im Vorratsraum ist es wieder still. Wir können das Wetterfenster nicht länger halten.")],
             },
         ]
     )
@@ -544,8 +551,14 @@ def rebuild_chapter_8(doc):
         msg("Quittung."),
         msg("RETTUNGSFLUG GESTARTET. ANKUNFT 43 MINUTEN. LANDEZONE NORD MARKIEREN.", "system"),
         msg("Sie kommen. Wirklich."),
-        msg("Wir packen jetzt Probe, Beweise, Wärmezeug und Nikos Box auf den Lastschlitten. Danach gehen wir gemeinsam zur Landezone."),
+        msg("Wir packen jetzt Probe, Beweise und Wärmezeug auf den Lastschlitten. Danach gehen wir gemeinsam zur Landezone."),
         msg("Ich schreibe an jedem Leinenmast. Dazwischen brauche ich beide Hände."),
+    ]
+    nodes["k8_020_receipt"]["variants"] = [
+        {
+            "requires": [req("niko_found", "eq", True)],
+            "appendMessages": [msg("Nikos Box wird warm eingepackt und auf dem Schlitten festgezurrt.")],
+        }
     ]
     nodes["k8_020_receipt"]["nextDelaySeconds"] = 600
     nodes["k8_030_wait"]["delaySeconds"] = 600

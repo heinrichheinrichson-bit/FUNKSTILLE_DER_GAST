@@ -155,7 +155,7 @@ Liv Sørensen liegt zwischen Untersuchungsliege und Medikamentenschrank. Eine ge
 
 Mira schreibt zunächst nicht. Dann:
 
-> Das ist Liv. Sie hat Niko immer aus dem Labor gejagt und ihm danach heimlich Fisch gegeben. Ich habe gestern noch mit ihr gestritten, weil sie meinen Kaffee weggeschüttet hat.
+> Das ist Liv. Ich habe gestern noch mit ihr gestritten, weil sie meinen Kaffee weggeschüttet hat. Sie hat behauptet, ich würde sonst irgendwann nur noch von Koffein und Trotz leben.
 
 Sie weint, entschuldigt sich bei Alex und muss sich setzen. Alex drängt sie nicht sofort zur Untersuchung. Erst als Mira selbst wieder bereit ist, prüft sie Livs Tablet. Darauf befindet sich ein medizinischer Eintrag über Emil Vargas Schnittverletzung mit kontaminiertem Werkzeug. Liv notierte Erinnerungslücken, Geruchsveränderungen und auffällige Wiederholungen in seiner Sprache. Der Eintrag bricht mitten im Satz ab.
 
@@ -249,9 +249,9 @@ Thal kann langsam gehen. Mira sichert sie mit der zweiten Leine. Beide kehren zu
 
 ## 17. Niko im Vorratsraum
 
-Kurz nach der Rückkehr fällt im Vorratsraum erneut etwas um. Mira erkennt diesmal ein kurzes, heiseres Miauen. Sie kennt den Laut:
+Kurz nach der Rückkehr fällt im Vorratsraum erneut etwas um. Danach folgt ein kurzer, gepresster Laut. Mira kann weiterhin nicht erkennen, ob ein Mensch, ein Tier oder lose Fracht im Schrank eingeschlossen ist. Erst nachdem sie die Tür öffnet und das Tier mit eigenen Augen sieht, schreibt sie:
 
-> Das war Niko. Livs Kater. Ich dachte, er wäre bei ihr gewesen.
+> Ich sehe ihn. Es ist Niko. Livs Kater. Ich dachte, er wäre bei ihr gewesen.
 
 Aus einem hohen Metallschrank kommt Kratzen. Alex rät, zuerst den Raum zu schließen, eine Decke und Wasser bereitzuhalten und dann den Schrank vorsichtig zu öffnen.
 

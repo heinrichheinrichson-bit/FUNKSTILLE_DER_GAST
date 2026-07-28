@@ -1866,11 +1866,11 @@
         },
         {
           "speaker": "mira",
-          "text": "Diesmal höre ich ein kurzes, heiseres Miauen."
+          "text": "Diesmal folgt ein kurzer, gepresster Laut. Dann stößt von innen etwas gegen die Schranktür."
         },
         {
           "speaker": "mira",
-          "text": "Das ist Niko. Livs Kater. Ich dachte, er wäre bei ihr gewesen."
+          "text": "Ich kann nicht sagen, ob dort ein verletzter Mensch, ein Tier oder nur lose Fracht eingeschlossen ist."
         }
       ],
       "effects": [
@@ -1947,7 +1947,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich habe ihn."
+          "text": "Ich sehe ihn. Es ist Niko."
+        },
+        {
+          "speaker": "mira",
+          "text": "Livs Kater. Ich dachte, er wäre bei ihr gewesen."
         },
         {
           "speaker": "mira",
@@ -2011,7 +2015,7 @@
         },
         {
           "speaker": "mira",
-          "text": "Ich stelle Wasser vor die Tür und markiere den Vorratsraum. Niko, falls du mich hörst: Bleib bitte einmal in deinem Leben vernünftig."
+          "text": "Ich stelle Wasser vor die Tür und markiere den Vorratsraum. Was immer dort drin ist, muss noch warten."
         }
       ],
       "next": "k4_320_transition",

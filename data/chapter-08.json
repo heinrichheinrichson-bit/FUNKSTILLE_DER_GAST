@@ -171,11 +171,28 @@
         },
         {
           "speaker": "mira",
-          "text": "Wir packen jetzt Probe, Beweise, Wärmezeug und Nikos Box auf den Lastschlitten. Danach gehen wir gemeinsam zur Landezone."
+          "text": "Wir packen jetzt Probe, Beweise und Wärmezeug auf den Lastschlitten. Danach gehen wir gemeinsam zur Landezone."
         },
         {
           "speaker": "mira",
           "text": "Ich schreibe an jedem Leinenmast. Dazwischen brauche ich beide Hände."
+        }
+      ],
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Nikos Box wird warm eingepackt und auf dem Schlitten festgezurrt."
+            }
+          ]
         }
       ],
       "next": "k8_030_wait",

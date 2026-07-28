@@ -115,6 +115,28 @@ missing_niko = required_niko_nodes - set(all_nodes)
 if missing_niko:
     errors.append(f"Niko-Pflichtnodes fehlen: {sorted(missing_niko)}")
 
+# The reveal is sacred: neither Niko nor a cat may be named before Mira
+# actually sees him in k4_311_niko_found (or in the finale-only reveal).
+reveal_words = ("niko", "katze", "kater", "miauen", "miaut", "schnurr", "pfote")
+pre_reveal_nodes = {
+    node_id
+    for node_id, node in all_nodes.items()
+    if node.get("chapter") in {1, 2, 3}
+}
+pre_reveal_nodes.update({"k4_300_hub", "k4_310_niko_open", "k4_312_niko_deferred"})
+for node_id in sorted(pre_reveal_nodes):
+    node = all_nodes[node_id]
+    visible_texts = [message.get("text", "") for message in node.get("messages", [])]
+    visible_texts.extend(choice.get("label", "") for choice in node.get("choices", []))
+    joined = " ".join(visible_texts).lower()
+    found_words = [word for word in reveal_words if word in joined]
+    if found_words:
+        errors.append(f"Vorzeitige Niko-Enthüllung in {node_id}: {found_words}")
+
+first_reveal = all_nodes.get("k4_311_niko_found", {}).get("messages", [])
+if not first_reveal or "ich sehe ihn. es ist niko." not in first_reveal[0].get("text", "").lower():
+    errors.append("Nikos erste Enthüllung beginnt nicht mit einer tatsächlichen Sichtung")
+
 if errors:
     print("WRITER-REBUILD-AUDIT: FEHLGESCHLAGEN")
     for error in errors:
@@ -127,4 +149,5 @@ print(f"Erreichbar: {len(reachable)}")
 print(f"Referenzen: {reference_count}")
 print("Fremdsprecher: 0")
 print("Niko-Pflichtpfad: vorhanden")
+print("Niko vor Sichtung: nicht erwähnt")
 print("Ortsmetadaten: vollständig")
