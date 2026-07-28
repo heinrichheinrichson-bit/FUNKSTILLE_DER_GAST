@@ -830,6 +830,29 @@ button.map-room.known {
 .map-marker.current { left: 24%; top: 47%; }
 .map-marker.note { left: 62%; color: #160d04; background: #e0a86f; }
 
+.map-pin {
+  position: absolute;
+  z-index: 5;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -100%) rotate(45deg);
+  border: 2px solid #dfffee;
+  border-radius: 50% 50% 50% 4px;
+  background: #42e98d;
+  box-shadow: 0 0 0 3px rgba(66, 233, 141, 0.16), 0 0 18px rgba(66, 233, 141, 0.75);
+}
+
+.map-pin span {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #052016;
+}
+
 .map-room.known {
   color: #7ef0aa;
   border: 1px solid #367b50;

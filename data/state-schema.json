@@ -95,7 +95,11 @@
     "relay_privacy": {
       "type": "enum",
       "default": "careful",
-      "values": ["careful", "mentioned", "exposed"],
+      "values": [
+        "careful",
+        "mentioned",
+        "exposed"
+      ],
       "visibility": "hidden"
     },
     "relay_confiscated": {
@@ -111,7 +115,12 @@
     "player_tone": {
       "type": "enum",
       "default": "unset",
-      "values": ["unset", "supportive", "commanding", "distant"],
+      "values": [
+        "unset",
+        "supportive",
+        "commanding",
+        "distant"
+      ],
       "visibility": "hidden"
     },
     "quarters_searched": {
@@ -147,7 +156,12 @@
     "aksel_intro_context": {
       "type": "enum",
       "default": "unset",
-      "values": ["unset", "called", "observed", "confronted"],
+      "values": [
+        "unset",
+        "called",
+        "observed",
+        "confronted"
+      ],
       "visibility": "hidden"
     },
     "aksel_restrained": {
@@ -163,7 +177,11 @@
     "first_route": {
       "type": "enum",
       "default": "unset",
-      "values": ["unset", "labor", "generator"],
+      "values": [
+        "unset",
+        "labor",
+        "generator"
+      ],
       "visibility": "hidden"
     },
     "chapter_01_complete": {
@@ -219,19 +237,33 @@
     "generator_state": {
       "type": "enum",
       "default": "unknown",
-      "values": ["unknown", "stable", "unstable", "failed"],
+      "values": [
+        "unknown",
+        "stable",
+        "unstable",
+        "failed"
+      ],
       "visibility": "narrative"
     },
     "lab_sample_state": {
       "type": "enum",
       "default": "unknown",
-      "values": ["unknown", "sealed", "analyzed", "degraded"],
+      "values": [
+        "unknown",
+        "sealed",
+        "analyzed",
+        "degraded"
+      ],
       "visibility": "hidden"
     },
     "lab_protection": {
       "type": "enum",
       "default": "none",
-      "values": ["none", "filter", "full"],
+      "values": [
+        "none",
+        "filter",
+        "full"
+      ],
       "visibility": "visible"
     },
     "item_sample_data": {
@@ -302,13 +334,24 @@
     "aksel_state": {
       "type": "enum",
       "default": "exposed",
-      "values": ["stable", "exposed", "infected", "lost", "dead"],
+      "values": [
+        "stable",
+        "exposed",
+        "infected",
+        "lost",
+        "dead"
+      ],
       "visibility": "secret"
     },
     "aksel_march": {
       "type": "enum",
       "default": "not_triggered",
-      "values": ["not_triggered", "returned", "lost", "locked_out"],
+      "values": [
+        "not_triggered",
+        "returned",
+        "lost",
+        "locked_out"
+      ],
       "visibility": "hidden"
     },
     "patient_zero_clue": {
@@ -334,19 +377,30 @@
     "aksel_medical_scan": {
       "type": "enum",
       "default": "unknown",
-      "values": ["unknown", "normal", "abnormal"],
+      "values": [
+        "unknown",
+        "normal",
+        "abnormal"
+      ],
       "visibility": "hidden"
     },
     "return_security": {
       "type": "enum",
       "default": "strong",
-      "values": ["strong", "weak"],
+      "values": [
+        "strong",
+        "weak"
+      ],
       "visibility": "hidden"
     },
     "thal_state": {
       "type": "enum",
       "default": "alive",
-      "values": ["alive", "missing", "dead"],
+      "values": [
+        "alive",
+        "missing",
+        "dead"
+      ],
       "visibility": "secret"
     },
     "cold_gear": {
@@ -359,7 +413,10 @@
     "expedition_companion": {
       "type": "enum",
       "default": "none",
-      "values": ["none", "aksel"],
+      "values": [
+        "none",
+        "aksel"
+      ],
       "visibility": "hidden"
     },
     "thal_returning": {
@@ -422,13 +479,24 @@
     "kader_state": {
       "type": "enum",
       "default": "independent",
-      "values": ["cooperative", "independent", "changed", "missing", "dead"],
+      "values": [
+        "cooperative",
+        "independent",
+        "changed",
+        "missing",
+        "dead"
+      ],
       "visibility": "secret"
     },
     "kader_companion_plan": {
       "type": "enum",
       "default": "alone",
-      "values": ["alone", "open", "waiting", "hidden"],
+      "values": [
+        "alone",
+        "open",
+        "waiting",
+        "hidden"
+      ],
       "visibility": "hidden"
     },
     "ice_coordinates_found": {
@@ -495,7 +563,12 @@
     "station_final_choice": {
       "type": "enum",
       "default": "unset",
-      "values": ["unset", "locked", "destroy", "open"],
+      "values": [
+        "unset",
+        "locked",
+        "destroy",
+        "open"
+      ],
       "visibility": "hidden"
     },
     "evac_mira": {
@@ -521,7 +594,11 @@
     "rescue_quality": {
       "type": "enum",
       "default": "unknown",
-      "values": ["unknown", "weak", "sufficient"],
+      "values": [
+        "unknown",
+        "weak",
+        "sufficient"
+      ],
       "visibility": "hidden"
     },
     "destruction_triggered": {
@@ -537,7 +614,15 @@
     "infection_source": {
       "type": "enum",
       "default": "none",
-      "values": ["none", "lab_aerosol", "contaminated_dressing", "aksel_contact", "drill_sample", "deep_core", "kader_contact"],
+      "values": [
+        "none",
+        "lab_aerosol",
+        "contaminated_dressing",
+        "aksel_contact",
+        "drill_sample",
+        "deep_core",
+        "kader_contact"
+      ],
       "visibility": "secret"
     },
     "mira_treated": {
@@ -572,19 +657,68 @@
     "containment": {
       "type": "enum",
       "default": "none",
-      "values": ["none", "partial", "unstable", "ready", "failed"],
+      "values": [
+        "none",
+        "partial",
+        "unstable",
+        "ready",
+        "failed"
+      ],
       "visibility": "hidden"
     },
     "report_honesty": {
       "type": "enum",
       "default": "unset",
-      "values": ["unset", "full", "partial", "false"],
+      "values": [
+        "unset",
+        "full",
+        "partial",
+        "false"
+      ],
       "visibility": "hidden"
     },
     "dose_hoarded": {
       "type": "boolean",
       "default": false,
       "visibility": "hidden"
+    },
+    "kader_escorted_to_lab": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "niko_state": {
+      "type": "enum",
+      "default": "unseen",
+      "values": [
+        "unseen",
+        "suspected",
+        "secured",
+        "roaming",
+        "at_landing_zone",
+        "evacuated"
+      ],
+      "visibility": "narrative"
+    },
+    "niko_found": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "niko_secured": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "niko_transport_slot": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "niko_evacuated": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
     }
   }
 }

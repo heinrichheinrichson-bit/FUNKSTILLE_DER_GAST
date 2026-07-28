@@ -12,9 +12,18 @@
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Hallo?" },
-        { "speaker": "mira", "text": "Das zeigt verbunden an." },
-        { "speaker": "mira", "text": "Bitte schreib irgendwas, wenn du das lesen kannst." }
+        {
+          "speaker": "mira",
+          "text": "Hallo?"
+        },
+        {
+          "speaker": "mira",
+          "text": "Das zeigt verbunden an."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bitte schreib irgendwas, wenn du das lesen kannst."
+        }
       ],
       "choices": [
         {
@@ -23,7 +32,11 @@
           "next": "k1_009_check_notice",
           "requires": [],
           "effects": [
-            { "state": "intro_injury_known", "operation": "set", "value": true }
+            {
+              "state": "intro_injury_known",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -32,8 +45,16 @@
           "next": "k1_020_check_room",
           "requires": [],
           "effects": [
-            { "state": "intro_location_known", "operation": "set", "value": true },
-            { "state": "intro_injury_known", "operation": "set", "value": true }
+            {
+              "state": "intro_location_known",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "intro_injury_known",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -42,71 +63,181 @@
           "next": "k1_021_identity_first",
           "requires": [],
           "effects": [
-            { "state": "intro_identity_known", "operation": "set", "value": true }
+            {
+              "state": "intro_identity_known",
+              "operation": "set",
+              "value": true
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_009_check_notice",
       "chapter": 1,
       "delaySeconds": 2,
       "messages": [
-        { "speaker": "mira", "text": "Warte kurz. Ich schaue nach." }
+        {
+          "speaker": "mira",
+          "text": "Warte kurz. Ich schaue nach."
+        }
       ],
       "next": "k1_010_check_self",
-      "nextDelaySeconds": 18
+      "nextDelaySeconds": 18,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_010_check_self",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Vermutlich." },
-        { "speaker": "mira", "text": "Blut an der Schläfe. Nicht viel. Pupillen reagieren gleich, soweit ich das mit der Frontkamera beurteilen kann." },
-        { "speaker": "mira", "text": "Mir fehlen ein paar Minuten. Vielleicht mehr." },
-        { "speaker": "mira", "text": "Ich sitze auf dem Boden im Wohntrakt. Notbeleuchtung läuft." },
-        { "speaker": "mira", "text": "Es riecht nach heißem Metall." }
+        {
+          "speaker": "mira",
+          "text": "Vermutlich."
+        },
+        {
+          "speaker": "mira",
+          "text": "Blut an der Schläfe. Nicht viel. Pupillen reagieren gleich, soweit ich das mit der Frontkamera beurteilen kann."
+        },
+        {
+          "speaker": "mira",
+          "text": "Mir fehlen ein paar Minuten. Vielleicht mehr."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich sitze auf dem Boden im Wohntrakt. Notbeleuchtung läuft."
+        },
+        {
+          "speaker": "mira",
+          "text": "Es riecht nach heißem Metall."
+        }
       ],
       "effects": [
-        { "state": "mira_wound_known", "operation": "set", "value": true },
-        { "state": "trust_mira", "operation": "add", "value": 1 }
+        {
+          "state": "mira_wound_known",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "trust_mira",
+          "operation": "add",
+          "value": 1
+        }
       ],
       "next": "k1_022_questions",
-      "nextDelaySeconds": 8
+      "nextDelaySeconds": 8,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_020_check_room",
       "chapter": 1,
       "delaySeconds": 12,
       "messages": [
-        { "speaker": "mira", "text": "Station Kaldstad. Antarktis." },
-        { "speaker": "mira", "text": "Ich sitze im Verbindungsgang vom Wohntrakt. Ein Teil der Deckenverkleidung ist runtergekommen." },
-        { "speaker": "mira", "text": "Notbeleuchtung. Kein Alarm. Das ist seltsamer als ein Alarm." },
-        { "speaker": "mira", "text": "Da ist Blut auf meinem Ärmel." },
-        { "speaker": "mira", "text": "Meins, denke ich." }
+        {
+          "speaker": "mira",
+          "text": "Station Kaldstad. Antarktis."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich sitze im Verbindungsgang vom Wohntrakt. Ein Teil der Deckenverkleidung ist runtergekommen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Notbeleuchtung. Kein Alarm. Das ist seltsamer als ein Alarm."
+        },
+        {
+          "speaker": "mira",
+          "text": "Da ist Blut auf meinem Ärmel."
+        },
+        {
+          "speaker": "mira",
+          "text": "Meins, denke ich."
+        }
       ],
       "effects": [
-        { "state": "mira_wound_known", "operation": "set", "value": true }
+        {
+          "state": "mira_wound_known",
+          "operation": "set",
+          "value": true
+        }
       ],
       "next": "k1_022_questions",
-      "nextDelaySeconds": 8
+      "nextDelaySeconds": 8,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_021_identity_first",
       "chapter": 1,
       "delaySeconds": 8,
       "messages": [
-        { "speaker": "mira", "text": "Dr. Mira Lindner. Glaziologie." },
-        { "speaker": "mira", "text": "Station Kaldstad, Antarktis. Ich sitze im Verbindungsgang vom Wohntrakt." },
-        { "speaker": "mira", "text": "Und du bist offenbar nicht die Person, die ich erreichen wollte." },
-        { "speaker": "mira", "text": "Da ist Blut auf meinem Ärmel. Meins, denke ich." }
+        {
+          "speaker": "mira",
+          "text": "Dr. Mira Lindner. Glaziologie."
+        },
+        {
+          "speaker": "mira",
+          "text": "Station Kaldstad, Antarktis. Ich sitze im Verbindungsgang vom Wohntrakt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Und du bist offenbar nicht die Person, die ich erreichen wollte."
+        },
+        {
+          "speaker": "mira",
+          "text": "Da ist Blut auf meinem Ärmel. Meins, denke ich."
+        }
       ],
       "effects": [
-        { "state": "mira_wound_known", "operation": "set", "value": true }
+        {
+          "state": "mira_wound_known",
+          "operation": "set",
+          "value": true
+        }
       ],
       "next": "k1_022_questions",
-      "nextDelaySeconds": 8
+      "nextDelaySeconds": 8,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_022_questions",
@@ -119,10 +250,18 @@
           "label": "Und wer bist du eigentlich?",
           "next": "k1_022_identity_answer",
           "requires": [
-            { "state": "intro_identity_known", "operator": "eq", "value": false }
+            {
+              "state": "intro_identity_known",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "intro_identity_known", "operation": "set", "value": true }
+            {
+              "state": "intro_identity_known",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -130,10 +269,18 @@
           "label": "Wo genau bist du? Was siehst du um dich herum?",
           "next": "k1_022_location_answer",
           "requires": [
-            { "state": "intro_location_known", "operator": "eq", "value": false }
+            {
+              "state": "intro_location_known",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "intro_location_known", "operation": "set", "value": true }
+            {
+              "state": "intro_location_known",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -141,10 +288,18 @@
           "label": "Du hast Blut erwähnt. Wie schwer bist du verletzt?",
           "next": "k1_022_injury_answer",
           "requires": [
-            { "state": "intro_injury_known", "operator": "eq", "value": false }
+            {
+              "state": "intro_injury_known",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "intro_injury_known", "operation": "set", "value": true }
+            {
+              "state": "intro_injury_known",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -154,56 +309,135 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_022_identity_answer",
       "chapter": 1,
       "delaySeconds": 3,
       "messages": [
-        { "speaker": "mira", "text": "Dr. Mira Lindner. Achtunddreißig. Glaziologin auf Station Kaldstad." },
-        { "speaker": "mira", "text": "Normalerweise untersuche ich Eisbohrkerne. Heute sitze ich auf dem Boden und schreibe mit einem fremden Menschen über ein kaputtes Relais." }
+        {
+          "speaker": "mira",
+          "text": "Dr. Mira Lindner. Achtunddreißig. Glaziologin auf Station Kaldstad."
+        },
+        {
+          "speaker": "mira",
+          "text": "Normalerweise untersuche ich Eisbohrkerne. Heute sitze ich auf dem Boden und schreibe mit einem fremden Menschen über ein kaputtes Relais."
+        }
       ],
       "next": "k1_022_questions",
-      "nextDelaySeconds": 2
+      "nextDelaySeconds": 2,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_022_location_answer",
       "chapter": 1,
       "delaySeconds": 3,
       "messages": [
-        { "speaker": "mira", "text": "Im Verbindungsgang des Wohntrakts. Neben mir ist ein Stück Deckenverkleidung heruntergekommen." },
-        { "speaker": "mira", "text": "Die Notbeleuchtung läuft, aber ich höre weder Lüftung noch Stimmen. Nur gelegentlich Metall, das sich in der Kälte zusammenzieht." },
-        { "speaker": "mira", "text": "Die Tür zum Labor ist geschlossen. Ich weiß nicht, ob ich selbst von dort hergekommen bin oder ob mich jemand hierhergebracht hat." }
+        {
+          "speaker": "mira",
+          "text": "Im Verbindungsgang des Wohntrakts. Neben mir ist ein Stück Deckenverkleidung heruntergekommen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Notbeleuchtung läuft, aber ich höre weder Lüftung noch Stimmen. Nur gelegentlich Metall, das sich in der Kälte zusammenzieht."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Tür zum Labor ist geschlossen. Ich weiß nicht, ob ich selbst von dort hergekommen bin oder ob mich jemand hierhergebracht hat."
+        }
       ],
       "next": "k1_022_questions",
-      "nextDelaySeconds": 2
+      "nextDelaySeconds": 2,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_022_injury_answer",
       "chapter": 1,
       "delaySeconds": 3,
       "messages": [
-        { "speaker": "mira", "text": "Eine Platzwunde an der Schläfe. Nicht stark, aber genug, dass Blut auf meinem Ärmel ist." },
-        { "speaker": "mira", "text": "Die Pupillen reagieren gleich, soweit ich das mit der Frontkamera prüfen kann. Mir ist schwindlig, und in meiner Erinnerung fehlen Minuten." },
-        { "speaker": "mira", "text": "Die Deckenplatte neben mir könnte mich getroffen haben. Sicher bin ich nicht." }
+        {
+          "speaker": "mira",
+          "text": "Eine Platzwunde an der Schläfe. Nicht stark, aber genug, dass Blut auf meinem Ärmel ist."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Pupillen reagieren gleich, soweit ich das mit der Frontkamera prüfen kann. Mir ist schwindlig, und in meiner Erinnerung fehlen Minuten."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Deckenplatte neben mir könnte mich getroffen haben. Sicher bin ich nicht."
+        }
       ],
       "effects": [
-        { "state": "mira_wound_known", "operation": "set", "value": true }
+        {
+          "state": "mira_wound_known",
+          "operation": "set",
+          "value": true
+        }
       ],
       "next": "k1_022_questions",
-      "nextDelaySeconds": 2
+      "nextDelaySeconds": 2,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_023_why_contact",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Ich habe dich nicht gezielt angerufen. Ich habe zuerst den internen Stationskanal versucht. Dann den Notkanal der Versorgungsstation." },
-        { "speaker": "mira", "text": "Niemand antwortet. Der Satelliten-Uplink ist tot, und das Relais hat sich stattdessen mit deinem Gerät verbunden." },
-        { "speaker": "mira", "text": "Meine letzte klare Erinnerung ist ein Alarm aus dem Labor. Kaders Stimme über den Lautsprecher. Jemand rannte durch den Gang." },
-        { "speaker": "mira", "text": "Dann ein Schlag, Dunkelheit – und jetzt bin ich hier. Ich weiß nicht, wie ich vom Labor in den Wohntrakt gekommen bin." },
-        { "speaker": "mira", "text": "Ich brauche Hilfe, weil ich verletzt bin, weil in der Station etwas ausgefallen ist und weil ich meiner Erinnerung gerade nicht vollständig trauen kann." }
+        {
+          "speaker": "mira",
+          "text": "Ich habe dich nicht gezielt angerufen. Ich habe zuerst den internen Stationskanal versucht. Dann den Notkanal der Versorgungsstation."
+        },
+        {
+          "speaker": "mira",
+          "text": "Niemand antwortet. Der Satelliten-Uplink ist tot, und das Relais hat sich stattdessen mit deinem Gerät verbunden."
+        },
+        {
+          "speaker": "mira",
+          "text": "Meine letzte klare Erinnerung ist ein Alarm aus dem Labor. Kaders Stimme über den Lautsprecher. Jemand rannte durch den Gang."
+        },
+        {
+          "speaker": "mira",
+          "text": "Dann ein Schlag, Dunkelheit – und jetzt bin ich hier. Ich weiß nicht, wie ich vom Labor in den Wohntrakt gekommen bin."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich brauche Hilfe, weil ich verletzt bin, weil in der Station etwas ausgefallen ist und weil ich meiner Erinnerung gerade nicht vollständig trauen kann."
+        }
       ],
       "choices": [
         {
@@ -226,53 +460,123 @@
           "next": "k1_024_support",
           "requires": [],
           "effects": [
-            { "state": "trust_mira", "operation": "add", "value": 1 }
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": 1
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_024_last_memory",
       "chapter": 1,
       "delaySeconds": 4,
       "messages": [
-        { "speaker": "mira", "text": "Die Temperaturwarnung an Probenkammer Drei. Kader stritt über Funk mit jemandem. Ich konnte nicht verstehen, mit wem." },
-        { "speaker": "mira", "text": "Dann ging das Licht aus. Etwas traf mich seitlich am Kopf." },
-        { "speaker": "mira", "text": "Ob es eine herabfallende Verkleidung war oder jemand – da ist einfach nichts." }
+        {
+          "speaker": "mira",
+          "text": "Die Temperaturwarnung an Probenkammer Drei. Kader stritt über Funk mit jemandem. Ich konnte nicht verstehen, mit wem."
+        },
+        {
+          "speaker": "mira",
+          "text": "Dann ging das Licht aus. Etwas traf mich seitlich am Kopf."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ob es eine herabfallende Verkleidung war oder jemand – da ist einfach nichts."
+        }
       ],
       "next": "k1_025_name",
-      "nextDelaySeconds": 5
+      "nextDelaySeconds": 5,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_024_crew_fear",
       "chapter": 1,
       "delaySeconds": 4,
       "messages": [
-        { "speaker": "mira", "text": "Ich habe nicht grundsätzlich Angst vor ihnen. Ich kenne Aksel, Thal, Kader, Liv – wir leben seit Wochen auf engem Raum." },
-        { "speaker": "mira", "text": "Aber keiner antwortet. Jemand oder etwas hat mich vom Labor bis hierher gebracht, und ich erinnere mich nicht daran." },
-        { "speaker": "mira", "text": "Bis ich weiß, was passiert ist und wer verletzt oder verwirrt ist, will ich niemanden im Dunkeln überraschen." }
+        {
+          "speaker": "mira",
+          "text": "Ich habe nicht grundsätzlich Angst vor ihnen. Ich kenne Aksel, Thal, Kader, Liv – wir leben seit Wochen auf engem Raum."
+        },
+        {
+          "speaker": "mira",
+          "text": "Aber keiner antwortet. Jemand oder etwas hat mich vom Labor bis hierher gebracht, und ich erinnere mich nicht daran."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bis ich weiß, was passiert ist und wer verletzt oder verwirrt ist, will ich niemanden im Dunkeln überraschen."
+        }
       ],
       "next": "k1_025_name",
-      "nextDelaySeconds": 5
+      "nextDelaySeconds": 5,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_024_support",
       "chapter": 1,
       "delaySeconds": 3,
       "messages": [
-        { "speaker": "mira", "text": "Danke." },
-        { "speaker": "mira", "text": "Das klingt vielleicht lächerlich, aber es hilft gerade schon, dass überhaupt jemand antwortet." }
+        {
+          "speaker": "mira",
+          "text": "Danke."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das klingt vielleicht lächerlich, aber es hilft gerade schon, dass überhaupt jemand antwortet."
+        }
       ],
       "next": "k1_025_name",
-      "nextDelaySeconds": 5
+      "nextDelaySeconds": 5,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_025_name",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Mit wem schreibe ich eigentlich?" },
-        { "speaker": "mira", "text": "Wie soll ich dich nennen?" }
+        {
+          "speaker": "mira",
+          "text": "Mit wem schreibe ich eigentlich?"
+        },
+        {
+          "speaker": "mira",
+          "text": "Wie soll ich dich nennen?"
+        }
       ],
       "input": {
         "kind": "text",
@@ -296,34 +600,72 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_030_identity",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Das Relais sollte sich mit dem Notkanal der Versorgungsstation koppeln." },
-        { "speaker": "mira", "text": "Stattdessen zeigt es nur eine Gerätekennung. Keine Rufnummer. Keinen Standort." },
-        { "speaker": "mira", "text": "Wo bist du?" }
+        {
+          "speaker": "mira",
+          "text": "Das Relais sollte sich mit dem Notkanal der Versorgungsstation koppeln."
+        },
+        {
+          "speaker": "mira",
+          "text": "Stattdessen zeigt es nur eine Gerätekennung. Keine Rufnummer. Keinen Standort."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wo bist du?"
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "player_name_known", "operator": "eq", "value": true }
+            {
+              "state": "player_name_known",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "prependMessages": [
-            { "speaker": "mira", "text": "Danke, {{player_name}}. Ich bin Mira." },
-            { "speaker": "mira", "text": "Unter anderen Umständen hätte ich gesagt: Freut mich. Im Moment bin ich einfach froh, nicht mehr allein zu sein." }
+            {
+              "speaker": "mira",
+              "text": "Danke, {{player_name}}. Ich bin Mira."
+            },
+            {
+              "speaker": "mira",
+              "text": "Unter anderen Umständen hätte ich gesagt: Freut mich. Im Moment bin ich einfach froh, nicht mehr allein zu sein."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "player_name_known", "operator": "eq", "value": false }
+            {
+              "state": "player_name_known",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "prependMessages": [
-            { "speaker": "mira", "text": "Okay. Dann bleibst du vorerst mein unbekannter Kontakt." },
-            { "speaker": "mira", "text": "Ich bin Mira. Und ich bin trotzdem froh, dass du antwortest." }
+            {
+              "speaker": "mira",
+              "text": "Okay. Dann bleibst du vorerst mein unbekannter Kontakt."
+            },
+            {
+              "speaker": "mira",
+              "text": "Ich bin Mira. Und ich bin trotzdem froh, dass du antwortest."
+            }
           ]
         }
       ],
@@ -334,7 +676,11 @@
           "next": "k1_031_location_shared",
           "requires": [],
           "effects": [
-            { "state": "player_location_shared", "operation": "set", "value": true }
+            {
+              "state": "player_location_shared",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -350,54 +696,127 @@
           "next": "k1_033_location_deflected",
           "requires": [],
           "effects": [
-            { "state": "trust_mira", "operation": "add", "value": -1 }
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": -1
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_031_location_shared",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Dann hat es wirklich irgendein Gerät erwischt." },
-        { "speaker": "mira", "text": "Großartig." },
-        { "speaker": "mira", "text": "Entschuldigung. Nicht deine Schuld." }
+        {
+          "speaker": "mira",
+          "text": "Dann hat es wirklich irgendein Gerät erwischt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Großartig."
+        },
+        {
+          "speaker": "mira",
+          "text": "Entschuldigung. Nicht deine Schuld."
+        }
       ],
       "next": "k1_040_relay",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_032_location_withheld",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Verständlich. Ich kann schließlich auch nicht beweisen, wer ich bin." }
+        {
+          "speaker": "mira",
+          "text": "Verständlich. Ich kann schließlich auch nicht beweisen, wer ich bin."
+        }
       ],
       "next": "k1_040_relay",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_033_location_deflected",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Im Moment ist fast alles wichtig." },
-        { "speaker": "mira", "text": "Aber gut. Kurzfassung." }
+        {
+          "speaker": "mira",
+          "text": "Im Moment ist fast alles wichtig."
+        },
+        {
+          "speaker": "mira",
+          "text": "Aber gut. Kurzfassung."
+        }
       ],
       "next": "k1_040_relay",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_040_relay",
       "chapter": 1,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Wir benutzen ein ELF-Relais für Sensordaten aus dem Eis. Sehr niedrige Frequenz, große Reichweite, absurd kleine Datenrate." },
-        { "speaker": "mira", "text": "Die Hauptantenne ist weg. Oder ausgefallen. Das Relais sucht deshalb offenbar selbst nach einem offenen Empfänger." },
-        { "speaker": "mira", "text": "Es hat dich gefunden." },
-        { "speaker": "mira", "text": "Ich kann diese Verbindung nicht neu wählen. Wenn ich sie trenne, finde ich dich wahrscheinlich nicht wieder." },
-        { "speaker": "mira", "text": "Ich brauche jemanden, der mitdenkt. Im Moment bist du alles, was ich habe." }
+        {
+          "speaker": "mira",
+          "text": "Wir benutzen ein ELF-Relais für Sensordaten aus dem Eis. Sehr niedrige Frequenz, große Reichweite, absurd kleine Datenrate."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Hauptantenne ist weg. Oder ausgefallen. Das Relais sucht deshalb offenbar selbst nach einem offenen Empfänger."
+        },
+        {
+          "speaker": "mira",
+          "text": "Es hat dich gefunden."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich kann diese Verbindung nicht neu wählen. Wenn ich sie trenne, finde ich dich wahrscheinlich nicht wieder."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich brauche jemanden, der mitdenkt. Im Moment bist du alles, was ich habe."
+        }
       ],
       "choices": [
         {
@@ -406,8 +825,16 @@
           "next": "k1_050_tone_supportive",
           "requires": [],
           "effects": [
-            { "state": "trust_mira", "operation": "add", "value": 1 },
-            { "state": "player_tone", "operation": "set", "value": "supportive" }
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": 1
+            },
+            {
+              "state": "player_tone",
+              "operation": "set",
+              "value": "supportive"
+            }
           ]
         },
         {
@@ -416,7 +843,11 @@
           "next": "k1_051_tone_commanding",
           "requires": [],
           "effects": [
-            { "state": "player_tone", "operation": "set", "value": "commanding" }
+            {
+              "state": "player_tone",
+              "operation": "set",
+              "value": "commanding"
+            }
           ]
         },
         {
@@ -425,41 +856,94 @@
           "next": "k1_052_tone_distant",
           "requires": [],
           "effects": [
-            { "state": "trust_mira", "operation": "add", "value": -1 },
-            { "state": "player_tone", "operation": "set", "value": "distant" }
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": -1
+            },
+            {
+              "state": "player_tone",
+              "operation": "set",
+              "value": "distant"
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_050_tone_supportive",
       "chapter": 1,
       "delaySeconds": 10,
       "messages": [
-        { "speaker": "mira", "text": "Gut." },
-        { "speaker": "mira", "text": "Schritt für Schritt kann ich." }
+        {
+          "speaker": "mira",
+          "text": "Gut."
+        },
+        {
+          "speaker": "mira",
+          "text": "Schritt für Schritt kann ich."
+        }
       ],
       "next": "k1_055_relay_privacy",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_051_tone_commanding",
       "chapter": 1,
       "delaySeconds": 10,
       "messages": [
-        { "speaker": "mira", "text": "Ich höre mir deinen Rat an." },
-        { "speaker": "mira", "text": "Verwechsel das bitte nicht mit einem Kommandoverhältnis." }
+        {
+          "speaker": "mira",
+          "text": "Ich höre mir deinen Rat an."
+        },
+        {
+          "speaker": "mira",
+          "text": "Verwechsel das bitte nicht mit einem Kommandoverhältnis."
+        }
       ],
       "next": "k1_055_relay_privacy",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_052_tone_distant",
       "chapter": 1,
       "delaySeconds": 10,
       "messages": [
-        { "speaker": "mira", "text": "Mehr weiß ich selbst noch nicht." },
-        { "speaker": "mira", "text": "Falls du gehen willst, sag es lieber jetzt." }
+        {
+          "speaker": "mira",
+          "text": "Mehr weiß ich selbst noch nicht."
+        },
+        {
+          "speaker": "mira",
+          "text": "Falls du gehen willst, sag es lieber jetzt."
+        }
       ],
       "choices": [
         {
@@ -469,17 +953,38 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_055_relay_privacy",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Noch etwas: Das Relais ist im Moment meine einzige Verbindung nach draußen." },
-        { "speaker": "mira", "text": "Das Notfallprotokoll sagt, einen funktionierenden Ersatzkanal soll man nicht offen herumreichen, solange die Ursache des Ausfalls unbekannt ist." },
-        { "speaker": "mira", "text": "Das heißt nicht, dass ich meine Kollegen plötzlich für Feinde halte. Ich weiß nur nicht, wer verletzt ist, wer noch klar denkt oder warum niemand auf Funk antwortet." },
-        { "speaker": "mira", "text": "Wenn ich jemanden treffe und nach dem Gerät gefragt werde – wie offen soll ich sein?" }
+        {
+          "speaker": "mira",
+          "text": "Noch etwas: Das Relais ist im Moment meine einzige Verbindung nach draußen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das Notfallprotokoll sagt, einen funktionierenden Ersatzkanal soll man nicht offen herumreichen, solange die Ursache des Ausfalls unbekannt ist."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das heißt nicht, dass ich meine Kollegen plötzlich für Feinde halte. Ich weiß nur nicht, wer verletzt ist, wer noch klar denkt oder warum niemand auf Funk antwortet."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wenn ich jemanden treffe und nach dem Gerät gefragt werde – wie offen soll ich sein?"
+        }
       ],
       "choices": [
         {
@@ -488,7 +993,11 @@
           "next": "k1_060_hub_first",
           "requires": [],
           "effects": [
-            { "state": "relay_privacy", "operation": "set", "value": "careful" }
+            {
+              "state": "relay_privacy",
+              "operation": "set",
+              "value": "careful"
+            }
           ]
         },
         {
@@ -497,7 +1006,11 @@
           "next": "k1_060_hub_first",
           "requires": [],
           "effects": [
-            { "state": "relay_privacy", "operation": "set", "value": "mentioned" }
+            {
+              "state": "relay_privacy",
+              "operation": "set",
+              "value": "mentioned"
+            }
           ]
         },
         {
@@ -506,20 +1019,45 @@
           "next": "k1_060_hub_first",
           "requires": [],
           "effects": [
-            { "state": "relay_privacy", "operation": "set", "value": "exposed" }
+            {
+              "state": "relay_privacy",
+              "operation": "set",
+              "value": "exposed"
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_060_hub_first",
       "chapter": 1,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Der Wohntrakt hängt noch am Notstrom." },
-        { "speaker": "mira", "text": "Links sind die Schlafquartiere und ein kleiner Erste-Hilfe-Raum. Rechts Kantine und Vorratsraum." },
-        { "speaker": "mira", "text": "Der Hauptgang zum Labor ist dunkel. Die Außenschleuse zeigt Grün, obwohl draußen Whiteout ist." },
-        { "speaker": "mira", "text": "Ich sollte erst etwas Brauchbares suchen." }
+        {
+          "speaker": "mira",
+          "text": "Der Wohntrakt hängt noch am Notstrom."
+        },
+        {
+          "speaker": "mira",
+          "text": "Links sind die Schlafquartiere und ein kleiner Erste-Hilfe-Raum. Rechts Kantine und Vorratsraum."
+        },
+        {
+          "speaker": "mira",
+          "text": "Der Hauptgang zum Labor ist dunkel. Die Außenschleuse zeigt Grün, obwohl draußen Whiteout ist."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich sollte erst etwas Brauchbares suchen."
+        }
       ],
       "choices": [
         {
@@ -536,26 +1074,56 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_061_quarters_depart",
       "chapter": 1,
       "delaySeconds": 2,
       "messages": [
-        { "speaker": "mira", "text": "Okay. Erst der Erste-Hilfe-Raum." },
-        { "speaker": "mira", "text": "Ich gehe los. Der Gang ist nicht weit – bleib einfach da." }
+        {
+          "speaker": "mira",
+          "text": "Okay. Erst der Erste-Hilfe-Raum."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich gehe los. Der Gang ist nicht weit – bleib einfach da."
+        }
       ],
       "next": "k1_062_quarters_walk",
-      "nextDelaySeconds": 10
+      "nextDelaySeconds": 10,
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_062_quarters_walk",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Die Notlampen summen. Bei jedem Schritt knirscht etwas unter meinen Schuhen – Glas oder Eis." },
-        { "speaker": "mira", "text": "Schreib ruhig weiter. Die Vibration am Relais erinnert mich daran, dass du noch da bist." }
+        {
+          "speaker": "mira",
+          "text": "Die Notlampen summen. Bei jedem Schritt knirscht etwas unter meinen Schuhen – Glas oder Eis."
+        },
+        {
+          "speaker": "mira",
+          "text": "Schreib ruhig weiter. Die Vibration am Relais erinnert mich daran, dass du noch da bist."
+        }
       ],
       "choices": [
         {
@@ -564,7 +1132,11 @@
           "next": "k1_063_quarters_reassured",
           "requires": [],
           "effects": [
-            { "state": "trust_mira", "operation": "add", "value": 1 }
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -581,59 +1153,161 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_063_quarters_reassured",
       "chapter": 1,
       "delaySeconds": 3,
       "messages": [
-        { "speaker": "mira", "text": "Langsam und vorsichtig. Verstanden." },
-            { "speaker": "mira", "text": "Ich sehe schon die Tür zum Erste-Hilfe-Raum." }
+        {
+          "speaker": "mira",
+          "text": "Langsam und vorsichtig. Verstanden."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich sehe schon die Tür zum Erste-Hilfe-Raum."
+        }
       ],
       "next": "k1_070_quarters",
-      "nextDelaySeconds": 18
+      "nextDelaySeconds": 18,
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_064_quarters_normal",
       "chapter": 1,
       "delaySeconds": 3,
       "messages": [
-        { "speaker": "mira", "text": "Normalerweise hört man überall die Lüftung, Wasserleitungen und irgendeinen Generator." },
-        { "speaker": "mira", "text": "Und fast immer jemanden fluchen, weil eine Tür klemmt. Diese Stille gehört nicht hierher." },
-        { "speaker": "mira", "text": "Ich bin am Erste-Hilfe-Raum." }
+        {
+          "speaker": "mira",
+          "text": "Normalerweise hört man überall die Lüftung, Wasserleitungen und irgendeinen Generator."
+        },
+        {
+          "speaker": "mira",
+          "text": "Und fast immer jemanden fluchen, weil eine Tür klemmt. Diese Stille gehört nicht hierher."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich bin am Erste-Hilfe-Raum."
+        }
       ],
       "next": "k1_070_quarters",
-      "nextDelaySeconds": 18
+      "nextDelaySeconds": 18,
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_065_quarters_focus",
       "chapter": 1,
       "delaySeconds": 3,
       "messages": [
-        { "speaker": "mira", "text": "Mach ich." },
-        { "speaker": "mira", "text": "Melde mich an der Tür zum Erste-Hilfe-Raum." }
+        {
+          "speaker": "mira",
+          "text": "Mach ich."
+        },
+        {
+          "speaker": "mira",
+          "text": "Melde mich an der Tür zum Erste-Hilfe-Raum."
+        }
       ],
       "next": "k1_070_quarters",
-      "nextDelaySeconds": 18
+      "nextDelaySeconds": 18,
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_070_quarters",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Bin drin. Mehr ein Erste-Hilfe-Raum als eine richtige Krankenstation." },
-        { "speaker": "mira", "text": "Verbandskasten ist offen. Eine Packung Kompressen liegt daneben." },
-        { "speaker": "mira", "text": "Die Folie ist an einer Ecke eingerissen. Könnte beim Sturz aus dem Schrank passiert sein." },
-        { "speaker": "mira", "text": "Ich benutze die lieber noch nicht." },
-        { "speaker": "mira", "text": "In Thals Quartier läuft noch ihr Terminal." },
-        { "speaker": "log", "text": "Kader nennt die Probe inert. Im unbearbeiteten Sensorstream bewegt sie sich trotzdem. Habe Kopien gemacht. Wenn der Uplink morgen wieder ausfällt, ist das kein Wetter." },
-        { "speaker": "mira", "text": "Der Uplink ist ausgefallen." }
+        {
+          "speaker": "mira",
+          "text": "Bin drin. Mehr ein Erste-Hilfe-Raum als eine richtige Krankenstation."
+        },
+        {
+          "speaker": "mira",
+          "text": "Verbandskasten ist offen. Eine Packung Kompressen liegt daneben."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Folie ist an einer Ecke eingerissen. Könnte beim Sturz aus dem Schrank passiert sein."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich benutze die lieber noch nicht."
+        },
+        {
+          "speaker": "mira",
+          "text": "In Thals Quartier läuft noch ihr Terminal."
+        },
+        {
+          "speaker": "log",
+          "text": "Kader nennt die Probe inert. Im unbearbeiteten Sensorstream bewegt sie sich trotzdem. Habe Kopien gemacht. Wenn der Uplink morgen wieder ausfällt, ist das kein Wetter."
+        },
+        {
+          "speaker": "mira",
+          "text": "Der Uplink ist ausgefallen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Unter Thals Datenpad steckt ein ungesendeter Bericht."
+        },
+        {
+          "speaker": "mira",
+          "text": "Titel: WARNBERICHT · 14.04. Darin widerspricht sie Kaders Einstufung von Probe 14C als inert."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich speichere ihn im Archiv. Das Datum könnte wichtig sein."
+        }
       ],
       "effects": [
-        { "state": "quarters_searched", "operation": "set", "value": true },
-        { "state": "item_damaged_bandage", "operation": "set", "value": true },
-        { "state": "log_thal_07", "operation": "set", "value": true }
+        {
+          "state": "quarters_searched",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "item_damaged_bandage",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "log_thal_07",
+          "operation": "set",
+          "value": true
+        }
       ],
       "choices": [
         {
@@ -641,7 +1315,11 @@
           "label": "Sieh noch in der Kantine nach.",
           "next": "k1_083_canteen_from_quarters",
           "requires": [
-            { "state": "canteen_searched", "operator": "eq", "value": false }
+            {
+              "state": "canteen_searched",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": []
         },
@@ -650,73 +1328,191 @@
           "label": "Du hast hier alles. Geh zurück in den Hauptgang.",
           "next": "k1_090_noise",
           "requires": [
-            { "state": "canteen_searched", "operator": "eq", "value": true }
+            {
+              "state": "canteen_searched",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_066_quarters_from_canteen",
       "chapter": 1,
       "delaySeconds": 2,
       "messages": [
-        { "speaker": "mira", "text": "Okay. Jetzt die Quartiere und der Erste-Hilfe-Raum." },
-        { "speaker": "mira", "text": "Ich bin gleich dort. Ich melde mich an der Tür." }
+        {
+          "speaker": "mira",
+          "text": "Okay. Jetzt die Quartiere und der Erste-Hilfe-Raum."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich bin gleich dort. Ich melde mich an der Tür."
+        }
       ],
       "next": "k1_070_quarters",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_081_canteen_depart",
       "chapter": 1,
       "delaySeconds": 2,
       "messages": [
-        { "speaker": "mira", "text": "Okay. Erst Kantine und Vorräte." },
-        { "speaker": "mira", "text": "Ich gehe los. Schreib weiter, wenn dir etwas einfällt – ich lese mit." }
+        {
+          "speaker": "mira",
+          "text": "Okay. Erst Kantine und Vorräte."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich gehe los. Schreib weiter, wenn dir etwas einfällt – ich lese mit."
+        }
       ],
       "next": "k1_082_canteen_walk",
-      "nextDelaySeconds": 12
+      "nextDelaySeconds": 12,
+      "location": {
+        "area": "quarters",
+        "room": "mess",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 63,
+        "interiorTop": 27,
+        "activity": "Mira durchsucht die Kantine"
+      }
     },
     {
       "id": "k1_082_canteen_walk",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Der Geruch nach heißem Metall wird schwächer. Dafür riecht es hier nach altem Kaffee." },
-        { "speaker": "mira", "text": "Das ist gerade beinahe beruhigend." },
-        { "speaker": "mira", "text": "Bin an der Kantinentür. Ich sehe mich kurz um." }
+        {
+          "speaker": "mira",
+          "text": "Der Geruch nach heißem Metall wird schwächer. Dafür riecht es hier nach altem Kaffee."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das ist gerade beinahe beruhigend."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bin an der Kantinentür. Ich sehe mich kurz um."
+        }
       ],
       "next": "k1_080_canteen",
-      "nextDelaySeconds": 35
+      "nextDelaySeconds": 35,
+      "location": {
+        "area": "quarters",
+        "room": "mess",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 63,
+        "interiorTop": 27,
+        "activity": "Mira durchsucht die Kantine"
+      }
     },
     {
       "id": "k1_083_canteen_from_quarters",
       "chapter": 1,
       "delaySeconds": 2,
       "messages": [
-        { "speaker": "mira", "text": "Gut. Danach Kantine und Vorratsraum." },
-        { "speaker": "mira", "text": "Ich gehe rüber und melde mich, sobald ich drin bin." }
+        {
+          "speaker": "mira",
+          "text": "Gut. Danach Kantine und Vorratsraum."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich gehe rüber und melde mich, sobald ich drin bin."
+        }
       ],
       "next": "k1_080_canteen",
-      "nextDelaySeconds": 25
+      "nextDelaySeconds": 25,
+      "location": {
+        "area": "quarters",
+        "room": "bunks",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 38,
+        "interiorTop": 72,
+        "activity": "Mira versorgt ihre Verletzung"
+      }
     },
     {
       "id": "k1_080_canteen",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Kantine ist leer. Zwei Tassen auf dem Tisch. Eine davon umgestoßen." },
-        { "speaker": "mira", "text": "Der Kaffee darin ist gefroren. Das sollte hier drinnen nicht möglich sein." },
-        { "speaker": "mira", "text": "Im Vorratsschrank liegt eine versiegelte Notration. Nehm ich mit." },
-        { "speaker": "mira", "text": "Außerdem ein Frachtmanifest von der letzten Lieferung." },
-        { "speaker": "mira", "text": "Medikamente, Filter, Ersatzteile. Zwei Kisten wurden nach dem Entladen umgebucht. Kein Empfänger eingetragen." },
-        { "speaker": "mira", "text": "Vielleicht nur schlampige Buchführung." }
+        {
+          "speaker": "mira",
+          "text": "Kantine ist leer. Zwei Tassen auf dem Tisch. Eine davon umgestoßen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Der Kaffee darin ist gefroren. Das sollte hier drinnen nicht möglich sein."
+        },
+        {
+          "speaker": "mira",
+          "text": "Im Vorratsschrank liegt eine versiegelte Notration. Nehm ich mit."
+        },
+        {
+          "speaker": "mira",
+          "text": "Außerdem ein Frachtmanifest von der letzten Lieferung."
+        },
+        {
+          "speaker": "mira",
+          "text": "Medikamente, Filter, Ersatzteile. Zwei Kisten wurden nach dem Entladen umgebucht. Kein Empfänger eingetragen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Vielleicht nur schlampige Buchführung."
+        },
+        {
+          "speaker": "mira",
+          "text": "Im Vorratsraum ist gerade etwas Metallisches umgefallen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Tür ist zu. Dahinter kratzt etwas, dann ist es wieder still."
+        },
+        {
+          "speaker": "mira",
+          "text": "Niko schläft normalerweise bei Liv oder im Gewächshaus. Das eben klang trotzdem zu schwer für eine Katze."
+        }
       ],
       "effects": [
-        { "state": "canteen_searched", "operation": "set", "value": true },
-        { "state": "item_sealed_ration", "operation": "set", "value": true },
-        { "state": "item_freight_manifest_a", "operation": "set", "value": true }
+        {
+          "state": "canteen_searched",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "item_sealed_ration",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "item_freight_manifest_a",
+          "operation": "set",
+          "value": true
+        }
       ],
       "choices": [
         {
@@ -724,7 +1520,11 @@
           "label": "Prüf jetzt die Quartiere und deine Verletzung.",
           "next": "k1_066_quarters_from_canteen",
           "requires": [
-            { "state": "quarters_searched", "operator": "eq", "value": false }
+            {
+              "state": "quarters_searched",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": []
         },
@@ -733,23 +1533,54 @@
           "label": "Du hast hier alles. Geh zurück in den Hauptgang.",
           "next": "k1_090_noise",
           "requires": [
-            { "state": "quarters_searched", "operator": "eq", "value": true }
+            {
+              "state": "quarters_searched",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "mess",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 63,
+        "interiorTop": 27,
+        "activity": "Mira durchsucht die Kantine"
+      }
     },
     {
       "id": "k1_090_noise",
       "chapter": 1,
       "delaySeconds": 40,
       "messages": [
-        { "speaker": "mira", "text": "Warte." },
-        { "speaker": "mira", "text": "Schritte im Hauptgang." },
-        { "speaker": "mira", "text": "Langsam. Jemand bleibt immer wieder stehen." },
-        { "speaker": "mira", "text": "Ich sehe einen Schatten unter der Brandschutztür." },
-        { "speaker": "mira", "text": "Das könnte einer von uns sein. Aber warum antwortet die Person nicht auf den Stationsfunk?" },
-        { "speaker": "mira", "text": "Ich habe Angst, weil ich nicht weiß, ob sie verletzt, verwirrt oder bewaffnet ist – nicht weil ich meine Kollegen plötzlich nicht mehr kenne." }
+        {
+          "speaker": "mira",
+          "text": "Warte."
+        },
+        {
+          "speaker": "mira",
+          "text": "Schritte im Hauptgang."
+        },
+        {
+          "speaker": "mira",
+          "text": "Langsam. Jemand bleibt immer wieder stehen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich sehe einen Schatten unter der Brandschutztür."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das könnte einer von uns sein. Aber warum antwortet die Person nicht auf den Stationsfunk?"
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich habe Angst, weil ich nicht weiß, ob sie verletzt, verwirrt oder bewaffnet ist – nicht weil ich meine Kollegen plötzlich nicht mehr kenne."
+        }
       ],
       "choices": [
         {
@@ -758,7 +1589,11 @@
           "next": "k1_091_call_out",
           "requires": [],
           "effects": [
-            { "state": "aksel_intro_context", "operation": "set", "value": "called" }
+            {
+              "state": "aksel_intro_context",
+              "operation": "set",
+              "value": "called"
+            }
           ]
         },
         {
@@ -767,7 +1602,11 @@
           "next": "k1_092_observe",
           "requires": [],
           "effects": [
-            { "state": "aksel_intro_context", "operation": "set", "value": "observed" }
+            {
+              "state": "aksel_intro_context",
+              "operation": "set",
+              "value": "observed"
+            }
           ]
         },
         {
@@ -776,75 +1615,195 @@
           "next": "k1_093_confront",
           "requires": [],
           "effects": [
-            { "state": "aksel_intro_context", "operation": "set", "value": "confronted" },
-            { "state": "trust_aksel", "operation": "add", "value": -1 }
+            {
+              "state": "aksel_intro_context",
+              "operation": "set",
+              "value": "confronted"
+            },
+            {
+              "state": "trust_aksel",
+              "operation": "add",
+              "value": -1
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_091_call_out",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Hab gefragt, wer da ist." },
-        { "speaker": "mira", "text": "Keine Antwort." },
-        { "speaker": "mira", "text": "Jetzt doch." },
-        { "speaker": "mira", "text": "„Aksel.“ Nur der Name. Sonst nichts." }
+        {
+          "speaker": "mira",
+          "text": "Hab gefragt, wer da ist."
+        },
+        {
+          "speaker": "mira",
+          "text": "Keine Antwort."
+        },
+        {
+          "speaker": "mira",
+          "text": "Jetzt doch."
+        },
+        {
+          "speaker": "mira",
+          "text": "„Aksel.“ Nur der Name. Sonst nichts."
+        }
       ],
       "next": "k1_100_aksel",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_092_observe",
       "chapter": 1,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Der Schatten steht einfach da." },
-        { "speaker": "mira", "text": "Jetzt lehnt er sich gegen die Tür." },
-        { "speaker": "mira", "text": "Ich sehe einen Ärmel durch das Fenster. Stationsjacke. Generator-Team." },
-        { "speaker": "mira", "text": "Er hat mich bemerkt. Es ist Aksel." }
+        {
+          "speaker": "mira",
+          "text": "Der Schatten steht einfach da."
+        },
+        {
+          "speaker": "mira",
+          "text": "Jetzt lehnt er sich gegen die Tür."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich sehe einen Ärmel durch das Fenster. Stationsjacke. Generator-Team."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er hat mich bemerkt. Es ist Aksel."
+        }
       ],
       "next": "k1_100_aksel",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_093_confront",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Hab den Feuerlöscher." },
-        { "speaker": "mira", "text": "Tür auf." },
-        { "speaker": "mira", "text": "Es ist Aksel. Er hat genauso erschrocken ausgesehen wie ich." },
-        { "speaker": "mira", "text": "Vielleicht sogar mehr wegen des Feuerlöschers." }
+        {
+          "speaker": "mira",
+          "text": "Hab den Feuerlöscher."
+        },
+        {
+          "speaker": "mira",
+          "text": "Tür auf."
+        },
+        {
+          "speaker": "mira",
+          "text": "Es ist Aksel. Er hat genauso erschrocken ausgesehen wie ich."
+        },
+        {
+          "speaker": "mira",
+          "text": "Vielleicht sogar mehr wegen des Feuerlöschers."
+        }
       ],
       "next": "k1_100_aksel",
-      "nextDelaySeconds": 20
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_100_aksel",
       "chapter": 1,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Aksel Berg. Stationstechniker." },
-        { "speaker": "mira", "text": "Blut an seiner Hand, aber keine sichtbare Wunde. Er sagt, es sei nicht seins." },
-        { "speaker": "mira", "text": "Er war angeblich im Generatorhaus, als der Strom ausfiel. Weiß nicht, was danach passiert ist." },
-        { "speaker": "mira", "text": "An seiner Jacke klebt grauer Staub. Könnte Ruß sein. Könnte auch Bohrstaub sein." },
-        { "speaker": "aksel", "text": "Wir müssen zum Generator. Wenn die Hauptheizung aussteigt, friert uns die ganze Station ein." },
-        { "speaker": "mira", "text": "Er hat recht. Trotzdem beantwortet das nicht, warum er aus Richtung Labor gekommen ist." }
+        {
+          "speaker": "mira",
+          "text": "Aksel Berg. Stationstechniker."
+        },
+        {
+          "speaker": "mira",
+          "text": "Blut an seiner Hand, aber keine sichtbare Wunde. Er sagt, es sei nicht seins."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er war angeblich im Generatorhaus, als der Strom ausfiel. Weiß nicht, was danach passiert ist."
+        },
+        {
+          "speaker": "mira",
+          "text": "An seiner Jacke klebt grauer Staub. Könnte Ruß sein. Könnte auch Bohrstaub sein."
+        },
+        {
+          "speaker": "mira",
+          "text": "Aksel sagt: „Wir müssen zum Generator. Wenn die Hauptheizung aussteigt, friert uns die ganze Station ein.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Er hat recht. Trotzdem beantwortet das nicht, warum er aus Richtung Labor gekommen ist."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "aksel_intro_context", "operator": "eq", "value": "observed" }
+            {
+              "state": "aksel_intro_context",
+              "operator": "eq",
+              "value": "observed"
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Aksel Berg. Stationstechniker." },
-            { "speaker": "mira", "text": "Blut an seiner Hand, aber keine sichtbare Wunde. Er sagt, es sei nicht seins." },
-            { "speaker": "mira", "text": "Er war angeblich im Generatorhaus, als der Strom ausfiel. Weiß nicht, was danach passiert ist." },
-            { "speaker": "mira", "text": "An seiner Jacke klebt grauer Staub. Nicht Ruß. Bohrstaub, würde ich sagen." },
-            { "speaker": "aksel", "text": "Wir müssen zum Generator. Wenn die Hauptheizung aussteigt, friert uns die ganze Station ein." },
-            { "speaker": "mira", "text": "Er hat recht. Trotzdem beantwortet das nicht, warum er aus Richtung Labor gekommen ist." }
+            {
+              "speaker": "mira",
+              "text": "Aksel Berg. Stationstechniker."
+            },
+            {
+              "speaker": "mira",
+              "text": "Blut an seiner Hand, aber keine sichtbare Wunde. Er sagt, es sei nicht seins."
+            },
+            {
+              "speaker": "mira",
+              "text": "Er war angeblich im Generatorhaus, als der Strom ausfiel. Weiß nicht, was danach passiert ist."
+            },
+            {
+              "speaker": "mira",
+              "text": "An seiner Jacke klebt grauer Staub. Nicht Ruß. Bohrstaub, würde ich sagen."
+            },
+            {
+              "speaker": "mira",
+              "text": "Aksel sagt: „Wir müssen zum Generator. Wenn die Hauptheizung aussteigt, friert uns die ganze Station ein.“"
+            },
+            {
+              "speaker": "mira",
+              "text": "Er hat recht. Trotzdem beantwortet das nicht, warum er aus Richtung Labor gekommen ist."
+            }
           ]
         }
       ],
@@ -855,8 +1814,16 @@
           "next": "k1_110_aksel_close",
           "requires": [],
           "effects": [
-            { "state": "trust_aksel", "operation": "add", "value": 1 },
-            { "state": "aksel_restrained", "operation": "set", "value": false }
+            {
+              "state": "trust_aksel",
+              "operation": "add",
+              "value": 1
+            },
+            {
+              "state": "aksel_restrained",
+              "operation": "set",
+              "value": false
+            }
           ]
         },
         {
@@ -865,7 +1832,11 @@
           "next": "k1_111_aksel_distance",
           "requires": [],
           "effects": [
-            { "state": "aksel_restrained", "operation": "set", "value": false }
+            {
+              "state": "aksel_restrained",
+              "operation": "set",
+              "value": false
+            }
           ]
         },
         {
@@ -874,54 +1845,128 @@
           "next": "k1_112_aksel_lock",
           "requires": [],
           "effects": [
-            { "state": "trust_aksel", "operation": "add", "value": -2 },
-            { "state": "aksel_restrained", "operation": "set", "value": true }
+            {
+              "state": "trust_aksel",
+              "operation": "add",
+              "value": -2
+            },
+            {
+              "state": "aksel_restrained",
+              "operation": "set",
+              "value": true
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_110_aksel_close",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Ich sag ihm, dass wir zusammenbleiben." },
-        { "speaker": "mira", "text": "Er nickt. Sieht ehrlich erleichtert aus." },
-        { "speaker": "mira", "text": "Oder erschöpft." }
+        {
+          "speaker": "mira",
+          "text": "Ich sag ihm, dass wir zusammenbleiben."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er nickt. Sieht ehrlich erleichtert aus."
+        },
+        {
+          "speaker": "mira",
+          "text": "Oder erschöpft."
+        }
       ],
       "next": "k1_115_relay_question",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_111_aksel_distance",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Er bleibt auf der anderen Seite des Gangs." },
-        { "speaker": "mira", "text": "Findet er übertrieben. Macht es aber." }
+        {
+          "speaker": "mira",
+          "text": "Er bleibt auf der anderen Seite des Gangs."
+        },
+        {
+          "speaker": "mira",
+          "text": "Findet er übertrieben. Macht es aber."
+        }
       ],
       "next": "k1_115_relay_question",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_112_aksel_lock",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Hab ihn in den kleinen Bereitschaftsraum geschickt." },
-        { "speaker": "mira", "text": "Er hat erst gelacht. Dann gemerkt, dass ich es ernst meine." },
-        { "speaker": "aksel", "text": "Wenn der Generator stoppt, brauchst du mich." },
-        { "speaker": "mira", "text": "Tür ist zu. Mechanisch verriegelt." }
+        {
+          "speaker": "mira",
+          "text": "Hab ihn in den kleinen Bereitschaftsraum geschickt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er hat erst gelacht. Dann gemerkt, dass ich es ernst meine."
+        },
+        {
+          "speaker": "mira",
+          "text": "Aksel sagt: „Wenn der Generator stoppt, brauchst du mich.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Tür ist zu. Mechanisch verriegelt."
+        }
       ],
       "next": "k1_115_relay_question",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_115_relay_question",
       "chapter": 1,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Aksel hat gefragt, warum ich ständig auf das Relais sehe." }
+        {
+          "speaker": "mira",
+          "text": "Aksel hat gefragt, warum ich ständig auf das Relais sehe."
+        }
       ],
       "choices": [
         {
@@ -929,10 +1974,18 @@
           "label": "Sag, das Gerät protokolliert nur Sensordaten.",
           "next": "k1_120_double_crisis",
           "requires": [
-            { "state": "relay_privacy", "operator": "neq", "value": "exposed" }
+            {
+              "state": "relay_privacy",
+              "operator": "neq",
+              "value": "exposed"
+            }
           ],
           "effects": [
-            { "state": "relay_privacy", "operation": "set", "value": "careful" }
+            {
+              "state": "relay_privacy",
+              "operation": "set",
+              "value": "careful"
+            }
           ]
         },
         {
@@ -941,7 +1994,11 @@
           "next": "k1_120_double_crisis",
           "requires": [],
           "effects": [
-            { "state": "relay_privacy", "operation": "set", "value": "mentioned" }
+            {
+              "state": "relay_privacy",
+              "operation": "set",
+              "value": "mentioned"
+            }
           ]
         },
         {
@@ -949,65 +2006,164 @@
           "label": "Zeig ihm das Gerät, damit er die Verbindung prüfen kann.",
           "next": "k1_116_confiscated",
           "requires": [
-            { "state": "aksel_restrained", "operator": "eq", "value": false }
+            {
+              "state": "aksel_restrained",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "relay_privacy", "operation": "set", "value": "exposed" },
-            { "state": "relay_confiscated", "operation": "set", "value": true }
+            {
+              "state": "relay_privacy",
+              "operation": "set",
+              "value": "exposed"
+            },
+            {
+              "state": "relay_confiscated",
+              "operation": "set",
+              "value": true
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_116_confiscated",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Er hat das Relais genommen." },
-        { "speaker": "mira", "text": "Nicht gewaltsam. Er sagte nur, er müsse prüfen, ob die Verbindung den Stationsfunk stört." },
-        { "speaker": "system", "text": "[VERBINDUNG UNTERBROCHEN]" }
+        {
+          "speaker": "mira",
+          "text": "Er hat das Relais genommen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Nicht gewaltsam. Er sagte nur, er müsse prüfen, ob die Verbindung den Stationsfunk stört."
+        },
+        {
+          "speaker": "system",
+          "text": "[VERBINDUNG UNTERBROCHEN]"
+        }
       ],
       "next": "k1_117_recovered",
-      "nextDelaySeconds": 7200
+      "nextDelaySeconds": 7200,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_117_recovered",
       "chapter": 1,
       "delaySeconds": 7200,
       "messages": [
-        { "speaker": "system", "text": "[VERBINDUNG WIEDERHERGESTELLT]" },
-        { "speaker": "mira", "text": "Ich habe es zurück." },
-        { "speaker": "mira", "text": "Zwei Stunden. Aksel war irgendwann nicht mehr bei dem Gerät. Es lag in seiner Jacke." },
-        { "speaker": "mira", "text": "In der Zwischenzeit ist die Netzspannung weiter gefallen. Ich erzähle dir unterwegs den Rest." }
+        {
+          "speaker": "system",
+          "text": "[VERBINDUNG WIEDERHERGESTELLT]"
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich habe es zurück."
+        },
+        {
+          "speaker": "mira",
+          "text": "Zwei Stunden. Aksel war irgendwann nicht mehr bei dem Gerät. Es lag in seiner Jacke."
+        },
+        {
+          "speaker": "mira",
+          "text": "In der Zwischenzeit ist die Netzspannung weiter gefallen. Ich erzähle dir unterwegs den Rest."
+        }
       ],
       "effects": [
-        { "state": "relay_recovered", "operation": "set", "value": true },
-        { "state": "global_time", "operation": "add", "value": 2 }
+        {
+          "state": "relay_recovered",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "global_time",
+          "operation": "add",
+          "value": 2
+        }
       ],
       "next": "k1_120_double_crisis",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_120_double_crisis",
       "chapter": 1,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "system", "text": "[NETZSPANNUNG UNTER 18 %]" },
-        { "speaker": "system", "text": "[HAUPTHEIZUNG NICHT VERFÜGBAR]" },
-        { "speaker": "mira", "text": "Da ist noch etwas." },
-        { "speaker": "mira", "text": "Das Labor meldet Temperaturanstieg in Probenkammer Drei." },
-        { "speaker": "mira", "text": "Das ist die Kammer mit dem Kernmaterial." },
-        { "speaker": "mira", "text": "Wenn die Kühlung ausfällt, verändert sich die Probe." },
-        { "speaker": "mira", "text": "Wenn der Generator ausfällt, verändert sich hier alles." },
-        { "speaker": "mira", "text": "Beides ist dringend. Beides liegt in entgegengesetzter Richtung. Was zuerst?" }
+        {
+          "speaker": "system",
+          "text": "[NETZSPANNUNG UNTER 18 %]"
+        },
+        {
+          "speaker": "system",
+          "text": "[HAUPTHEIZUNG NICHT VERFÜGBAR]"
+        },
+        {
+          "speaker": "mira",
+          "text": "Da ist noch etwas."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das Labor meldet Temperaturanstieg in Probenkammer Drei."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das ist die Kammer mit dem Kernmaterial."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wenn die Kühlung ausfällt, verändert sich die Probe."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wenn der Generator ausfällt, verändert sich hier alles."
+        },
+        {
+          "speaker": "mira",
+          "text": "Beides ist dringend. Beides liegt in entgegengesetzter Richtung. Was zuerst?"
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "aksel_restrained", "operator": "eq", "value": true }
+            {
+              "state": "aksel_restrained",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Aksel hämmert gegen die Tür. Er sagt, ich soll ihn rauslassen und zum Generator kommen." }
+            {
+              "speaker": "mira",
+              "text": "Aksel hämmert gegen die Tür. Er sagt, ich soll ihn rauslassen und zum Generator kommen."
+            }
           ]
         }
       ],
@@ -1018,8 +2174,16 @@
           "next": "k1_130_exit_labor",
           "requires": [],
           "effects": [
-            { "state": "first_route", "operation": "set", "value": "labor" },
-            { "state": "chapter_01_complete", "operation": "set", "value": true }
+            {
+              "state": "first_route",
+              "operation": "set",
+              "value": "labor"
+            },
+            {
+              "state": "chapter_01_complete",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -1028,33 +2192,83 @@
           "next": "k1_131_exit_generator",
           "requires": [],
           "effects": [
-            { "state": "first_route", "operation": "set", "value": "generator" },
-            { "state": "chapter_01_complete", "operation": "set", "value": true }
+            {
+              "state": "first_route",
+              "operation": "set",
+              "value": "generator"
+            },
+            {
+              "state": "chapter_01_complete",
+              "operation": "set",
+              "value": true
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_130_exit_labor",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Labor zuerst." },
-        { "speaker": "mira", "text": "Ich nehme das Relais und die beschädigte Verbandspackung mit." },
-        { "speaker": "mira", "text": "Bin unterwegs. Wenn die Verbindung kurz weg ist: nicht trennen." },
-        { "speaker": "mira", "text": "Ich komme zurück." }
+        {
+          "speaker": "mira",
+          "text": "Labor zuerst."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich nehme das Relais und die beschädigte Verbandspackung mit."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bin unterwegs. Wenn die Verbindung kurz weg ist: nicht trennen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich komme zurück."
+        }
       ],
-      "handoff": "chapter_02"
+      "handoff": "chapter_02",
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_131_exit_generator",
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Generator." },
-        { "speaker": "mira", "text": "Ohne Wärme bringt uns das Labor auch nichts." },
-        { "speaker": "mira", "text": "Bin unterwegs. Wenn die Verbindung kurz weg ist: nicht trennen." },
-        { "speaker": "mira", "text": "Ich komme zurück." }
+        {
+          "speaker": "mira",
+          "text": "Generator."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ohne Wärme bringt uns das Labor auch nichts."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bin unterwegs. Wenn die Verbindung kurz weg ist: nicht trennen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich komme zurück."
+        }
       ],
       "choices": [
         {
@@ -1062,11 +2276,23 @@
           "label": "Lass Aksel raus. Du brauchst seine Kenntnisse.",
           "next": "k1_132_generator_handoff",
           "requires": [
-            { "state": "aksel_restrained", "operator": "eq", "value": true }
+            {
+              "state": "aksel_restrained",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "aksel_released_for_generator", "operation": "set", "value": true },
-            { "state": "trust_aksel", "operation": "add", "value": 1 }
+            {
+              "state": "aksel_released_for_generator",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "trust_aksel",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -1074,10 +2300,18 @@
           "label": "Nimm sein Werkzeug und geh allein.",
           "next": "k1_132_generator_handoff",
           "requires": [
-            { "state": "aksel_restrained", "operator": "eq", "value": true }
+            {
+              "state": "aksel_restrained",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "aksel_released_for_generator", "operation": "set", "value": false }
+            {
+              "state": "aksel_released_for_generator",
+              "operation": "set",
+              "value": false
+            }
           ]
         },
         {
@@ -1085,18 +2319,40 @@
           "label": "Auf zum Generator.",
           "next": "k1_132_generator_handoff",
           "requires": [
-            { "state": "aksel_restrained", "operator": "eq", "value": false }
+            {
+              "state": "aksel_restrained",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k1_132_generator_handoff",
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [],
-      "handoff": "chapter_02"
+      "handoff": "chapter_02",
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     }
   ]
 }

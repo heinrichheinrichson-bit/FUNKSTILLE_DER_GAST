@@ -15,46 +15,109 @@
       "redirects": [
         {
           "requires": [
-            { "state": "weather_window_known", "operator": "eq", "value": true },
-            { "state": "rescue_coordinates", "operator": "eq", "value": true },
-            { "state": "evidence_level", "operator": "gte", "value": 2 }
+            {
+              "state": "weather_window_known",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "rescue_coordinates",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "evidence_level",
+              "operator": "gte",
+              "value": 2
+            }
           ],
           "effects": [
-            { "state": "rescue_quality", "operation": "set", "value": "sufficient" }
+            {
+              "state": "rescue_quality",
+              "operation": "set",
+              "value": "sufficient"
+            }
           ],
           "next": "k8_010_signal"
         },
         {
           "requires": [
-            { "state": "weather_window_known", "operator": "eq", "value": true },
-            { "state": "rescue_coordinates", "operator": "eq", "value": true },
-            { "state": "report_honesty", "operator": "eq", "value": "full" }
+            {
+              "state": "weather_window_known",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "rescue_coordinates",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "report_honesty",
+              "operator": "eq",
+              "value": "full"
+            }
           ],
           "effects": [
-            { "state": "rescue_quality", "operation": "set", "value": "sufficient" }
+            {
+              "state": "rescue_quality",
+              "operation": "set",
+              "value": "sufficient"
+            }
           ],
           "next": "k8_010_signal"
         },
         {
           "requires": [],
           "effects": [
-            { "state": "rescue_quality", "operation": "set", "value": "weak" }
+            {
+              "state": "rescue_quality",
+              "operation": "set",
+              "value": "weak"
+            }
           ],
           "next": "k8_010_signal"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_010_signal",
       "chapter": 8,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Sender auf Notleistung." },
-        { "speaker": "mira", "text": "Wetterdaten angehängt. Koordinaten angehängt. Bericht angehängt." },
-        { "speaker": "mira", "text": "Senden." }
+        {
+          "speaker": "mira",
+          "text": "Sender auf Notleistung."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wetterdaten angehängt. Koordinaten angehängt. Bericht angehängt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Senden."
+        }
       ],
       "next": "k8_011_signal_result",
-      "nextDelaySeconds": 300
+      "nextDelaySeconds": 300,
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet den Abmarsch vor"
+      }
     },
     {
       "id": "k8_011_signal_result",
@@ -64,7 +127,11 @@
       "redirects": [
         {
           "requires": [
-            { "state": "rescue_quality", "operator": "eq", "value": "sufficient" }
+            {
+              "state": "rescue_quality",
+              "operator": "eq",
+              "value": "sufficient"
+            }
           ],
           "effects": [],
           "next": "k8_020_receipt"
@@ -74,107 +141,250 @@
           "effects": [],
           "next": "k8_021_no_receipt"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet den Abmarsch vor"
+      }
     },
     {
       "id": "k8_020_receipt",
       "chapter": 8,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Quittung." },
-        { "speaker": "system", "text": "RETTUNGSFLUG GESTARTET. ANKUNFT 43 MINUTEN. LANDEZONE NORD MARKIEREN." },
-        { "speaker": "mira", "text": "Sie kommen." }
+        {
+          "speaker": "mira",
+          "text": "Quittung."
+        },
+        {
+          "speaker": "system",
+          "text": "RETTUNGSFLUG GESTARTET. ANKUNFT 43 MINUTEN. LANDEZONE NORD MARKIEREN."
+        },
+        {
+          "speaker": "mira",
+          "text": "Sie kommen. Wirklich."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wir packen jetzt Probe, Beweise, Wärmezeug und Nikos Box auf den Lastschlitten. Danach gehen wir gemeinsam zur Landezone."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich schreibe an jedem Leinenmast. Dazwischen brauche ich beide Hände."
+        }
       ],
       "next": "k8_030_wait",
-      "nextDelaySeconds": 1800
+      "nextDelaySeconds": 600,
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet den Abmarsch vor"
+      }
     },
     {
       "id": "k8_021_no_receipt",
       "chapter": 8,
       "delaySeconds": 300,
       "messages": [
-        { "speaker": "mira", "text": "Keine Quittung. Der Sender versucht es erneut." },
-        { "speaker": "mira", "text": "Relaisakku sieben Prozent." }
+        {
+          "speaker": "mira",
+          "text": "Keine Quittung. Der Sender versucht es erneut."
+        },
+        {
+          "speaker": "mira",
+          "text": "Relaisakku sieben Prozent."
+        }
       ],
       "next": "k8_e_radio",
-      "nextDelaySeconds": 600
+      "nextDelaySeconds": 600,
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet den Abmarsch vor"
+      }
     },
     {
       "id": "k8_030_wait",
       "chapter": 8,
-      "delaySeconds": 1800,
+      "delaySeconds": 600,
       "messages": [
-        { "speaker": "mira", "text": "Noch zwölf Minuten bis zur berechneten Ankunft." },
-        { "speaker": "mira", "text": "Markierungsfeuer ist bereit. Der Wind steigt wieder." }
+        {
+          "speaker": "mira",
+          "text": "Erster Mast. Alle noch da."
+        },
+        {
+          "speaker": "mira",
+          "text": "Aksel trägt die Probenkiste. Ingrid hat das Richtfunkgerät. Kader geht zwischen uns."
+        },
+        {
+          "speaker": "mira",
+          "text": "Noch etwa dreißig Minuten bis zum Anflug."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "generator_state", "operator": "eq", "value": "unstable" }
+            {
+              "state": "generator_state",
+              "operator": "eq",
+              "value": "unstable"
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Das Licht der Station ist endgültig ausgefallen." }
+            {
+              "speaker": "mira",
+              "text": "Das Licht der Station ist endgültig ausgefallen."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "evac_aksel", "operator": "eq", "value": true },
-            { "state": "aksel_treated", "operator": "eq", "value": false }
+            {
+              "state": "evac_aksel",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "aksel_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Aksel hat aufgehört zu zittern. Bei dieser Kälte sollte das keine gute Nachricht sein." }
+            {
+              "speaker": "mira",
+              "text": "Aksel hat aufgehört zu zittern. Bei dieser Kälte sollte das keine gute Nachricht sein."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "evac_thal", "operator": "eq", "value": true }
+            {
+              "state": "evac_thal",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "appendMessages": [
-            { "speaker": "thal", "text": "Ich habe Ihren Bericht geprüft. Nichts daran ist genug. Aber es muss reichen." }
+            {
+              "speaker": "mira",
+              "text": "Ingrid sagt: „Ich habe Ihren Bericht geprüft. Nichts daran ist genug. Aber es muss reichen.“"
+            }
           ]
         }
       ],
       "next": "k8_040_landing_zone",
-      "nextDelaySeconds": 600
+      "nextDelaySeconds": 480,
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet den Abmarsch vor"
+      }
     },
     {
       "id": "k8_040_landing_zone",
       "chapter": 8,
-      "delaySeconds": 600,
+      "delaySeconds": 480,
       "messages": [
-        { "speaker": "mira", "text": "Landezone erreicht. Markierungsfeuer steht." },
-        { "speaker": "mira", "text": "Wind aus Südwest. Sicht vielleicht hundert Meter." },
-        { "speaker": "mira", "text": "Ich sehe noch nichts." }
+        {
+          "speaker": "mira",
+          "text": "Landezone erreicht. Markierungsfeuer steht."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wind aus Südwest. Sicht vielleicht hundert Meter."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich sehe noch nichts."
+        }
       ],
       "next": "k8_041_group_check",
-      "nextDelaySeconds": 90
+      "nextDelaySeconds": 90,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
     },
     {
       "id": "k8_041_group_check",
       "chapter": 8,
       "delaySeconds": 90,
       "messages": [
-        { "speaker": "mira", "text": "Jemand bewegt sich zurück in Richtung Station." }
+        {
+          "speaker": "mira",
+          "text": "Jemand bewegt sich zurück in Richtung Station."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "evac_aksel", "operator": "eq", "value": true },
-            { "state": "aksel_treated", "operator": "eq", "value": false }
+            {
+              "state": "evac_aksel",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "aksel_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Aksel bewegt sich zurück in Richtung Station." },
-            { "speaker": "aksel", "text": "Da ist noch jemand. Ich höre ihn." }
+            {
+              "speaker": "mira",
+              "text": "Aksel bewegt sich zurück in Richtung Station."
+            },
+            {
+              "speaker": "mira",
+              "text": "Er sagt, da sei noch jemand und er könne ihn hören."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "evac_kader", "operator": "eq", "value": true },
-            { "state": "kader_treated", "operator": "eq", "value": false }
+            {
+              "state": "evac_kader",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "kader_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Kader bewegt sich zurück in Richtung Station." },
-            { "speaker": "kader", "text": "Die Kammer darf jetzt nicht allein bleiben." }
+            {
+              "speaker": "mira",
+              "text": "Kader bewegt sich zurück in Richtung Station."
+            },
+            {
+              "speaker": "mira",
+              "text": "Er sagt, die Kammer dürfe jetzt nicht allein bleiben."
+            }
           ]
         }
       ],
@@ -185,7 +395,11 @@
           "next": "k8_050_helicopter",
           "requires": [],
           "effects": [
-            { "state": "trust_mira", "operation": "add", "value": 1 }
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -194,7 +408,11 @@
           "next": "k8_050_helicopter",
           "requires": [],
           "effects": [
-            { "state": "trust_mira", "operation": "add", "value": -1 }
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": -1
+            }
           ]
         },
         {
@@ -204,33 +422,79 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_042_person_leaves",
       "chapter": 8,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Eine Gestalt verschwindet im Schnee Richtung Station." },
-        { "speaker": "mira", "text": "Ich kann nicht gleichzeitig hinterher und das Markierungsfeuer halten." }
+        {
+          "speaker": "mira",
+          "text": "Eine Gestalt verschwindet im Schnee Richtung Station."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich kann nicht gleichzeitig hinterher und das Markierungsfeuer halten."
+        }
       ],
       "effects": [
-        { "state": "evac_kader", "operation": "set", "value": false }
+        {
+          "state": "evac_kader",
+          "operation": "set",
+          "value": false
+        }
       ],
       "next": "k8_050_helicopter",
-      "nextDelaySeconds": 180
+      "nextDelaySeconds": 180,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_050_helicopter",
       "chapter": 8,
       "delaySeconds": 300,
       "messages": [
-        { "speaker": "mira", "text": "Licht. Norden." },
-        { "speaker": "mira", "text": "Hubschrauber." },
-        { "speaker": "mira", "text": "Sie haben uns." }
+        {
+          "speaker": "mira",
+          "text": "Licht. Norden."
+        },
+        {
+          "speaker": "mira",
+          "text": "Hubschrauber."
+        },
+        {
+          "speaker": "mira",
+          "text": "Sie haben uns."
+        }
       ],
       "next": "k8_060_containment_gate",
-      "nextDelaySeconds": 60
+      "nextDelaySeconds": 60,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
     },
     {
       "id": "k8_060_containment_gate",
@@ -240,8 +504,16 @@
       "redirects": [
         {
           "requires": [
-            { "state": "station_final_choice", "operator": "eq", "value": "destroy" },
-            { "state": "containment", "operator": "eq", "value": "ready" }
+            {
+              "state": "station_final_choice",
+              "operator": "eq",
+              "value": "destroy"
+            },
+            {
+              "state": "containment",
+              "operator": "eq",
+              "value": "ready"
+            }
           ],
           "effects": [],
           "next": "k8_061_containment"
@@ -249,17 +521,32 @@
         {
           "requires": [],
           "effects": [],
-          "next": "k8_070_boarding"
+          "next": "k8_065_niko_gate"
         }
-      ]
+      ],
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
     },
     {
       "id": "k8_061_containment",
       "chapter": 8,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Auslöser zeigt bereit." },
-        { "speaker": "mira", "text": "Wenn ich jetzt drücke, fällt Ebene minus drei in den Schacht. Die Verzögerung reicht vielleicht bis zur Winde." }
+        {
+          "speaker": "mira",
+          "text": "Auslöser zeigt bereit."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wenn ich jetzt drücke, fällt Ebene minus drei in den Schacht. Die Verzögerung reicht vielleicht bis zur Winde."
+        }
       ],
       "choices": [
         {
@@ -268,7 +555,11 @@
           "next": "k8_062_triggered",
           "requires": [],
           "effects": [
-            { "state": "destruction_triggered", "operation": "set", "value": true }
+            {
+              "state": "destruction_triggered",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
@@ -277,115 +568,570 @@
           "next": "k8_063_others_first",
           "requires": [],
           "effects": [
-            { "state": "destruction_triggered", "operation": "set", "value": true }
+            {
+              "state": "destruction_triggered",
+              "operation": "set",
+              "value": true
+            }
           ]
         },
         {
           "id": "cancel_destruction",
           "label": "Nicht auslösen.",
-          "next": "k8_070_boarding",
+          "next": "k8_065_niko_gate",
           "requires": [],
           "effects": [
-            { "state": "containment", "operation": "set", "value": "partial" }
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "partial"
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
     },
     {
       "id": "k8_062_triggered",
       "chapter": 8,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Sequenz läuft. Vier Minuten." },
-        { "speaker": "mira", "text": "Zur Winde." }
+        {
+          "speaker": "mira",
+          "text": "Sequenz läuft. Vier Minuten."
+        },
+        {
+          "speaker": "mira",
+          "text": "Zur Winde."
+        }
       ],
-      "next": "k8_070_boarding",
-      "nextDelaySeconds": 60
+      "next": "k8_065_niko_gate",
+      "nextDelaySeconds": 60,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_063_others_first",
       "chapter": 8,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Die anderen sind an der Winde." },
-        { "speaker": "mira", "text": "Sequenz gestartet. Ich bin als Letzte unten." }
+        {
+          "speaker": "mira",
+          "text": "Die anderen sind an der Winde."
+        },
+        {
+          "speaker": "mira",
+          "text": "Sequenz gestartet. Ich bin als Letzte unten."
+        }
+      ],
+      "next": "k8_065_niko_gate",
+      "nextDelaySeconds": 60,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
+    },
+    {
+      "id": "k8_065_niko_gate",
+      "chapter": 8,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_secured",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "effects": [],
+          "next": "k8_066_niko_with_group"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k8_067_niko_arrives"
+        }
+      ],
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
+    },
+    {
+      "id": "k8_066_niko_with_group",
+      "chapter": 8,
+      "delaySeconds": 5,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Nikos Box steht neben mir. Er presst die Nase gegen das Gitter, als der Rotorwind den Schnee aufreißt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Liv hätte mich umgebracht, wenn ich ihn hier zurückließe."
+        }
+      ],
+      "next": "k8_068_niko_capacity",
+      "nextDelaySeconds": 5,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
+    },
+    {
+      "id": "k8_067_niko_arrives",
+      "chapter": 8,
+      "delaySeconds": 15,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Warte. Da bewegt sich etwas im Nebel."
+        },
+        {
+          "speaker": "mira",
+          "text": "Klein. Direkt unter der Leine."
+        },
+        {
+          "speaker": "mira",
+          "text": "Niko."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er rennt durch den Schnee, als hätte er die ganze Station nach uns abgesucht. Jetzt hängt er mit den Krallen an meinem Parka."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich wusste nicht, dass er noch lebt."
+        }
+      ],
+      "effects": [
+        {
+          "state": "niko_state",
+          "operation": "set",
+          "value": "at_landing_zone"
+        },
+        {
+          "state": "niko_found",
+          "operation": "set",
+          "value": true
+        }
+      ],
+      "next": "k8_068_niko_capacity",
+      "nextDelaySeconds": 5,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
+    },
+    {
+      "id": "k8_068_niko_capacity",
+      "chapter": 8,
+      "delaySeconds": 0,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Der Sanitäter zeigt auf die Fracht. Niko braucht eine gesicherte Position. Wenn wir keinen Platz reserviert haben, muss eine Kiste hierbleiben."
+        }
+      ],
+      "redirects": [
+        {
+          "requires": [
+            {
+              "state": "niko_transport_slot",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "effects": [
+            {
+              "state": "niko_evacuated",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "niko_state",
+              "operation": "set",
+              "value": "evacuated"
+            }
+          ],
+          "next": "k8_069_niko_boarded"
+        }
+      ],
+      "choices": [
+        {
+          "id": "leave_material_for_niko",
+          "label": "Die nicht lebenswichtige Materialkiste zurücklassen. Niko kommt mit.",
+          "next": "k8_069_niko_boarded",
+          "requires": [],
+          "effects": [
+            {
+              "state": "niko_evacuated",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "niko_state",
+              "operation": "set",
+              "value": "evacuated"
+            },
+            {
+              "state": "sample_preserved",
+              "operation": "set",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "leave_niko",
+          "label": "Die Fracht behalten und ohne Niko abheben.",
+          "next": "k8_069_niko_left",
+          "requires": [],
+          "effects": [
+            {
+              "state": "niko_evacuated",
+              "operation": "set",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
+    },
+    {
+      "id": "k8_069_niko_boarded",
+      "chapter": 8,
+      "delaySeconds": 10,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Niko kommt mit."
+        },
+        {
+          "speaker": "mira",
+          "text": "Seine Box wird außen am Sitz festgezurrt. Er streckt eine Pfote durchs Gitter und hält meinen Ärmel fest."
+        }
       ],
       "next": "k8_070_boarding",
-      "nextDelaySeconds": 60
+      "nextDelaySeconds": 5,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
+    },
+    {
+      "id": "k8_069_niko_left",
+      "chapter": 8,
+      "delaySeconds": 10,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Ich setze Niko in den Windschatten der Markierungsbox."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er läuft sofort wieder zur offenen Tür."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich werde dir nicht sagen, dass das nur eine Katze ist. Liv hätte das auch nicht getan."
+        }
+      ],
+      "effects": [
+        {
+          "state": "trust_mira",
+          "operation": "add",
+          "value": -2
+        }
+      ],
+      "next": "k8_070_boarding",
+      "nextDelaySeconds": 5,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
     },
     {
       "id": "k8_070_boarding",
       "chapter": 8,
       "delaySeconds": 180,
       "messages": [
-        { "speaker": "mira", "text": "Seil ist unten. Einer nach dem anderen." },
-        { "speaker": "mira", "text": "Ich bin als Letzte dran." },
-        { "speaker": "mira", "text": "Kabine. Wärme. Echte Wärme." },
-        { "speaker": "mira", "text": "Das Relais zeigt noch eine Minute." }
+        {
+          "speaker": "mira",
+          "text": "Seil ist unten. Einer nach dem anderen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich bin als Letzte dran."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kabine. Wärme. Echte Wärme."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das Relais zeigt noch eine Minute."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich zähle jeden Namen laut, bevor die Tür schließt. Niemand ist einfach irgendwann in der Gruppe aufgetaucht."
+        }
       ],
       "next": "k8_080_goodbye",
-      "nextDelaySeconds": 60
+      "nextDelaySeconds": 60,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
     },
     {
       "id": "k8_080_goodbye",
       "chapter": 8,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Ich weiß nicht einmal, wie du heißt." },
-        { "speaker": "mira", "text": "Du hast nicht immer richtiggelegen. Ich auch nicht." },
-        { "speaker": "mira", "text": "Aber du bist geblieben." },
-        { "speaker": "mira", "text": "Danke." },
-        { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
+        {
+          "speaker": "mira",
+          "text": "Du hast mich zuerst gefragt, ob ich verletzt bin. Nicht, ob meine Geschichte glaubwürdig ist."
+        },
+        {
+          "speaker": "mira",
+          "text": "Du bist geblieben."
+        },
+        {
+          "speaker": "mira",
+          "text": "Danke."
+        },
+        {
+          "speaker": "system",
+          "text": "[VERBINDUNG BEENDET]"
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "player_location_shared", "operator": "eq", "value": true }
+            {
+              "state": "player_location_shared",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Ich weiß nur ungefähr, wo du bist." },
-            { "speaker": "mira", "text": "Das reicht vielleicht, damit ich irgendwann Danke sagen kann, ohne eine kaputte Station dazwischen." },
-            { "speaker": "mira", "text": "Du bist geblieben." },
-            { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
+            {
+              "speaker": "mira",
+              "text": "Ich weiß nur ungefähr, wo du bist."
+            },
+            {
+              "speaker": "mira",
+              "text": "Das reicht vielleicht, damit ich irgendwann Danke sagen kann, ohne eine kaputte Station dazwischen."
+            },
+            {
+              "speaker": "mira",
+              "text": "Du bist geblieben."
+            },
+            {
+              "speaker": "system",
+              "text": "[VERBINDUNG BEENDET]"
+            }
           ]
         },
         {
           "requires": [
-            { "state": "trust_mira", "operator": "lt", "value": 0 }
+            {
+              "state": "trust_mira",
+              "operator": "lt",
+              "value": 0
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Wir waren uns oft nicht einig." },
-            { "speaker": "mira", "text": "Ohne die Verbindung wäre ich trotzdem nicht hier." },
-            { "speaker": "mira", "text": "Danke." },
-            { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
+            {
+              "speaker": "mira",
+              "text": "Wir waren uns oft nicht einig."
+            },
+            {
+              "speaker": "mira",
+              "text": "Ohne die Verbindung wäre ich trotzdem nicht hier."
+            },
+            {
+              "speaker": "mira",
+              "text": "Danke."
+            },
+            {
+              "speaker": "system",
+              "text": "[VERBINDUNG BEENDET]"
+            }
           ]
         },
         {
           "requires": [
-            { "state": "player_name_known", "operator": "eq", "value": true }
+            {
+              "state": "player_name_known",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Ich kenne deinen Namen, {{player_name}}. Mehr eigentlich nicht." },
-            { "speaker": "mira", "text": "Du hast nicht immer richtiggelegen. Ich auch nicht." },
-            { "speaker": "mira", "text": "Aber du bist geblieben. Danke." },
-            { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
+            {
+              "speaker": "mira",
+              "text": "Ich kenne deinen Namen, {{player_name}}. Mehr eigentlich nicht."
+            },
+            {
+              "speaker": "mira",
+              "text": "Du hast nicht immer richtiggelegen. Ich auch nicht."
+            },
+            {
+              "speaker": "mira",
+              "text": "Aber du bist geblieben. Danke."
+            },
+            {
+              "speaker": "system",
+              "text": "[VERBINDUNG BEENDET]"
+            }
           ]
         },
         {
           "requires": [
-            { "state": "player_name_known", "operator": "eq", "value": true },
-            { "state": "trust_mira", "operator": "lt", "value": 0 }
+            {
+              "state": "player_name_known",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "trust_mira",
+              "operator": "lt",
+              "value": 0
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Ich kenne deinen Namen, {{player_name}}. Wir waren uns trotzdem oft nicht einig." },
-            { "speaker": "mira", "text": "Ohne die Verbindung wäre ich nicht hier." },
-            { "speaker": "mira", "text": "Danke." },
-            { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
+            {
+              "speaker": "mira",
+              "text": "Ich kenne deinen Namen, {{player_name}}. Wir waren uns trotzdem oft nicht einig."
+            },
+            {
+              "speaker": "mira",
+              "text": "Ohne die Verbindung wäre ich nicht hier."
+            },
+            {
+              "speaker": "mira",
+              "text": "Danke."
+            },
+            {
+              "speaker": "system",
+              "text": "[VERBINDUNG BEENDET]"
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "player_name_known",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "trust_mira",
+              "operator": "gte",
+              "value": 0
+            }
+          ],
+          "replaceMessages": [
+            {
+              "speaker": "mira",
+              "text": "{{player_name}}, du hast mich zuerst gefragt, ob ich verletzt bin."
+            },
+            {
+              "speaker": "mira",
+              "text": "Du hast dafür gesorgt, dass ich wieder aufstehe. Ich werde deinen Namen nicht vergessen."
+            },
+            {
+              "speaker": "mira",
+              "text": "Niko sitzt neben mir. Wir sind drin."
+            },
+            {
+              "speaker": "mira",
+              "text": "Leb wohl. Oder hoffentlich nur: bis irgendwann."
+            },
+            {
+              "speaker": "system",
+              "text": "[VERBINDUNG BEENDET]"
+            }
           ]
         }
       ],
       "next": "k8_090_uncontrolled_mira",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
+      }
     },
     {
       "id": "k8_090_uncontrolled_mira",
@@ -395,11 +1141,23 @@
       "redirects": [
         {
           "requires": [
-            { "state": "infection_source", "operator": "neq", "value": "none" },
-            { "state": "mira_treated", "operator": "eq", "value": false }
+            {
+              "state": "infection_source",
+              "operator": "neq",
+              "value": "none"
+            },
+            {
+              "state": "mira_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "uncontrolled_evacuee", "operation": "set", "value": true }
+            {
+              "state": "uncontrolled_evacuee",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k8_091_uncontrolled_aksel"
         },
@@ -408,7 +1166,16 @@
           "effects": [],
           "next": "k8_091_uncontrolled_aksel"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_091_uncontrolled_aksel",
@@ -418,12 +1185,28 @@
       "redirects": [
         {
           "requires": [
-            { "state": "evac_aksel", "operator": "eq", "value": true },
-            { "state": "aksel_state", "operator": "eq", "value": "infected" },
-            { "state": "aksel_treated", "operator": "eq", "value": false }
+            {
+              "state": "evac_aksel",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "aksel_state",
+              "operator": "eq",
+              "value": "infected"
+            },
+            {
+              "state": "aksel_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "uncontrolled_evacuee", "operation": "set", "value": true }
+            {
+              "state": "uncontrolled_evacuee",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k8_100_ending_resolver"
         },
@@ -432,7 +1215,16 @@
           "effects": [],
           "next": "k8_100_ending_resolver"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_100_ending_resolver",
@@ -442,42 +1234,95 @@
       "redirects": [
         {
           "requires": [
-            { "state": "destruction_triggered", "operator": "eq", "value": true },
-            { "state": "uncontrolled_evacuee", "operator": "eq", "value": false }
+            {
+              "state": "destruction_triggered",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "uncontrolled_evacuee",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [],
           "next": "k8_e_contained"
         },
         {
           "requires": [
-            { "state": "dose_hoarded", "operator": "eq", "value": true },
-            { "state": "mira_treated", "operator": "eq", "value": true }
+            {
+              "state": "dose_hoarded",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "mira_treated",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [],
           "next": "k8_e_one_dose"
         },
         {
           "requires": [
-            { "state": "infection_source", "operator": "neq", "value": "none" },
-            { "state": "mira_treated", "operator": "eq", "value": false },
-            { "state": "report_honesty", "operator": "eq", "value": "false" }
+            {
+              "state": "infection_source",
+              "operator": "neq",
+              "value": "none"
+            },
+            {
+              "state": "mira_treated",
+              "operator": "eq",
+              "value": false
+            },
+            {
+              "state": "report_honesty",
+              "operator": "eq",
+              "value": "false"
+            }
           ],
           "effects": [],
           "next": "k8_e_lie"
         },
         {
           "requires": [
-            { "state": "uncontrolled_evacuee", "operator": "eq", "value": true }
+            {
+              "state": "uncontrolled_evacuee",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [],
           "next": "k8_e_hidden_guest"
         },
         {
           "requires": [
-            { "state": "evac_aksel", "operator": "eq", "value": true },
-            { "state": "evac_thal", "operator": "eq", "value": true },
-            { "state": "sample_preserved", "operator": "eq", "value": true },
-            { "state": "evidence_level", "operator": "gte", "value": 4 }
+            {
+              "state": "evac_aksel",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "evac_thal",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "sample_preserved",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "evidence_level",
+              "operator": "gte",
+              "value": 4
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [],
           "next": "k8_e_all_rescued"
@@ -487,111 +1332,551 @@
           "effects": [],
           "next": "k8_e_clean"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_e_radio",
       "chapter": 8,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "system", "text": "[SIGNAL UNTERBROCHEN]" },
-        { "speaker": "system", "text": "Das Relais versucht elfmal, die Verbindung neu aufzubauen." },
-        { "speaker": "system", "text": "Kein Versuch erreicht Kaldstad." },
-        { "speaker": "system", "text": "Ob der Rettungsflug die Station gefunden hat, erfährst du nicht. Funkstille." }
+        {
+          "speaker": "system",
+          "text": "[SIGNAL UNTERBROCHEN]"
+        },
+        {
+          "speaker": "system",
+          "text": "Das Relais versucht elfmal, die Verbindung neu aufzubauen."
+        },
+        {
+          "speaker": "system",
+          "text": "Kein Versuch erreicht Kaldstad."
+        },
+        {
+          "speaker": "system",
+          "text": "Ob der Rettungsflug die Station gefunden hat, erfährst du nicht. Funkstille."
+        }
       ],
       "effects": [
-        { "state": "chapter_08_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_08_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "ending": "ending_radio_silence"
+      "ending": "ending_radio_silence",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko befindet sich an Bord und erreicht die Quarantänestation."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko blieb an der Landezone zurück. Mira erwähnt seinen Namen im letzten Bericht."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_e_contained",
       "chapter": 8,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "system", "text": "Ebene minus drei stürzt um 04:17 Uhr Ortszeit in den Bohrschacht." },
-        { "speaker": "system", "text": "Die Temperatur im Kernbereich fällt innerhalb einer Stunde unter den messbaren Bereich." },
-        { "speaker": "system", "text": "Von Mira kommt keine weitere Nachricht." },
-        { "speaker": "system", "text": "Sie hat verhindert, dass der Gast abreist." }
+        {
+          "speaker": "system",
+          "text": "Ebene minus drei stürzt um 04:17 Uhr Ortszeit in den Bohrschacht."
+        },
+        {
+          "speaker": "system",
+          "text": "Die Temperatur im Kernbereich fällt innerhalb einer Stunde unter den messbaren Bereich."
+        },
+        {
+          "speaker": "system",
+          "text": "Von Mira kommt keine weitere Nachricht."
+        },
+        {
+          "speaker": "system",
+          "text": "Sie hat verhindert, dass der Gast abreist."
+        }
       ],
       "effects": [
-        { "state": "chapter_08_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_08_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "ending": "ending_contained"
+      "ending": "ending_contained",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko befindet sich an Bord und erreicht die Quarantänestation."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko blieb an der Landezone zurück. Mira erwähnt seinen Namen im letzten Bericht."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_e_one_dose",
       "chapter": 8,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "system", "text": "Der Hemmstoff wirkt. Mira erreicht die Versorgungsstation ohne nachweisbare Veränderung." },
-        { "speaker": "system", "text": "Im Abschlussbericht steht, für die anderen habe keine Behandlungsmöglichkeit bestanden." },
-        { "speaker": "system", "text": "Das ist technisch korrekt." },
-        { "speaker": "system", "text": "Sie schreibt dir nie wieder." }
+        {
+          "speaker": "system",
+          "text": "Der Hemmstoff wirkt. Mira erreicht die Versorgungsstation ohne nachweisbare Veränderung."
+        },
+        {
+          "speaker": "system",
+          "text": "Im Abschlussbericht steht, für die anderen habe keine Behandlungsmöglichkeit bestanden."
+        },
+        {
+          "speaker": "system",
+          "text": "Das ist technisch korrekt."
+        },
+        {
+          "speaker": "system",
+          "text": "Sie schreibt dir nie wieder."
+        }
       ],
       "effects": [
-        { "state": "chapter_08_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_08_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "ending": "ending_one_dose"
+      "ending": "ending_one_dose",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko befindet sich an Bord und erreicht die Quarantänestation."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko blieb an der Landezone zurück. Mira erwähnt seinen Namen im letzten Bericht."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_e_lie",
       "chapter": 8,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "system", "text": "Mira sieht den auffälligen Messwert." },
-        { "speaker": "system", "text": "Der Sanitäter fragt, ob sie Kontakt mit der Probe hatte. Sie sagt Nein." },
-        { "speaker": "system", "text": "Ruhig. Ohne zu zögern." },
-        { "speaker": "system", "text": "In ihrer Tasche blinkt das Relais ein letztes Mal." }
+        {
+          "speaker": "system",
+          "text": "Mira sieht den auffälligen Messwert."
+        },
+        {
+          "speaker": "system",
+          "text": "Der Sanitäter fragt, ob sie Kontakt mit der Probe hatte. Sie sagt Nein."
+        },
+        {
+          "speaker": "system",
+          "text": "Ruhig. Ohne zu zögern."
+        },
+        {
+          "speaker": "system",
+          "text": "In ihrer Tasche blinkt das Relais ein letztes Mal."
+        }
       ],
       "effects": [
-        { "state": "chapter_08_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_08_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "ending": "ending_the_lie"
+      "ending": "ending_the_lie",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko befindet sich an Bord und erreicht die Quarantänestation."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko blieb an der Landezone zurück. Mira erwähnt seinen Namen im letzten Bericht."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_e_hidden_guest",
       "chapter": 8,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "system", "text": "Die Verbindung endet, bevor das Rettungsteam die erste Blutprobe auswertet." },
-        { "speaker": "system", "text": "Ein Messwert außerhalb des erwarteten Rasters wird als Gerätefehler markiert." },
-        { "speaker": "system", "text": "Unter Miras Haut bildet sich für einen Moment eine feine dunkle Linie." },
-        { "speaker": "system", "text": "Der Hubschrauber fliegt nach Norden." }
+        {
+          "speaker": "system",
+          "text": "Die Verbindung endet, bevor das Rettungsteam die erste Blutprobe auswertet."
+        },
+        {
+          "speaker": "system",
+          "text": "Ein Messwert außerhalb des erwarteten Rasters wird als Gerätefehler markiert."
+        },
+        {
+          "speaker": "system",
+          "text": "Unter Miras Haut bildet sich für einen Moment eine feine dunkle Linie."
+        },
+        {
+          "speaker": "system",
+          "text": "Der Hubschrauber fliegt nach Norden."
+        }
       ],
       "effects": [
-        { "state": "chapter_08_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_08_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "ending": "ending_hidden_guest"
+      "ending": "ending_hidden_guest",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko befindet sich an Bord und erreicht die Quarantänestation."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko blieb an der Landezone zurück. Mira erwähnt seinen Namen im letzten Bericht."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_e_all_rescued",
       "chapter": 8,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "system", "text": "Alle Personen, die Kaldstad lebend verlassen konnten, erreichen die Versorgungsstation." },
-        { "speaker": "system", "text": "Keine Probe reagiert außerhalb der versiegelten Behälter." },
-        { "speaker": "system", "text": "Monate später schreibt Mira: „Wir sind noch wir. Soweit jemand das von sich sagen kann.“" }
+        {
+          "speaker": "system",
+          "text": "Alle Personen, die Kaldstad lebend verlassen konnten, erreichen die Versorgungsstation."
+        },
+        {
+          "speaker": "system",
+          "text": "Keine Probe reagiert außerhalb der versiegelten Behälter."
+        },
+        {
+          "speaker": "system",
+          "text": "Monate später schreibt Mira: „Wir sind noch wir. Soweit jemand das von sich sagen kann.“"
+        }
       ],
       "effects": [
-        { "state": "chapter_08_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_08_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "ending": "ending_all_rescued"
+      "ending": "ending_all_rescued",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko befindet sich an Bord und erreicht die Quarantänestation."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko blieb an der Landezone zurück. Mira erwähnt seinen Namen im letzten Bericht."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     },
     {
       "id": "k8_e_clean",
       "chapter": 8,
       "delaySeconds": 0,
       "messages": [
-        { "speaker": "system", "text": "Kaldstad wird zwölf Stunden später unter Quarantäne gestellt." },
-        { "speaker": "system", "text": "Bei Mira werden keine netzartigen Strukturen nachgewiesen." },
-        { "speaker": "system", "text": "Ob sie nie infiziert war oder der Hemmstoff wirkte, lässt sich nicht bestimmen." },
-        { "speaker": "mira", "text": "Diesmal habe ich die Verbindung selbst gewählt." }
+        {
+          "speaker": "system",
+          "text": "Kaldstad wird zwölf Stunden später unter Quarantäne gestellt."
+        },
+        {
+          "speaker": "system",
+          "text": "Bei Mira werden keine netzartigen Strukturen nachgewiesen."
+        },
+        {
+          "speaker": "system",
+          "text": "Ob sie nie infiziert war oder der Hemmstoff wirkte, lässt sich nicht bestimmen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Diesmal habe ich die Verbindung selbst gewählt."
+        }
       ],
       "effects": [
-        { "state": "chapter_08_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_08_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "ending": "ending_clean_rescue"
+      "ending": "ending_clean_rescue",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko befindet sich an Bord und erreicht die Quarantänestation."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "niko_evacuated",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "system",
+              "text": "Niko blieb an der Landezone zurück. Mira erwähnt seinen Namen im letzten Bericht."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 46,
+        "interiorTop": 50,
+        "activity": "Mira orientiert sich im Wohntrakt"
+      }
     }
   ]
 }

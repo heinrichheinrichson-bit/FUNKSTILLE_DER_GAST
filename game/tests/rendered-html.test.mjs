@@ -63,17 +63,19 @@ test("ships chapter data and production metadata", async () => {
 
   assert.equal(chapterData.chapter.startNode, "k1_001_signal");
   assert.equal(chapterData.nodes.length, 50);
-  assert.equal(chapterTwoData.nodes.length, 40);
+  assert.equal(chapterTwoData.nodes.length, 45);
   assert.deepEqual(
     chapterTwoData.nodes.find(({ id }) => id === "k2_l_020_locked").input.answers,
     ["0414", "14.04", "1404"],
   );
   assert.equal(chapterThreeData.nodes.length, 31);
-  assert.equal(chapterFourData.nodes.length, 42);
+  assert.equal(chapterFourData.nodes.length, 46);
   assert.equal(chapterFiveData.nodes.length, 30);
   assert.equal(chapterSixData.nodes.length, 29);
-  assert.equal(chapterSevenData.nodes.length, 19);
-  assert.equal(chapterEightData.nodes.length, 26);
+  assert.equal(chapterSevenData.nodes.length, 21);
+  assert.equal(chapterEightData.nodes.length, 32);
+  assert.ok(chapterFourData.nodes.some(({ id }) => id === "k4_311_niko_found"));
+  assert.ok(chapterEightData.nodes.some(({ id }) => id === "k8_067_niko_arrives"));
   assert.deepEqual(
     indexData.chapters.map(({ id }) => id),
     ["chapter_01", "chapter_02", "chapter_03", "chapter_04", "chapter_05", "chapter_06", "chapter_07", "chapter_08"],

@@ -54,6 +54,15 @@ type StoryNode = {
   handoff?: string;
   ending?: string;
   input?: InputSpec;
+  location?: {
+    area: string;
+    room: string;
+    stationLeft: number;
+    stationTop: number;
+    interiorLeft: number;
+    interiorTop: number;
+    activity?: string;
+  };
 };
 type StoryDocument = {
   chapter: { id: string; number: number; title: string; startNode: string };
@@ -121,9 +130,9 @@ const BUILDING_ROOMS: Record<Exclude<MapView, "station">, Array<{ id: string; la
     { id: "airlock", label: "SCHLEUSE", x: 3, y: 38, w: 17, h: 25 },
     { id: "corridor", label: "HAUPTGANG", x: 20, y: 43, w: 57, h: 15 },
     { id: "radio", label: "FUNK / BÜRO", x: 25, y: 8, w: 22, h: 35 },
-    { id: "mess", label: "MESSE", x: 50, y: 8, w: 27, h: 35 },
+    { id: "mess", label: "KANTINE", x: 50, y: 8, w: 27, h: 35 },
     { id: "bunks", label: "KABINEN", x: 25, y: 58, w: 27, h: 31 },
-    { id: "storage", label: "LAGER", x: 55, y: 58, w: 22, h: 31 },
+    { id: "storage", label: "VORRATSRAUM", x: 55, y: 58, w: 22, h: 31 },
   ],
   labor: [
     { id: "airlock", label: "DEKON-SCHLEUSE", x: 3, y: 35, w: 20, h: 28 },
@@ -249,10 +258,11 @@ function formatMessageTime(time: number) {
   }).format(time);
 }
 
-function waitingActivity(nodeId: string | null, chapterId: string, disconnected: boolean) {
+function waitingActivity(node: StoryNode | undefined, chapterId: string, disconnected: boolean) {
   if (disconnected) return "Keine Verbindung zu Mira";
-  const id = (nodeId ?? "").toLowerCase();
-  if (id.includes("generator") || chapterId === "chapter_02") return "Mira arbeitet an der Station";
+  if (node?.location?.activity) return node.location.activity;
+  const id = (node?.id ?? "").toLowerCase();
+  if (id.includes("generator") || id.includes("_g_")) return "Mira arbeitet am Generator";
   if (id.includes("lab")) return "Mira untersucht das Labor";
   if (id.includes("tower") || id.includes("bohr") || chapterId === "chapter_05") return "Mira ist unterwegs";
   if (id.includes("shelter") || chapterId === "chapter_06") return "Mira ist unter dem Eis unterwegs";
@@ -260,12 +270,23 @@ function waitingActivity(nodeId: string | null, chapterId: string, disconnected:
   return "Mira ist beschäftigt";
 }
 
-function currentMapLocation(chapterId: string, nodeId: string) {
+function currentMapLocation(chapterId: string, node: StoryNode | undefined) {
+  if (node?.location) {
+    return {
+      area: node.location.area,
+      room: node.location.room,
+      left: node.location.stationLeft,
+      top: node.location.stationTop,
+      interiorLeft: node.location.interiorLeft,
+      interiorTop: node.location.interiorTop,
+    };
+  }
+  const nodeId = node?.id ?? "";
   const text = nodeId.toLowerCase();
-  if (text.includes("lab")) return { area: "labor", left: 46, top: 27 };
-  if (text.includes("generator")) return { area: "generator", left: 47, top: 63 };
-  if (text.includes("tower") || text.includes("bohr")) return { area: "tower", left: 78, top: 57 };
-  if (text.includes("shelter") || text.includes("unter")) return { area: "shelter", left: 70, top: 83 };
+  if (text.includes("lab")) return { area: "labor", room: "hall", left: 46, top: 27, interiorLeft: 34, interiorTop: 50 };
+  if (text.includes("generator") || text.includes("_g_")) return { area: "generator", room: "control", left: 47, top: 63, interiorLeft: 36, interiorTop: 30 };
+  if (text.includes("tower") || text.includes("bohr")) return { area: "tower", room: "platform", left: 78, top: 57, interiorLeft: 50, interiorTop: 50 };
+  if (text.includes("shelter") || text.includes("unter")) return { area: "shelter", room: "shelter", left: 70, top: 83, interiorLeft: 50, interiorTop: 50 };
   const fallback: Record<string, { area: string; left: number; top: number }> = {
     chapter_01: { area: "quarters", left: 20, top: 42 },
     chapter_02: { area: "labor", left: 48, top: 27 },
@@ -276,7 +297,8 @@ function currentMapLocation(chapterId: string, nodeId: string) {
     chapter_07: { area: "quarters", left: 20, top: 42 },
     chapter_08: { area: "quarters", left: 19, top: 74 },
   };
-  return fallback[chapterId] ?? fallback.chapter_01;
+  const result = fallback[chapterId] ?? fallback.chapter_01;
+  return { ...result, room: "unknown", interiorLeft: 35, interiorTop: 50 };
 }
 
 export default function Home() {
@@ -329,7 +351,7 @@ export default function Home() {
     gameState.expedition_companion === "aksel"
       ? 3
       : 2;
-  const currentLocation = currentMapLocation(currentChapterId, currentNodeId);
+  const currentLocation = currentMapLocation(currentChapterId, currentNode);
 
   const enterNode = useCallback(
     (nodeId: string, baseState: GameState, baseTimeline: TimelineItem[]) => {
@@ -513,13 +535,15 @@ export default function Home() {
   }, [currentNodeId, gameState]);
 
   useEffect(() => {
-    if (nearBottomRef.current) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (nearBottomRef.current || deliveryPhase !== "idle") {
+      window.requestAnimationFrame(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      });
       setUnreadCount(0);
     } else if (timeline.length) {
       setUnreadCount((count) => count + 1);
     }
-  }, [timeline]);
+  }, [timeline, deliveryPhase]);
 
   useEffect(() => {
     const sent = timeline.filter(
@@ -1045,6 +1069,12 @@ export default function Home() {
     setCurrentNodeId("");
   }
 
+  useEffect(() => {
+    if (testMode || delivering || !currentNode?.handoff) return;
+    const timer = window.setTimeout(() => continueChapter(), 900);
+    return () => window.clearTimeout(timer);
+  }, [currentNode?.handoff, delivering, testMode]);
+
   if (!storyIndex || !story || !schema || !restored) {
     return (
       <main className="loading-screen">
@@ -1113,13 +1143,13 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="chapter-strip">
+        {testMode && <div className="chapter-strip">
           <span>KAPITEL {String(story.chapter.number).padStart(2, "0")}</span>
           <strong>{story.chapter.title}</strong>
           <button type="button" onClick={restart} aria-label="Spiel neu starten">
             Neustart
           </button>
-        </div>
+        </div>}
 
         <section
           className="transcript"
@@ -1162,18 +1192,14 @@ export default function Home() {
               >
                 {item.speaker !== "system" && (
                   <span className="speaker">
-                    {item.speaker === "mira"
-                      ? "MIRA"
-                      : item.speaker === "log"
-                        ? "DOKUMENT"
-                        : `MIRA · WÖRTLICH: ${item.speaker.toUpperCase()}`}
+                    {item.speaker === "log" ? "DOKUMENT" : "MIRA"}
                   </span>
                 )}
                 <div
                   className={`bubble ${
                     item.speaker === "system"
                       ? "bubble-system"
-                      : item.speaker === "log" || item.speaker !== "mira"
+                      : item.speaker === "log"
                         ? "bubble-log"
                         : "bubble-mira"
                   }`}
@@ -1224,7 +1250,7 @@ export default function Home() {
               {waitDurationSeconds >= 120 && (
                 <div className="activity-status">
                   <span className="activity-pulse" />
-                  {waitingActivity(pendingNode, currentChapterId, disconnected)}
+                  {waitingActivity(nodeMap.get(pendingNode ?? ""), currentChapterId, disconnected)}
                 </div>
               )}
               {canSendCheckIn && (
@@ -1302,7 +1328,7 @@ export default function Home() {
               </button>
             ))}
 
-          {connectionEnded && !delivering && (
+          {connectionEnded && !delivering && (currentNode?.ending || testMode) && (
             <div className="handoff">
               <span>
                 {currentNode?.ending ? "Dein Ende" : "Kapitel abgeschlossen"}
@@ -1387,7 +1413,7 @@ export default function Home() {
                         </button>
                       );
                     })}
-                    <div className="map-marker current" style={{ left: `${currentLocation.left}%`, top: `${currentLocation.top}%` }}>MIRA · AKTUELL</div>
+                    <div className="map-pin current" style={{ left: `${currentLocation.left}%`, top: `${currentLocation.top}%` }} aria-label="Miras aktueller Standort"><span /></div>
                   </div>
                 ) : (
                   <div className="map-grid interior-map">
@@ -1398,7 +1424,11 @@ export default function Home() {
                       </div>
                     ))}
                     <div className="door door-entry">EINGANG</div>
-                    {currentLocation.area === mapView && <div className="map-marker current">MIRA · AKTUELL</div>}
+                    {currentLocation.area === mapView && (
+                      <div className="map-pin current" style={{ left: `${currentLocation.interiorLeft}%`, top: `${currentLocation.interiorTop}%` }} aria-label={`Miras aktueller Standort: ${currentLocation.room}`}>
+                        <span />
+                      </div>
+                    )}
                     {mapNotes(mapView, gameState).map((note, index) => <div className="map-marker note" key={note} style={{ top: `${68 + index * 7}%` }}>{note}</div>)}
                   </div>
                 )}

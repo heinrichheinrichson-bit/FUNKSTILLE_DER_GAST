@@ -15,101 +15,343 @@
       "redirects": [
         {
           "requires": [
-            { "state": "cure_material", "operator": "gte", "value": 3 },
-            { "state": "generator_state", "operator": "eq", "value": "stable" }
+            {
+              "state": "cure_material",
+              "operator": "gte",
+              "value": 3
+            },
+            {
+              "state": "generator_state",
+              "operator": "eq",
+              "value": "stable"
+            }
           ],
           "effects": [
-            { "state": "doses_available", "operation": "set", "value": 3 },
-            { "state": "doses_remaining", "operation": "set", "value": 3 }
+            {
+              "state": "doses_available",
+              "operation": "set",
+              "value": 3
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "set",
+              "value": 3
+            }
           ],
-          "next": "k7_010_synthesis"
+          "next": "k7_005_reunion"
         },
         {
           "requires": [
-            { "state": "cure_material", "operator": "gte", "value": 2 }
+            {
+              "state": "cure_material",
+              "operator": "gte",
+              "value": 2
+            }
           ],
           "effects": [
-            { "state": "doses_available", "operation": "set", "value": 2 },
-            { "state": "doses_remaining", "operation": "set", "value": 2 }
+            {
+              "state": "doses_available",
+              "operation": "set",
+              "value": 2
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "set",
+              "value": 2
+            }
           ],
-          "next": "k7_010_synthesis"
+          "next": "k7_005_reunion"
         },
         {
           "requires": [
-            { "state": "cure_material", "operator": "gte", "value": 1 }
+            {
+              "state": "cure_material",
+              "operator": "gte",
+              "value": 1
+            }
           ],
           "effects": [
-            { "state": "doses_available", "operation": "set", "value": 1 },
-            { "state": "doses_remaining", "operation": "set", "value": 1 }
+            {
+              "state": "doses_available",
+              "operation": "set",
+              "value": 1
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "set",
+              "value": 1
+            }
           ],
-          "next": "k7_010_synthesis"
+          "next": "k7_005_reunion"
         },
         {
           "requires": [],
           "effects": [],
-          "next": "k7_010_synthesis"
+          "next": "k7_005_reunion"
         }
-      ]
+      ],
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
+    },
+    {
+      "id": "k7_005_reunion",
+      "chapter": 7,
+      "delaySeconds": 30,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Ich bin im Labor. Bevor wir über Dosen reden: Ich sage dir genau, wer tatsächlich hier ist."
+        }
+      ],
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "aksel_inside_after_return",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Aksel sitzt an der Wand neben der Dekonschleuse. Ich habe ihn selbst aus dem Wohntrakt hergebracht."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "thal_returning",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Ingrid ist langsam vom Wohntrakt herübergekommen. Sie ruht im Laborvorraum."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "kader_escorted_to_lab",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Kader wurde von Aksel und mir vom Bohrturm eskortiert. Er bleibt von der Steuerung getrennt."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Niko ist in seiner Transportbox im warmen Vorraum. Er bekommt selbstverständlich keinen menschlichen Hemmstoff."
+            }
+          ]
+        }
+      ],
+      "next": "k7_010_synthesis",
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_010_synthesis",
       "chapter": 7,
       "delaySeconds": 720,
       "messages": [
-        { "speaker": "mira", "text": "Der Hemmstoff ist fertig." },
-        { "speaker": "mira", "text": "„Gegenmittel“ wäre zu viel gesagt. Er blockiert die Netzstruktur in Zellkulturen." },
-        { "speaker": "mira", "text": "Ob er in einem Menschen dasselbe tut, weiß niemand." }
+        {
+          "speaker": "mira",
+          "text": "Der Hemmstoff ist fertig."
+        },
+        {
+          "speaker": "mira",
+          "text": "„Gegenmittel“ wäre zu viel gesagt. Er blockiert die Netzstruktur in Zellkulturen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ob er in einem Menschen dasselbe tut, weiß niemand."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "doses_available", "operator": "eq", "value": 0 }
+            {
+              "state": "doses_available",
+              "operator": "eq",
+              "value": 0
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Wir haben keine verwendbare Dosis. Nur Rettung und Eindämmung bleiben." }
+            {
+              "speaker": "mira",
+              "text": "Wir haben keine verwendbare Dosis. Nur Rettung und Eindämmung bleiben."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "doses_available", "operator": "eq", "value": 1 }
+            {
+              "state": "doses_available",
+              "operator": "eq",
+              "value": 1
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Eine Dosis. Nicht genug für alle." }
+            {
+              "speaker": "mira",
+              "text": "Eine Dosis. Nicht genug für alle."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "doses_available", "operator": "eq", "value": 2 }
+            {
+              "state": "doses_available",
+              "operator": "eq",
+              "value": 2
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Zwei Dosen. Nicht genug für alle erreichbaren Personen." }
+            {
+              "speaker": "mira",
+              "text": "Zwei Dosen. Nicht genug für alle erreichbaren Personen."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "doses_available", "operator": "eq", "value": 3 }
+            {
+              "state": "doses_available",
+              "operator": "eq",
+              "value": 3
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Drei Dosen. Mehr lässt der Ansatz nicht zu." }
+            {
+              "speaker": "mira",
+              "text": "Drei Dosen. Mehr lässt der Ansatz nicht zu."
+            }
           ]
         }
       ],
       "next": "k7_020_candidates",
-      "nextDelaySeconds": 60
+      "nextDelaySeconds": 60,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_020_candidates",
       "chapter": 7,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Bei mir: mögliche Exposition, Erinnerungslücken, veränderte Wahrnehmung. Aber auch Kopfverletzung, Kälte und Erschöpfung." },
-        { "speaker": "mira", "text": "Bei Aksel: Bohrstaub, Marsch, Erinnerungslücke, ungewöhnliche Körpertemperatur." },
-        { "speaker": "mira", "text": "Bei Thal: eigene Erinnerungslücken und lange Zeit allein. Keine bestätigte Probenexposition." },
-        { "speaker": "mira", "text": "Bei Kader: direkter Kontakt zur Kernkammer und verändertes Verhalten." },
-        { "speaker": "mira", "text": "Das sind Indizien. Keine Diagnose." }
+        {
+          "speaker": "mira",
+          "text": "Jetzt zu den tatsächlich anwesenden Personen. Ich untersuche nur Menschen, die vor mir stehen – keine Namen auf einer Liste."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bei mir: mögliche Exposition, Erinnerungslücken, Kopfverletzung, Kälte und Erschöpfung."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Befunde sind Indizien. Keine sichere Diagnose."
+        }
       ],
       "next": "k7_030_distribution_gate",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "aksel_inside_after_return",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Aksel: Bohrstaub, Marsch, Erinnerungslücke und ungewöhnliche Körpertemperatur."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "thal_returning",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Ingrid: Unterkühlung und Erschöpfung, aber keine bestätigte Probenexposition."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "kader_escorted_to_lab",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Kader: direkter Kontakt zur Kernkammer und deutliche Verhaltensänderungen."
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_030_distribution_gate",
@@ -119,7 +361,11 @@
       "redirects": [
         {
           "requires": [
-            { "state": "doses_remaining", "operator": "gt", "value": 0 }
+            {
+              "state": "doses_remaining",
+              "operator": "gt",
+              "value": 0
+            }
           ],
           "effects": [],
           "next": "k7_031_distribution"
@@ -129,14 +375,26 @@
           "effects": [],
           "next": "k7_050_distribution_done"
         }
-      ]
+      ],
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_031_distribution",
       "chapter": 7,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Die nächste Entscheidung ist endgültig. Jede Behandlung verbraucht eine Dosis." }
+        {
+          "speaker": "mira",
+          "text": "Die nächste Entscheidung ist endgültig. Jede Behandlung verbraucht eine Dosis."
+        }
       ],
       "choices": [
         {
@@ -144,11 +402,23 @@
           "label": "Mira behandeln.",
           "next": "k7_040_mira",
           "requires": [
-            { "state": "mira_treated", "operator": "eq", "value": false }
+            {
+              "state": "mira_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "mira_treated", "operation": "set", "value": true },
-            { "state": "doses_remaining", "operation": "add", "value": -1 }
+            {
+              "state": "mira_treated",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "add",
+              "value": -1
+            }
           ]
         },
         {
@@ -156,12 +426,28 @@
           "label": "Aksel behandeln.",
           "next": "k7_041_aksel",
           "requires": [
-            { "state": "aksel_inside_after_return", "operator": "eq", "value": true },
-            { "state": "aksel_treated", "operator": "eq", "value": false }
+            {
+              "state": "aksel_inside_after_return",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "aksel_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "aksel_treated", "operation": "set", "value": true },
-            { "state": "doses_remaining", "operation": "add", "value": -1 }
+            {
+              "state": "aksel_treated",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "add",
+              "value": -1
+            }
           ]
         },
         {
@@ -169,12 +455,28 @@
           "label": "Thal behandeln.",
           "next": "k7_042_thal",
           "requires": [
-            { "state": "thal_returning", "operator": "eq", "value": true },
-            { "state": "thal_treated", "operator": "eq", "value": false }
+            {
+              "state": "thal_returning",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "thal_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "thal_treated", "operation": "set", "value": true },
-            { "state": "doses_remaining", "operation": "add", "value": -1 }
+            {
+              "state": "thal_treated",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "add",
+              "value": -1
+            }
           ]
         },
         {
@@ -182,12 +484,28 @@
           "label": "Kader behandeln.",
           "next": "k7_043_kader",
           "requires": [
-            { "state": "kader_state", "operator": "eq", "value": "cooperative" },
-            { "state": "kader_treated", "operator": "eq", "value": false }
+            {
+              "state": "kader_escorted_to_lab",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "kader_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "kader_treated", "operation": "set", "value": true },
-            { "state": "doses_remaining", "operation": "add", "value": -1 }
+            {
+              "state": "kader_treated",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "add",
+              "value": -1
+            }
           ]
         },
         {
@@ -195,11 +513,23 @@
           "label": "Eine Dosis ungeöffnet für externe Analyse bewahren.",
           "next": "k7_044_preserved",
           "requires": [
-            { "state": "sample_preserved", "operator": "eq", "value": false }
+            {
+              "state": "sample_preserved",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "sample_preserved", "operation": "set", "value": true },
-            { "state": "doses_remaining", "operation": "add", "value": -1 }
+            {
+              "state": "sample_preserved",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "doses_remaining",
+              "operation": "add",
+              "value": -1
+            }
           ]
         },
         {
@@ -209,93 +539,211 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_040_mira",
       "chapter": 7,
       "delaySeconds": 90,
       "messages": [
-        { "speaker": "mira", "text": "Injektion gesetzt. Brennt entlang des Arms." },
-        { "speaker": "mira", "text": "Für einen Moment war das Relais vollkommen still." },
-        { "speaker": "mira", "text": "Wahrscheinlich Zufall." }
+        {
+          "speaker": "mira",
+          "text": "Injektion gesetzt. Brennt entlang des Arms."
+        },
+        {
+          "speaker": "mira",
+          "text": "Für einen Moment war das Relais vollkommen still."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wahrscheinlich Zufall."
+        }
       ],
       "next": "k7_030_distribution_gate",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_041_aksel",
       "chapter": 7,
       "delaySeconds": 90,
       "messages": [
-        { "speaker": "aksel", "text": "Wirst du mir danach glauben?" },
-        { "speaker": "mira", "text": "Ich kann ihm nicht antworten. Er hält trotzdem den Arm hin." }
+        {
+          "speaker": "mira",
+          "text": "Aksel sagt: „Wirst du mir danach glauben?“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich kann ihm nicht antworten. Er hält trotzdem den Arm hin."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "trust_aksel", "operator": "lt", "value": 0 }
+            {
+              "state": "trust_aksel",
+              "operator": "lt",
+              "value": 0
+            }
           ],
           "replaceMessages": [
-            { "speaker": "mira", "text": "Aksel will die Spritze nicht." },
-            { "speaker": "mira", "text": "Ich lese ihm Vargas Bericht vor. Danach hält er den Arm hin, ohne mich anzusehen." }
+            {
+              "speaker": "mira",
+              "text": "Aksel will die Spritze nicht."
+            },
+            {
+              "speaker": "mira",
+              "text": "Ich lese ihm Vargas Bericht vor. Danach hält er den Arm hin, ohne mich anzusehen."
+            }
           ]
         }
       ],
       "next": "k7_030_distribution_gate",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_042_thal",
       "chapter": 7,
       "delaySeconds": 90,
       "messages": [
-        { "speaker": "mira", "text": "Thal liest die gesamte Formel, bevor sie zustimmt." },
-        { "speaker": "thal", "text": "Falls ich danach nicht mehr ich bin, woran merken Sie den Unterschied?" }
+        {
+          "speaker": "mira",
+          "text": "Thal liest die gesamte Formel, bevor sie zustimmt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ingrid sagt: „Falls ich danach nicht mehr ich bin, woran merken Sie den Unterschied?“"
+        }
       ],
       "next": "k7_030_distribution_gate",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_043_kader",
       "chapter": 7,
       "delaySeconds": 90,
       "messages": [
-        { "speaker": "kader", "text": "Sie geben dem Verantwortlichen die Dosis." },
-        { "speaker": "mira", "text": "Er lacht einmal. Dann hält er den Arm hin." }
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Sie geben dem Verantwortlichen die Dosis.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Er lacht einmal. Dann hält er den Arm hin."
+        }
       ],
       "next": "k7_030_distribution_gate",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_044_preserved",
       "chapter": 7,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Behälter versiegelt. Genug für ein externes Labor." },
-        { "speaker": "mira", "text": "Oder für die nächste Katastrophe." }
+        {
+          "speaker": "mira",
+          "text": "Behälter versiegelt. Genug für ein externes Labor."
+        },
+        {
+          "speaker": "mira",
+          "text": "Oder für die nächste Katastrophe."
+        }
       ],
       "next": "k7_030_distribution_gate",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_050_distribution_done",
       "chapter": 7,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Wenn wir falschliegen, haben wir einen Gesunden mit etwas behandelt, das nie an Menschen getestet wurde." },
-        { "speaker": "mira", "text": "Wenn wir gar nichts tun, nehmen wir vielleicht etwas Lebendes mit in den Hubschrauber." },
-        { "speaker": "mira", "text": "Die Verteilung steht." }
+        {
+          "speaker": "mira",
+          "text": "Wenn wir falschliegen, haben wir einen Gesunden mit etwas behandelt, das nie an Menschen getestet wurde."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wenn wir gar nichts tun, nehmen wir vielleicht etwas Lebendes mit in den Hubschrauber."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Verteilung steht."
+        }
       ],
       "next": "k7_060_report",
-      "nextDelaySeconds": 60
+      "nextDelaySeconds": 60,
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
     },
     {
       "id": "k7_060_report",
       "chapter": 7,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Der Notruf braucht einen Bericht. Das Rettungsteam entscheidet danach über Ausrüstung und Quarantäne." }
+        {
+          "speaker": "mira",
+          "text": "Der Notruf braucht einen Bericht. Das Rettungsteam entscheidet danach über Ausrüstung und Quarantäne."
+        }
       ],
       "choices": [
         {
@@ -304,8 +752,16 @@
           "next": "k7_061_report_sent",
           "requires": [],
           "effects": [
-            { "state": "report_honesty", "operation": "set", "value": "full" },
-            { "state": "trust_mira", "operation": "add", "value": 1 }
+            {
+              "state": "report_honesty",
+              "operation": "set",
+              "value": "full"
+            },
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -314,7 +770,11 @@
           "next": "k7_061_report_sent",
           "requires": [],
           "effects": [
-            { "state": "report_honesty", "operation": "set", "value": "partial" }
+            {
+              "state": "report_honesty",
+              "operation": "set",
+              "value": "partial"
+            }
           ]
         },
         {
@@ -323,47 +783,96 @@
           "next": "k7_061_report_sent",
           "requires": [],
           "effects": [
-            { "state": "report_honesty", "operation": "set", "value": "false" },
-            { "state": "trust_mira", "operation": "add", "value": -1 }
+            {
+              "state": "report_honesty",
+              "operation": "set",
+              "value": "false"
+            },
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": -1
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     },
     {
       "id": "k7_061_report_sent",
       "chapter": 7,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Bericht vorbereitet. Wetterdaten und Koordinaten angehängt." }
+        {
+          "speaker": "mira",
+          "text": "Bericht vorbereitet. Wetterdaten und Koordinaten angehängt."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "report_honesty", "operator": "eq", "value": "full" }
+            {
+              "state": "report_honesty",
+              "operator": "eq",
+              "value": "full"
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Quarantäneprotokoll ausdrücklich angefordert." }
+            {
+              "speaker": "mira",
+              "text": "Quarantäneprotokoll ausdrücklich angefordert."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "report_honesty", "operator": "eq", "value": "false" }
+            {
+              "state": "report_honesty",
+              "operator": "eq",
+              "value": "false"
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Im Bericht steht nichts von möglicher biologischer Aktivität." }
+            {
+              "speaker": "mira",
+              "text": "Im Bericht steht nichts von möglicher biologischer Aktivität."
+            }
           ]
         }
       ],
       "next": "k7_070_station",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     },
     {
       "id": "k7_070_station",
       "chapter": 7,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Letzte Entscheidung vor der Landezone." },
-        { "speaker": "mira", "text": "Station verriegeln und verlassen. Den vorbereiteten Einsturz auslösen. Oder alles für ein Untersuchungsteam offenlassen." }
+        {
+          "speaker": "mira",
+          "text": "Letzte Entscheidung vor der Landezone."
+        },
+        {
+          "speaker": "mira",
+          "text": "Station verriegeln und verlassen. Den vorbereiteten Einsturz auslösen. Oder alles für ein Untersuchungsteam offenlassen."
+        }
       ],
       "choices": [
         {
@@ -372,8 +881,16 @@
           "next": "k7_080_group_resolve_aksel",
           "requires": [],
           "effects": [
-            { "state": "station_final_choice", "operation": "set", "value": "locked" },
-            { "state": "containment", "operation": "set", "value": "partial" }
+            {
+              "state": "station_final_choice",
+              "operation": "set",
+              "value": "locked"
+            },
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "partial"
+            }
           ]
         },
         {
@@ -381,10 +898,18 @@
           "label": "Den vorbereiteten Einsturz an der Landezone auslösen.",
           "next": "k7_080_group_resolve_aksel",
           "requires": [
-            { "state": "containment", "operator": "eq", "value": "ready" }
+            {
+              "state": "containment",
+              "operator": "eq",
+              "value": "ready"
+            }
           ],
           "effects": [
-            { "state": "station_final_choice", "operation": "set", "value": "destroy" }
+            {
+              "state": "station_final_choice",
+              "operation": "set",
+              "value": "destroy"
+            }
           ]
         },
         {
@@ -393,11 +918,28 @@
           "next": "k7_080_group_resolve_aksel",
           "requires": [],
           "effects": [
-            { "state": "station_final_choice", "operation": "set", "value": "open" },
-            { "state": "containment", "operation": "set", "value": "failed" }
+            {
+              "state": "station_final_choice",
+              "operation": "set",
+              "value": "open"
+            },
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "failed"
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     },
     {
       "id": "k7_080_group_resolve_aksel",
@@ -407,10 +949,18 @@
       "redirects": [
         {
           "requires": [
-            { "state": "aksel_inside_after_return", "operator": "eq", "value": true }
+            {
+              "state": "aksel_inside_after_return",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "evac_aksel", "operation": "set", "value": true }
+            {
+              "state": "evac_aksel",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k7_081_group_resolve_thal"
         },
@@ -419,7 +969,16 @@
           "effects": [],
           "next": "k7_081_group_resolve_thal"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     },
     {
       "id": "k7_081_group_resolve_thal",
@@ -429,10 +988,18 @@
       "redirects": [
         {
           "requires": [
-            { "state": "thal_returning", "operator": "eq", "value": true }
+            {
+              "state": "thal_returning",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "evac_thal", "operation": "set", "value": true }
+            {
+              "state": "evac_thal",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k7_082_group_resolve_kader"
         },
@@ -441,7 +1008,16 @@
           "effects": [],
           "next": "k7_082_group_resolve_kader"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     },
     {
       "id": "k7_082_group_resolve_kader",
@@ -451,10 +1027,18 @@
       "redirects": [
         {
           "requires": [
-            { "state": "kader_state", "operator": "eq", "value": "cooperative" }
+            {
+              "state": "kader_escorted_to_lab",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "evac_kader", "operation": "set", "value": true }
+            {
+              "state": "evac_kader",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k7_083_hoard_resolve"
         },
@@ -463,7 +1047,16 @@
           "effects": [],
           "next": "k7_083_hoard_resolve"
         }
-      ]
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     },
     {
       "id": "k7_083_hoard_resolve",
@@ -473,73 +1066,244 @@
       "redirects": [
         {
           "requires": [
-            { "state": "doses_available", "operator": "eq", "value": 1 },
-            { "state": "mira_treated", "operator": "eq", "value": true },
-            { "state": "evac_aksel", "operator": "eq", "value": true },
-            { "state": "aksel_treated", "operator": "eq", "value": false }
+            {
+              "state": "doses_available",
+              "operator": "eq",
+              "value": 1
+            },
+            {
+              "state": "mira_treated",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "evac_aksel",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "aksel_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "dose_hoarded", "operation": "set", "value": true }
+            {
+              "state": "dose_hoarded",
+              "operation": "set",
+              "value": true
+            }
           ],
-          "next": "k7_090_departure"
+          "next": "k7_085_manifest"
         },
         {
           "requires": [
-            { "state": "doses_available", "operator": "eq", "value": 1 },
-            { "state": "mira_treated", "operator": "eq", "value": true },
-            { "state": "evac_thal", "operator": "eq", "value": true },
-            { "state": "thal_treated", "operator": "eq", "value": false }
+            {
+              "state": "doses_available",
+              "operator": "eq",
+              "value": 1
+            },
+            {
+              "state": "mira_treated",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "evac_thal",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "thal_treated",
+              "operator": "eq",
+              "value": false
+            }
           ],
           "effects": [
-            { "state": "dose_hoarded", "operation": "set", "value": true }
+            {
+              "state": "dose_hoarded",
+              "operation": "set",
+              "value": true
+            }
           ],
-          "next": "k7_090_departure"
+          "next": "k7_085_manifest"
         },
         {
           "requires": [],
           "effects": [],
-          "next": "k7_090_departure"
+          "next": "k7_085_manifest"
         }
-      ]
+      ],
+      "location": {
+        "area": "labor",
+        "room": "analysis",
+        "stationLeft": 49,
+        "stationTop": 27,
+        "interiorLeft": 59,
+        "interiorTop": 25,
+        "activity": "Mira arbeitet im Labor"
+      }
+    },
+    {
+      "id": "k7_085_manifest",
+      "chapter": 7,
+      "delaySeconds": 15,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Thal erstellt das Rettungsmanifest: Menschen, biologische Proben, Beweiskisten und ein Tiertransport."
+        },
+        {
+          "speaker": "mira",
+          "text": "Der Helikopter kann die Menschen aufnehmen. Für Niko müssen wir einen Frachtplatz freihalten; sonst müssten wir an der Landezone Material zurücklassen."
+        }
+      ],
+      "choices": [
+        {
+          "id": "reserve_niko_slot",
+          "label": "Transportplatz für Niko reservieren.",
+          "next": "k7_090_departure",
+          "requires": [],
+          "effects": [
+            {
+              "state": "niko_transport_slot",
+              "operation": "set",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "keep_all_material",
+          "label": "Material vorerst vollständig mitnehmen. An der Landezone entscheiden.",
+          "next": "k7_090_departure",
+          "requires": [],
+          "effects": [
+            {
+              "state": "niko_transport_slot",
+              "operation": "set",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     },
     {
       "id": "k7_090_departure",
       "chapter": 7,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Gruppe steht. Bericht steht. Station ist vorbereitet." },
-        { "speaker": "mira", "text": "Ab jetzt gibt es nur noch den Sender und die Landezone." }
+        {
+          "speaker": "mira",
+          "text": "Das Manifest steht. Die Station ist vorbereitet."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wir brechen jetzt zur Landezone auf. Ich kann unterwegs nur an den Leinenmasten schreiben."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "evac_aksel", "operator": "eq", "value": true }
+            {
+              "state": "evac_aksel",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Aksel kommt mit." }
+            {
+              "speaker": "mira",
+              "text": "Aksel kommt mit."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "evac_thal", "operator": "eq", "value": true }
+            {
+              "state": "evac_thal",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Thal trägt den Beweisbehälter." }
+            {
+              "speaker": "mira",
+              "text": "Thal trägt den Beweisbehälter."
+            }
           ]
         },
         {
           "requires": [
-            { "state": "evac_kader", "operator": "eq", "value": true }
+            {
+              "state": "evac_kader",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Kader folgt mit Abstand." }
+            {
+              "speaker": "mira",
+              "text": "Kader folgt mit Abstand."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Niko ist in der gepolsterten Box auf dem Lastschlitten. Er beschwert sich ohne Pause."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "niko_found",
+              "operator": "eq",
+              "value": false
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Von Niko fehlt jede Spur. Ich habe Wasser stehen lassen und zweimal gerufen. Wir können das Wetterfenster nicht länger halten."
+            }
           ]
         }
       ],
       "effects": [
-        { "state": "chapter_07_complete", "operation": "set", "value": true }
+        {
+          "state": "chapter_07_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
-      "handoff": "chapter_08"
+      "handoff": "chapter_08",
+      "location": {
+        "area": "quarters",
+        "room": "radio",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 36,
+        "interiorTop": 25,
+        "activity": "Mira bereitet die Evakuierung vor"
+      }
     }
   ]
 }

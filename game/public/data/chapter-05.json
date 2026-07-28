@@ -15,38 +15,73 @@
       "redirects": [
         {
           "requires": [
-            { "state": "global_time", "operator": "gte", "value": 8 }
+            {
+              "state": "global_time",
+              "operator": "gte",
+              "value": 8
+            }
           ],
           "effects": [
-            { "state": "kader_state", "operation": "set", "value": "changed" }
+            {
+              "state": "kader_state",
+              "operation": "set",
+              "value": "changed"
+            }
           ],
           "next": "k5_010_pack"
         },
         {
           "requires": [
-            { "state": "kader_relation", "operator": "gte", "value": 1 }
+            {
+              "state": "kader_relation",
+              "operator": "gte",
+              "value": 1
+            }
           ],
           "effects": [
-            { "state": "kader_state", "operation": "set", "value": "cooperative" }
+            {
+              "state": "kader_state",
+              "operation": "set",
+              "value": "cooperative"
+            }
           ],
           "next": "k5_010_pack"
         },
         {
           "requires": [],
           "effects": [
-            { "state": "kader_state", "operation": "set", "value": "independent" }
+            {
+              "state": "kader_state",
+              "operation": "set",
+              "value": "independent"
+            }
           ],
           "next": "k5_010_pack"
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_010_pack",
       "chapter": 5,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Zum Bohrturm kann ich zwei große Ausrüstungsstücke tragen. Mit einer Begleitung vielleicht drei." },
-        { "speaker": "mira", "text": "Was wir nicht mitnehmen, fehlt uns unten. Was wir mitnehmen, macht den Abstieg langsamer." }
+        {
+          "speaker": "mira",
+          "text": "Zum Bohrturm kann ich zwei große Ausrüstungsstücke tragen. Mit einer Begleitung vielleicht drei."
+        },
+        {
+          "speaker": "mira",
+          "text": "Was wir nicht mitnehmen, fehlt uns unten. Was wir mitnehmen, macht den Abstieg langsamer."
+        }
       ],
       "choices": [
         {
@@ -54,12 +89,28 @@
           "label": "Schutzanzug einpacken.",
           "next": "k5_011_packed",
           "requires": [
-            { "state": "pack_protection", "operator": "eq", "value": false },
-            { "state": "pack_count", "operator": "lt", "value": 3 }
+            {
+              "state": "pack_protection",
+              "operator": "eq",
+              "value": false
+            },
+            {
+              "state": "pack_count",
+              "operator": "lt",
+              "value": 3
+            }
           ],
           "effects": [
-            { "state": "pack_protection", "operation": "set", "value": true },
-            { "state": "pack_count", "operation": "add", "value": 1 }
+            {
+              "state": "pack_protection",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "pack_count",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -67,12 +118,28 @@
           "label": "Versiegelungsschaum und Bolzen einpacken.",
           "next": "k5_011_packed",
           "requires": [
-            { "state": "pack_sealant", "operator": "eq", "value": false },
-            { "state": "pack_count", "operator": "lt", "value": 3 }
+            {
+              "state": "pack_sealant",
+              "operator": "eq",
+              "value": false
+            },
+            {
+              "state": "pack_count",
+              "operator": "lt",
+              "value": 3
+            }
           ],
           "effects": [
-            { "state": "pack_sealant", "operation": "set", "value": true },
-            { "state": "pack_count", "operation": "add", "value": 1 }
+            {
+              "state": "pack_sealant",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "pack_count",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -80,12 +147,28 @@
           "label": "Großen Probenbehälter einpacken.",
           "next": "k5_011_packed",
           "requires": [
-            { "state": "pack_container", "operator": "eq", "value": false },
-            { "state": "pack_count", "operator": "lt", "value": 3 }
+            {
+              "state": "pack_container",
+              "operator": "eq",
+              "value": false
+            },
+            {
+              "state": "pack_count",
+              "operator": "lt",
+              "value": 3
+            }
           ],
           "effects": [
-            { "state": "pack_container", "operation": "set", "value": true },
-            { "state": "pack_count", "operation": "add", "value": 1 }
+            {
+              "state": "pack_container",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "pack_count",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -93,12 +176,28 @@
           "label": "Wärmeakku einpacken.",
           "next": "k5_011_packed",
           "requires": [
-            { "state": "pack_heat", "operator": "eq", "value": false },
-            { "state": "pack_count", "operator": "lt", "value": 3 }
+            {
+              "state": "pack_heat",
+              "operator": "eq",
+              "value": false
+            },
+            {
+              "state": "pack_count",
+              "operator": "lt",
+              "value": 3
+            }
           ],
           "effects": [
-            { "state": "pack_heat", "operation": "set", "value": true },
-            { "state": "pack_count", "operation": "add", "value": 1 }
+            {
+              "state": "pack_heat",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "pack_count",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -106,12 +205,28 @@
           "label": "Relais-Ersatzakku einpacken.",
           "next": "k5_011_packed",
           "requires": [
-            { "state": "pack_relay_battery", "operator": "eq", "value": false },
-            { "state": "pack_count", "operator": "lt", "value": 3 }
+            {
+              "state": "pack_relay_battery",
+              "operator": "eq",
+              "value": false
+            },
+            {
+              "state": "pack_count",
+              "operator": "lt",
+              "value": 3
+            }
           ],
           "effects": [
-            { "state": "pack_relay_battery", "operation": "set", "value": true },
-            { "state": "pack_count", "operation": "add", "value": 1 }
+            {
+              "state": "pack_relay_battery",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "pack_count",
+              "operation": "add",
+              "value": 1
+            }
           ]
         },
         {
@@ -119,67 +234,149 @@
           "label": "Ausrüstung bestätigen und aufbrechen.",
           "next": "k5_020_tower",
           "requires": [
-            { "state": "pack_count", "operator": "gte", "value": 2 }
+            {
+              "state": "pack_count",
+              "operator": "gte",
+              "value": 2
+            }
           ],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_011_packed",
       "chapter": 5,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Verstaut. Noch kann ich die Auswahl ergänzen oder aufbrechen." }
+        {
+          "speaker": "mira",
+          "text": "Verstaut. Noch kann ich die Auswahl ergänzen oder aufbrechen."
+        }
       ],
       "next": "k5_010_pack",
-      "nextDelaySeconds": 10
+      "nextDelaySeconds": 10,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_020_tower",
       "chapter": 5,
       "delaySeconds": 540,
       "messages": [
-        { "speaker": "mira", "text": "Bohrturm erreicht. Eine Seitenwand ist nach außen gebogen. Nicht nach innen." },
-        { "speaker": "mira", "text": "Als hätte der Druck im Gebäude gesessen." },
-        { "speaker": "mira", "text": "Die Luft riecht süßlich. Ozon und etwas Organisches. Schutz bleibt zu." }
+        {
+          "speaker": "mira",
+          "text": "Bohrturm erreicht. Eine Seitenwand ist nach außen gebogen. Nicht nach innen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Als hätte der Druck im Gebäude gesessen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Luft riecht süßlich. Ozon und etwas Organisches. Schutz bleibt zu."
+        }
       ],
       "next": "k5_030_accident_log",
-      "nextDelaySeconds": 60
+      "nextDelaySeconds": 60,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_030_accident_log",
       "chapter": 5,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Unfallbericht: Emil Varga. Schnitt an der linken Hand beim Bergen von Kern 14C." },
-        { "speaker": "mira", "text": "Desinfiziert, vier Stiche, zur Arbeit zurück. Am Folgetag war die Wunde vollständig geschlossen." },
-        { "speaker": "mira", "text": "Dafür gibt es ein Foto. Nach zwölf Stunden." }
+        {
+          "speaker": "mira",
+          "text": "Unfallbericht: Emil Varga. Schnitt an der linken Hand beim Bergen von Kern 14C."
+        },
+        {
+          "speaker": "mira",
+          "text": "Desinfiziert, vier Stiche, zur Arbeit zurück. Am Folgetag war die Wunde vollständig geschlossen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Dafür gibt es ein Foto. Nach zwölf Stunden."
+        }
       ],
       "variants": [
         {
           "requires": [
-            { "state": "patient_zero_clue", "operator": "eq", "value": true }
+            {
+              "state": "patient_zero_clue",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "appendMessages": [
-            { "speaker": "mira", "text": "Sein Ausweis lag draußen im Schnee. Vier Tage nach diesem Eintrag." }
+            {
+              "speaker": "mira",
+              "text": "Sein Ausweis lag draußen im Schnee. Vier Tage nach diesem Eintrag."
+            }
           ]
         }
       ],
       "effects": [
-        { "state": "patient_zero_confirmed", "operation": "set", "value": true },
-        { "state": "evidence_level", "operation": "add", "value": 1 }
+        {
+          "state": "patient_zero_confirmed",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "evidence_level",
+          "operation": "add",
+          "value": 1
+        }
       ],
       "next": "k5_040_descent",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_040_descent",
       "chapter": 5,
       "delaySeconds": 40,
       "messages": [
-        { "speaker": "mira", "text": "Lift ohne Strom. Wartungsleiter bis Ebene minus drei." },
-        { "speaker": "kader", "text": "Kommen Sie allein." }
+        {
+          "speaker": "mira",
+          "text": "Lift ohne Strom. Wartungsleiter bis Ebene minus drei."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Kommen Sie allein.“"
+        }
       ],
       "choices": [
         {
@@ -188,7 +385,11 @@
           "next": "k5_050_kader_resolve",
           "requires": [],
           "effects": [
-            { "state": "kader_companion_plan", "operation": "set", "value": "alone" }
+            {
+              "state": "kader_companion_plan",
+              "operation": "set",
+              "value": "alone"
+            }
           ]
         },
         {
@@ -196,11 +397,23 @@
           "label": "Eine verfügbare Begleitung offen mitnehmen.",
           "next": "k5_050_kader_resolve",
           "requires": [
-            { "state": "thal_returning", "operator": "eq", "value": true }
+            {
+              "state": "thal_returning",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "kader_companion_plan", "operation": "set", "value": "open" },
-            { "state": "kader_relation", "operation": "add", "value": -1 }
+            {
+              "state": "kader_companion_plan",
+              "operation": "set",
+              "value": "open"
+            },
+            {
+              "state": "kader_relation",
+              "operation": "add",
+              "value": -1
+            }
           ]
         },
         {
@@ -208,10 +421,18 @@
           "label": "Thal oben warten lassen.",
           "next": "k5_050_kader_resolve",
           "requires": [
-            { "state": "thal_returning", "operator": "eq", "value": true }
+            {
+              "state": "thal_returning",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "kader_companion_plan", "operation": "set", "value": "waiting" }
+            {
+              "state": "kader_companion_plan",
+              "operation": "set",
+              "value": "waiting"
+            }
           ]
         },
         {
@@ -219,14 +440,35 @@
           "label": "Thal heimlich nachkommen lassen.",
           "next": "k5_050_kader_resolve",
           "requires": [
-            { "state": "thal_returning", "operator": "eq", "value": true }
+            {
+              "state": "thal_returning",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "kader_companion_plan", "operation": "set", "value": "hidden" },
-            { "state": "kader_relation", "operation": "add", "value": -1 }
+            {
+              "state": "kader_companion_plan",
+              "operation": "set",
+              "value": "hidden"
+            },
+            {
+              "state": "kader_relation",
+              "operation": "add",
+              "value": -1
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_050_kader_resolve",
@@ -236,14 +478,22 @@
       "redirects": [
         {
           "requires": [
-            { "state": "kader_state", "operator": "eq", "value": "cooperative" }
+            {
+              "state": "kader_state",
+              "operator": "eq",
+              "value": "cooperative"
+            }
           ],
           "effects": [],
           "next": "k5_051_cooperative"
         },
         {
           "requires": [
-            { "state": "kader_state", "operator": "eq", "value": "changed" }
+            {
+              "state": "kader_state",
+              "operator": "eq",
+              "value": "changed"
+            }
           ],
           "effects": [],
           "next": "k5_053_changed"
@@ -253,50 +503,124 @@
           "effects": [],
           "next": "k5_052_independent"
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_051_cooperative",
       "chapter": 5,
       "delaySeconds": 240,
       "messages": [
-        { "speaker": "mira", "text": "Kader sitzt vor der Kernkammer. Schutzanzug, Visier offen." },
-        { "speaker": "kader", "text": "Ich habe den Bericht geändert. Wenn Sie eine Erklärung brauchen, bekommen Sie keine gute." },
-        { "speaker": "kader", "text": "Wir hatten drei Monate, bevor das Projekt gestrichen worden wäre. Ich wollte Gewissheit." }
+        {
+          "speaker": "mira",
+          "text": "Kader sitzt vor der Kernkammer. Schutzanzug, Visier offen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Ich habe den Bericht geändert. Wenn Sie eine Erklärung brauchen, bekommen Sie keine gute.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Wir hatten drei Monate, bevor das Projekt gestrichen worden wäre. Ich wollte Gewissheit.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader bleibt im Sicherheitsraum, bis Aksel ihm die Steuerung sperrt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wenn wir ihn später untersuchen oder mitnehmen wollen, müssen wir ihn ausdrücklich vom Bohrturm ins Labor eskortieren. Von selbst geht er nirgends hin."
+        }
       ],
       "next": "k5_060_truth",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_052_independent",
       "chapter": 5,
       "delaySeconds": 240,
       "messages": [
-        { "speaker": "mira", "text": "Kader arbeitet am Bohrkopf. Werkzeug und Probenbehälter liegen offen." },
-        { "speaker": "kader", "text": "Sie hätten nicht kommen sollen. Jetzt helfen Sie oder gehen wieder." }
+        {
+          "speaker": "mira",
+          "text": "Kader arbeitet am Bohrkopf. Werkzeug und Probenbehälter liegen offen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Sie hätten nicht kommen sollen. Jetzt helfen Sie oder gehen wieder.“"
+        }
       ],
       "next": "k5_060_truth",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_053_changed",
       "chapter": 5,
       "delaySeconds": 240,
       "messages": [
-        { "speaker": "mira", "text": "Kader steht mit der Stirn an der Sichtscheibe." },
-        { "speaker": "kader", "text": "Es bildet keine Kolonie. Kolonie ist das falsche Wort." },
-        { "speaker": "mira", "text": "Dann dreht er sich um und begrüßt mich, als wäre ich gerade erst angekommen." }
+        {
+          "speaker": "mira",
+          "text": "Kader steht mit der Stirn an der Sichtscheibe."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Es bildet keine Kolonie. Kolonie ist das falsche Wort.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Dann dreht er sich um und begrüßt mich, als wäre ich gerade erst angekommen."
+        }
       ],
       "next": "k5_060_truth",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_060_truth",
       "chapter": 5,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "kader", "text": "Ich dachte, wir beobachten Reaktion. In Wahrheit beobachtete es uns." },
-        { "speaker": "kader", "text": "Das ist eine Metapher, Lindner. Schreiben Sie nicht, ich hätte Bewusstsein behauptet." }
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Ich dachte, wir beobachten Reaktion. In Wahrheit beobachtete es uns.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Das ist eine Metapher, Lindner. Schreiben Sie nicht, ich hätte Bewusstsein behauptet.“"
+        }
       ],
       "choices": [
         {
@@ -311,7 +635,11 @@
           "label": "Frag nach Thals blockiertem Warnruf.",
           "next": "k5_062_warning",
           "requires": [
-            { "state": "kader_motive_clue", "operator": "eq", "value": true }
+            {
+              "state": "kader_motive_clue",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": []
         },
@@ -320,55 +648,131 @@
           "label": "Frag nach dem älteren Projekt.",
           "next": "k5_063_old",
           "requires": [
-            { "state": "evidence_level", "operator": "gte", "value": 3 }
+            {
+              "state": "evidence_level",
+              "operator": "gte",
+              "value": 3
+            }
           ],
-          "effects": [
-            { "state": "ice_coordinates_found", "operation": "set", "value": true }
+        "effects": [
+          {
+            "state": "ice_coordinates_found",
+            "operation": "set",
+            "value": true
+          },
+          {
+            "state": "kader_escorted_to_lab",
+            "operation": "set",
+            "value": true
+          }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_061_varga",
       "chapter": 5,
       "delaySeconds": 45,
       "messages": [
-        { "speaker": "kader", "text": "Varga war verletzt. Er war auch der Einzige, der noch in den Schacht steigen wollte." },
-        { "speaker": "kader", "text": "Ich habe beides für Mut gehalten." }
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Varga war verletzt. Er war auch der Einzige, der noch in den Schacht steigen wollte.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Ich habe beides für Mut gehalten.“"
+        }
       ],
       "next": "k5_070_chamber",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_062_warning",
       "chapter": 5,
       "delaySeconds": 45,
       "messages": [
-        { "speaker": "kader", "text": "Ich wollte vier Stunden. Nur vier. Für eine zweite Messung." },
-        { "speaker": "mira", "text": "Vier Stunden waren genug, damit niemand mehr wusste, wem er trauen konnte." }
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Ich wollte vier Stunden. Nur vier. Für eine zweite Messung.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Vier Stunden waren genug, damit niemand mehr wusste, wem er trauen konnte."
+        }
       ],
       "next": "k5_070_chamber",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_063_old",
       "chapter": 5,
       "delaySeconds": 45,
       "messages": [
-        { "speaker": "kader", "text": "Eine Notunterkunft in einer Gletscherspalte. Elf Kilometer südöstlich." },
-        { "speaker": "kader", "text": "Das Projekt ist älter als diese Station. Ich fand die Akte erst nach Vargas Unfall." }
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Eine Notunterkunft in einer Gletscherspalte. Elf Kilometer südöstlich.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Das Projekt ist älter als diese Station. Ich fand die Akte erst nach Vargas Unfall.“"
+        }
       ],
       "next": "k5_070_chamber",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_070_chamber",
       "chapter": 5,
       "delaySeconds": 40,
       "messages": [
-        { "speaker": "mira", "text": "Kernkammer. Der Bohrkopf steckt noch im Eis. Daneben ein handbreiter Riss." },
-        { "speaker": "mira", "text": "Auf der Oberfläche liegt etwas wie Reif. Es bildet Linien gegen die Schwerkraft." },
-        { "speaker": "kader", "text": "Wir können schließen, nehmen, was wir brauchen, oder tiefer gehen." }
+        {
+          "speaker": "mira",
+          "text": "Kernkammer. Der Bohrkopf steckt noch im Eis. Daneben ein handbreiter Riss."
+        },
+        {
+          "speaker": "mira",
+          "text": "Auf der Oberfläche liegt etwas wie Reif. Es bildet Linien gegen die Schwerkraft."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Wir können schließen, nehmen, was wir brauchen, oder tiefer gehen.“"
+        }
       ],
       "choices": [
         {
@@ -376,10 +780,18 @@
           "label": "Versiegle den Riss.",
           "next": "k5_071_seal",
           "requires": [
-            { "state": "pack_sealant", "operator": "eq", "value": true }
+            {
+              "state": "pack_sealant",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "containment", "operation": "set", "value": "partial" }
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "partial"
+            }
           ]
         },
         {
@@ -387,10 +799,18 @@
           "label": "Versiegle den Riss mit Kaders Material.",
           "next": "k5_071_seal",
           "requires": [
-            { "state": "kader_state", "operator": "eq", "value": "cooperative" }
+            {
+              "state": "kader_state",
+              "operator": "eq",
+              "value": "cooperative"
+            }
           ],
           "effects": [
-            { "state": "containment", "operation": "set", "value": "partial" }
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "partial"
+            }
           ]
         },
         {
@@ -405,7 +825,11 @@
           "label": "Bohre bis zur zweiten Grenzschicht.",
           "next": "k5_074_deep_resolve",
           "requires": [
-            { "state": "generator_state", "operator": "eq", "value": "stable" }
+            {
+              "state": "generator_state",
+              "operator": "eq",
+              "value": "stable"
+            }
           ],
           "effects": []
         },
@@ -414,22 +838,50 @@
           "label": "Bohre bis zur zweiten Grenzschicht.",
           "next": "k5_075_drill_warning",
           "requires": [
-            { "state": "generator_state", "operator": "neq", "value": "stable" }
+            {
+              "state": "generator_state",
+              "operator": "neq",
+              "value": "stable"
+            }
           ],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "core_chamber",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira arbeitet an der Kernkammer"
+      }
     },
     {
       "id": "k5_071_seal",
       "chapter": 5,
       "delaySeconds": 360,
       "messages": [
-        { "speaker": "mira", "text": "Schaum im Riss. Bolzen durch die Wartungsplatte." },
-        { "speaker": "mira", "text": "Die Linien ziehen sich zurück, bevor der Schaum sie berührt. Wahrscheinlich Wärmegradient." }
+        {
+          "speaker": "mira",
+          "text": "Schaum im Riss. Bolzen durch die Wartungsplatte."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Linien ziehen sich zurück, bevor der Schaum sie berührt. Wahrscheinlich Wärmegradient."
+        }
       ],
       "next": "k5_080_kader_resolution",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "core_chamber",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira arbeitet an der Kernkammer"
+      }
     },
     {
       "id": "k5_072_sample_resolve",
@@ -439,57 +891,135 @@
       "redirects": [
         {
           "requires": [
-            { "state": "pack_protection", "operator": "eq", "value": true },
-            { "state": "pack_container", "operator": "eq", "value": true }
+            {
+              "state": "pack_protection",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "state": "pack_container",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "cure_material", "operation": "add", "value": 1 }
+            {
+              "state": "cure_material",
+              "operation": "add",
+              "value": 1
+            }
           ],
           "next": "k5_073_sample_safe"
         },
         {
           "requires": [
-            { "state": "infection_source", "operator": "eq", "value": "none" }
+            {
+              "state": "infection_source",
+              "operator": "eq",
+              "value": "none"
+            }
           ],
           "effects": [
-            { "state": "infection_source", "operation": "set", "value": "drill_sample" },
-            { "state": "clarity", "operation": "add", "value": -1 },
-            { "state": "cure_material", "operation": "add", "value": 1 }
+            {
+              "state": "infection_source",
+              "operation": "set",
+              "value": "drill_sample"
+            },
+            {
+              "state": "clarity",
+              "operation": "add",
+              "value": -1
+            },
+            {
+              "state": "cure_material",
+              "operation": "add",
+              "value": 1
+            }
           ],
           "next": "k5_073_sample_risk"
         },
         {
           "requires": [],
           "effects": [
-            { "state": "clarity", "operation": "add", "value": -1 },
-            { "state": "cure_material", "operation": "add", "value": 1 }
+            {
+              "state": "clarity",
+              "operation": "add",
+              "value": -1
+            },
+            {
+              "state": "cure_material",
+              "operation": "add",
+              "value": 1
+            }
           ],
           "next": "k5_073_sample_risk"
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "core_chamber",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira arbeitet an der Kernkammer"
+      }
     },
     {
       "id": "k5_073_sample_safe",
       "chapter": 5,
       "delaySeconds": 300,
       "messages": [
-        { "speaker": "mira", "text": "Probe isoliert. Doppelte Wandung. Kein Druckverlust." },
-        { "speaker": "mira", "text": "Genug für einen Hemmstoffansatz." }
+        {
+          "speaker": "mira",
+          "text": "Probe isoliert. Doppelte Wandung. Kein Druckverlust."
+        },
+        {
+          "speaker": "mira",
+          "text": "Genug für einen Hemmstoffansatz."
+        }
       ],
       "next": "k5_080_kader_resolution",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "core_chamber",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira arbeitet an der Kernkammer"
+      }
     },
     {
       "id": "k5_073_sample_risk",
       "chapter": 5,
       "delaySeconds": 300,
       "messages": [
-        { "speaker": "mira", "text": "Beim Schließen beschlägt mein Visier von innen." },
-        { "speaker": "mira", "text": "Ich trage kein Visier. Entschuldige. Für einen Moment dachte ich—" },
-        { "speaker": "mira", "text": "Die Probe ist verschlossen." }
+        {
+          "speaker": "mira",
+          "text": "Beim Schließen beschlägt mein Visier von innen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich trage kein Visier. Entschuldige. Für einen Moment dachte ich—"
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Probe ist verschlossen."
+        }
       ],
       "next": "k5_080_kader_resolution",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "core_chamber",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira arbeitet an der Kernkammer"
+      }
     },
     {
       "id": "k5_074_deep_resolve",
@@ -499,45 +1029,108 @@
       "redirects": [
         {
           "requires": [
-            { "state": "pack_protection", "operator": "eq", "value": true }
+            {
+              "state": "pack_protection",
+              "operator": "eq",
+              "value": true
+            }
           ],
           "effects": [
-            { "state": "cure_material", "operation": "add", "value": 2 },
-            { "state": "containment", "operation": "set", "value": "unstable" },
-            { "state": "ice_coordinates_found", "operation": "set", "value": true }
+            {
+              "state": "cure_material",
+              "operation": "add",
+              "value": 2
+            },
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "unstable"
+            },
+            {
+              "state": "ice_coordinates_found",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k5_078_deep_done"
         },
         {
           "requires": [
-            { "state": "infection_source", "operator": "eq", "value": "none" }
+            {
+              "state": "infection_source",
+              "operator": "eq",
+              "value": "none"
+            }
           ],
           "effects": [
-            { "state": "infection_source", "operation": "set", "value": "deep_core" },
-            { "state": "cure_material", "operation": "add", "value": 2 },
-            { "state": "containment", "operation": "set", "value": "unstable" },
-            { "state": "ice_coordinates_found", "operation": "set", "value": true }
+            {
+              "state": "infection_source",
+              "operation": "set",
+              "value": "deep_core"
+            },
+            {
+              "state": "cure_material",
+              "operation": "add",
+              "value": 2
+            },
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "unstable"
+            },
+            {
+              "state": "ice_coordinates_found",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k5_078_deep_done"
         },
         {
           "requires": [],
           "effects": [
-            { "state": "cure_material", "operation": "add", "value": 2 },
-            { "state": "containment", "operation": "set", "value": "unstable" },
-            { "state": "ice_coordinates_found", "operation": "set", "value": true }
+            {
+              "state": "cure_material",
+              "operation": "add",
+              "value": 2
+            },
+            {
+              "state": "containment",
+              "operation": "set",
+              "value": "unstable"
+            },
+            {
+              "state": "ice_coordinates_found",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k5_078_deep_done"
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_075_drill_warning",
       "chapter": 5,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Die Anlage ist nicht stabil. Der Bohrkopf läuft bereits unrund." },
-        { "speaker": "mira", "text": "Tieferbohren kann die Kammer öffnen." }
+        {
+          "speaker": "mira",
+          "text": "Die Anlage ist nicht stabil. Der Bohrkopf läuft bereits unrund."
+        },
+        {
+          "speaker": "mira",
+          "text": "Tieferbohren kann die Kammer öffnen."
+        }
       ],
       "choices": [
         {
@@ -554,15 +1147,30 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "core_chamber",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira arbeitet an der Kernkammer"
+      }
     },
     {
       "id": "k5_076_final_warning",
       "chapter": 5,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Die Verriegelung hält den nächsten Lastsprung wahrscheinlich nicht." },
-        { "speaker": "mira", "text": "Wenn ich starte, können wir die Kammer nicht mehr kontrolliert schließen." }
+        {
+          "speaker": "mira",
+          "text": "Die Verriegelung hält den nächsten Lastsprung wahrscheinlich nicht."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wenn ich starte, können wir die Kammer nicht mehr kontrolliert schließen."
+        }
       ],
       "choices": [
         {
@@ -579,30 +1187,75 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_077_radio_silence",
       "chapter": 5,
       "delaySeconds": 180,
       "messages": [
-        { "speaker": "mira", "text": "Der Bohrkopf springt. Etwas trifft die Sichtscheibe von innen." },
-        { "speaker": "mira", "text": "Kader sagt meinen Namen. Dann sagt er ihn noch einmal aus dem Funkgerät auf dem Boden." },
-        { "speaker": "system", "text": "[SIGNAL VERLOREN]" }
+        {
+          "speaker": "mira",
+          "text": "Der Bohrkopf springt. Etwas trifft die Sichtscheibe von innen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt meinen Namen. Dann sagt er ihn noch einmal aus dem Funkgerät auf dem Boden."
+        },
+        {
+          "speaker": "system",
+          "text": "[SIGNAL VERLOREN]"
+        }
       ],
-      "ending": "ending_radio_silence"
+      "ending": "ending_radio_silence",
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_078_deep_done",
       "chapter": 5,
       "delaySeconds": 600,
       "messages": [
-        { "speaker": "mira", "text": "Zweite Grenzschicht erreicht. Das Eis darunter ist grau und von feinen Kanälen durchzogen." },
-        { "speaker": "kader", "text": "Genug Material. Mehr als genug." },
-        { "speaker": "mira", "text": "Der Riss ist größer geworden. Die Kammer bleibt nicht dauerhaft dicht." }
+        {
+          "speaker": "mira",
+          "text": "Zweite Grenzschicht erreicht. Das Eis darunter ist grau und von feinen Kanälen durchzogen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Genug Material. Mehr als genug.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Der Riss ist größer geworden. Die Kammer bleibt nicht dauerhaft dicht."
+        }
       ],
       "next": "k5_080_kader_resolution",
-      "nextDelaySeconds": 40
+      "nextDelaySeconds": 40,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_080_kader_resolution",
@@ -612,17 +1265,29 @@
       "redirects": [
         {
           "requires": [
-            { "state": "kader_state", "operator": "eq", "value": "changed" }
+            {
+              "state": "kader_state",
+              "operator": "eq",
+              "value": "changed"
+            }
           ],
           "effects": [],
           "next": "k5_081_changed_choice"
         },
         {
           "requires": [
-            { "state": "kader_state", "operator": "eq", "value": "cooperative" }
+            {
+              "state": "kader_state",
+              "operator": "eq",
+              "value": "cooperative"
+            }
           ],
           "effects": [
-            { "state": "ice_coordinates_found", "operation": "set", "value": true }
+            {
+              "state": "ice_coordinates_found",
+              "operation": "set",
+              "value": true
+            }
           ],
           "next": "k5_083_coordinates"
         },
@@ -631,15 +1296,30 @@
           "effects": [],
           "next": "k5_082_independent_end"
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_081_changed_choice",
       "chapter": 5,
       "delaySeconds": 30,
       "messages": [
-        { "speaker": "mira", "text": "Kader greift nach dem Probenverschluss. Nicht nach mir." },
-        { "speaker": "kader", "text": "Sie trennen etwas, das bereits verbunden ist." }
+        {
+          "speaker": "mira",
+          "text": "Kader greift nach dem Probenverschluss. Nicht nach mir."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Sie trennen etwas, das bereits verbunden ist.“"
+        }
       ],
       "choices": [
         {
@@ -647,11 +1327,23 @@
           "label": "Halte ihn körperlich auf.",
           "next": "k5_083_coordinates",
           "requires": [
-            { "state": "infection_source", "operator": "eq", "value": "none" }
+            {
+              "state": "infection_source",
+              "operator": "eq",
+              "value": "none"
+            }
           ],
           "effects": [
-            { "state": "infection_source", "operation": "set", "value": "kader_contact" },
-            { "state": "kader_state", "operation": "set", "value": "missing" }
+            {
+              "state": "infection_source",
+              "operation": "set",
+              "value": "kader_contact"
+            },
+            {
+              "state": "kader_state",
+              "operation": "set",
+              "value": "missing"
+            }
           ]
         },
         {
@@ -660,7 +1352,11 @@
           "next": "k5_083_coordinates",
           "requires": [],
           "effects": [
-            { "state": "kader_state", "operation": "set", "value": "missing" }
+            {
+              "state": "kader_state",
+              "operation": "set",
+              "value": "missing"
+            }
           ]
         },
         {
@@ -668,41 +1364,99 @@
           "label": "Erinnere ihn an Thals Bericht und Varga.",
           "next": "k5_083_coordinates",
           "requires": [
-            { "state": "evidence_level", "operator": "gte", "value": 4 },
-            { "state": "kader_relation", "operator": "gte", "value": 0 }
+            {
+              "state": "evidence_level",
+              "operator": "gte",
+              "value": 4
+            },
+            {
+              "state": "kader_relation",
+              "operator": "gte",
+              "value": 0
+            }
           ],
           "effects": [
-            { "state": "kader_state", "operation": "set", "value": "cooperative" },
-            { "state": "ice_coordinates_found", "operation": "set", "value": true }
+            {
+              "state": "kader_state",
+              "operation": "set",
+              "value": "cooperative"
+            },
+            {
+              "state": "ice_coordinates_found",
+              "operation": "set",
+              "value": true
+            }
           ]
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_082_independent_end",
       "chapter": 5,
       "delaySeconds": 90,
       "messages": [
-        { "speaker": "kader", "text": "Ich bleibe hier. Jemand muss wissen, ob die Kammer hält." },
-        { "speaker": "mira", "text": "Er gibt mir seine Notizen nicht. Nur einen Blick auf eine alte Koordinate." }
+        {
+          "speaker": "mira",
+          "text": "Kader sagt über den lokalen Stationskanal: „Ich bleibe hier. Jemand muss wissen, ob die Kammer hält.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Er gibt mir seine Notizen nicht. Nur einen Blick auf eine alte Koordinate."
+        }
       ],
       "effects": [
-        { "state": "ice_coordinates_found", "operation": "set", "value": true }
+        {
+          "state": "ice_coordinates_found",
+          "operation": "set",
+          "value": true
+        }
       ],
       "next": "k5_083_coordinates",
-      "nextDelaySeconds": 30
+      "nextDelaySeconds": 30,
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_083_coordinates",
       "chapter": 5,
       "delaySeconds": 60,
       "messages": [
-        { "speaker": "mira", "text": "Gletscherspalte elf Kilometer südöstlich. Alte Notunterkunft. In keinem aktuellen Stationsplan." },
-        { "speaker": "mira", "text": "Dort liegt Material aus dem früheren Projekt. Das Rettungsfenster wartet nicht." }
+        {
+          "speaker": "mira",
+          "text": "Gletscherspalte elf Kilometer südöstlich. Alte Notunterkunft. In keinem aktuellen Stationsplan."
+        },
+        {
+          "speaker": "mira",
+          "text": "Dort liegt Material aus dem früheren Projekt. Das Rettungsfenster wartet nicht."
+        }
       ],
       "effects": [
-        { "state": "ice_coordinates_found", "operation": "set", "value": true },
-        { "state": "chapter_05_complete", "operation": "set", "value": true }
+        {
+          "state": "ice_coordinates_found",
+          "operation": "set",
+          "value": true
+        },
+        {
+          "state": "chapter_05_complete",
+          "operation": "set",
+          "value": true
+        }
       ],
       "choices": [
         {
@@ -719,25 +1473,79 @@
           "requires": [],
           "effects": []
         }
-      ]
+      ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_090_to_seven",
       "chapter": 5,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Zurück zum Labor. Wir arbeiten mit dem, was wir haben." }
+        {
+          "speaker": "mira",
+          "text": "Zurück zum Labor. Wir arbeiten mit dem, was wir haben."
+        }
       ],
-      "handoff": "chapter_07"
+      "handoff": "chapter_07",
+      "variants": [
+        {
+          "requires": [
+            {
+              "state": "kader_state",
+              "operator": "eq",
+              "value": "cooperative"
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Aksel geht hinter Kader, ich vor ihm. Wir bringen ihn gemeinsam zum Labor."
+            },
+            {
+              "speaker": "mira",
+              "text": "Er ist nicht plötzlich Teil unserer Gruppe. Er ist ein Gefangener, ein Zeuge und vielleicht ein Patient."
+            }
+          ]
+        }
+  ],
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     },
     {
       "id": "k5_091_to_six",
       "chapter": 5,
       "delaySeconds": 120,
       "messages": [
-        { "speaker": "mira", "text": "Dann zur Spalte. Wenn wir gehen, gibt es keinen zweiten Versuch." }
+        {
+          "speaker": "mira",
+          "text": "Dann zur Spalte. Wenn wir gehen, gibt es keinen zweiten Versuch."
+        }
       ],
-      "handoff": "chapter_06"
+      "handoff": "chapter_06",
+      "location": {
+        "area": "tower",
+        "room": "platform",
+        "stationLeft": 81,
+        "stationTop": 58,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist im Bohrturm"
+      }
     }
   ]
 }

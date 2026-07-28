@@ -233,7 +233,7 @@ function makeSession() {
   });
 
   const view = session.enter();
-  assert.equal(view.id, "k7_010_synthesis");
+  assert.equal(view.id, "k7_005_reunion");
   assert.equal(session.state.doses_available, 3);
   assert.equal(
     session.state.doses_remaining,
@@ -251,6 +251,7 @@ function makeSession() {
   state.evac_aksel = true;
   state.evac_thal = true;
   state.sample_preserved = true;
+  state.niko_evacuated = true;
   const session = new StorySession({
     schema,
     chapter: chapterEight,
@@ -273,7 +274,7 @@ function makeSession() {
     ["ending_one_dose", { dose_hoarded: true, mira_treated: true }],
     ["ending_the_lie", { infection_source: "lab_aerosol", mira_treated: false, report_honesty: "false" }],
     ["ending_hidden_guest", { uncontrolled_evacuee: true }],
-    ["ending_all_rescued", { evac_aksel: true, evac_thal: true, sample_preserved: true, evidence_level: 4 }],
+    ["ending_all_rescued", { evac_aksel: true, evac_thal: true, sample_preserved: true, evidence_level: 4, niko_evacuated: true }],
     ["ending_clean_rescue", {}],
   ];
 
