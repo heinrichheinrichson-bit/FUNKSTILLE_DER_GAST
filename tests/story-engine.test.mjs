@@ -68,6 +68,22 @@ function makeSession() {
   assert.equal(session.state.trust_mira, 1);
 
   view = session.advance();
+  assert.equal(view.id, "k1_022_questions");
+  assert.deepEqual(
+    view.choices.map(({ id }) => id),
+    ["ask_missing_identity", "ask_missing_location", "continue_intro"],
+    "unanswered essential opening questions must remain available",
+  );
+
+  view = session.choose("ask_missing_identity");
+  assert.equal(view.id, "k1_022_identity_answer");
+  view = session.advance();
+  assert.ok(
+    !view.choices.some(({ id }) => id === "ask_missing_identity"),
+    "answered opening questions must disappear",
+  );
+
+  view = session.choose("continue_intro");
   assert.equal(view.id, "k1_023_why_contact");
 
   view = session.choose("offer_support");
@@ -299,6 +315,7 @@ function makeSession() {
   session.enter();
   session.choose("check_room");
   session.advance();
+  session.choose("continue_intro");
   session.choose("offer_support");
   session.advance();
   session.choose("withhold_name");
@@ -331,6 +348,7 @@ function makeSession() {
   session.enter();
   session.choose("check_room");
   session.advance();
+  session.choose("continue_intro");
   session.choose("offer_support");
   session.advance();
   session.choose("withhold_name");

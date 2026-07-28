@@ -22,21 +22,28 @@
           "label": "Ich kann dich lesen. Bist du verletzt?",
           "next": "k1_009_check_notice",
           "requires": [],
-          "effects": []
+          "effects": [
+            { "state": "intro_injury_known", "operation": "set", "value": true }
+          ]
         },
         {
           "id": "check_room",
           "label": "Ich bin da. Wo bist du und was ist passiert?",
           "next": "k1_020_check_room",
           "requires": [],
-          "effects": []
+          "effects": [
+            { "state": "intro_location_known", "operation": "set", "value": true },
+            { "state": "intro_injury_known", "operation": "set", "value": true }
+          ]
         },
         {
           "id": "ask_identity",
           "label": "Wer bist du?",
           "next": "k1_021_identity_first",
           "requires": [],
-          "effects": []
+          "effects": [
+            { "state": "intro_identity_known", "operation": "set", "value": true }
+          ]
         }
       ]
     },
@@ -65,7 +72,7 @@
         { "state": "mira_wound_known", "operation": "set", "value": true },
         { "state": "trust_mira", "operation": "add", "value": 1 }
       ],
-      "next": "k1_023_why_contact",
+      "next": "k1_022_questions",
       "nextDelaySeconds": 8
     },
     {
@@ -82,7 +89,7 @@
       "effects": [
         { "state": "mira_wound_known", "operation": "set", "value": true }
       ],
-      "next": "k1_023_why_contact",
+      "next": "k1_022_questions",
       "nextDelaySeconds": 8
     },
     {
@@ -98,8 +105,94 @@
       "effects": [
         { "state": "mira_wound_known", "operation": "set", "value": true }
       ],
-      "next": "k1_023_why_contact",
+      "next": "k1_022_questions",
       "nextDelaySeconds": 8
+    },
+    {
+      "id": "k1_022_questions",
+      "chapter": 1,
+      "delaySeconds": 0,
+      "messages": [],
+      "choices": [
+        {
+          "id": "ask_missing_identity",
+          "label": "Und wer bist du eigentlich?",
+          "next": "k1_022_identity_answer",
+          "requires": [
+            { "state": "intro_identity_known", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "intro_identity_known", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "ask_missing_location",
+          "label": "Wo genau bist du? Was siehst du um dich herum?",
+          "next": "k1_022_location_answer",
+          "requires": [
+            { "state": "intro_location_known", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "intro_location_known", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "ask_missing_injury",
+          "label": "Du hast Blut erwähnt. Wie schwer bist du verletzt?",
+          "next": "k1_022_injury_answer",
+          "requires": [
+            { "state": "intro_injury_known", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "intro_injury_known", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "continue_intro",
+          "label": "Okay. Erzähl mir, warum du versucht hast, jemanden zu erreichen.",
+          "next": "k1_023_why_contact",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k1_022_identity_answer",
+      "chapter": 1,
+      "delaySeconds": 3,
+      "messages": [
+        { "speaker": "mira", "text": "Dr. Mira Lindner. Achtunddreißig. Glaziologin auf Station Kaldstad." },
+        { "speaker": "mira", "text": "Normalerweise untersuche ich Eisbohrkerne. Heute sitze ich auf dem Boden und schreibe mit einem fremden Menschen über ein kaputtes Relais." }
+      ],
+      "next": "k1_022_questions",
+      "nextDelaySeconds": 2
+    },
+    {
+      "id": "k1_022_location_answer",
+      "chapter": 1,
+      "delaySeconds": 3,
+      "messages": [
+        { "speaker": "mira", "text": "Im Verbindungsgang des Wohntrakts. Neben mir ist ein Stück Deckenverkleidung heruntergekommen." },
+        { "speaker": "mira", "text": "Die Notbeleuchtung läuft, aber ich höre weder Lüftung noch Stimmen. Nur gelegentlich Metall, das sich in der Kälte zusammenzieht." },
+        { "speaker": "mira", "text": "Die Tür zum Labor ist geschlossen. Ich weiß nicht, ob ich selbst von dort hergekommen bin oder ob mich jemand hierhergebracht hat." }
+      ],
+      "next": "k1_022_questions",
+      "nextDelaySeconds": 2
+    },
+    {
+      "id": "k1_022_injury_answer",
+      "chapter": 1,
+      "delaySeconds": 3,
+      "messages": [
+        { "speaker": "mira", "text": "Eine Platzwunde an der Schläfe. Nicht stark, aber genug, dass Blut auf meinem Ärmel ist." },
+        { "speaker": "mira", "text": "Die Pupillen reagieren gleich, soweit ich das mit der Frontkamera prüfen kann. Mir ist schwindlig, und in meiner Erinnerung fehlen Minuten." },
+        { "speaker": "mira", "text": "Die Deckenplatte neben mir könnte mich getroffen haben. Sicher bin ich nicht." }
+      ],
+      "effects": [
+        { "state": "mira_wound_known", "operation": "set", "value": true }
+      ],
+      "next": "k1_022_questions",
+      "nextDelaySeconds": 2
     },
     {
       "id": "k1_023_why_contact",

@@ -67,6 +67,21 @@
       "default": false,
       "visibility": "visible"
     },
+    "intro_identity_known": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "intro_location_known": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "intro_injury_known": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "player_location_shared": {
       "type": "boolean",
       "default": false,
