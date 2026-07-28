@@ -29,6 +29,9 @@ const chapterFive = JSON.parse(
 const chapterSix = JSON.parse(
   await readFile(new URL("data/chapter-06.json", projectRoot), "utf8"),
 );
+const chapterSeven = JSON.parse(
+  await readFile(new URL("data/chapter-07.json", projectRoot), "utf8"),
+);
 
 function makeSession() {
   return new StorySession({ schema, chapter });
@@ -179,6 +182,31 @@ function makeSession() {
     view.id,
     "k6_030_descent_safe",
     "heat and anchoring equipment must unlock the controlled descent",
+  );
+}
+
+{
+  const state = createInitialState(schema);
+  state.cure_material = 4;
+  state.generator_state = "stable";
+  const session = new StorySession({
+    schema,
+    chapter: chapterSeven,
+    snapshot: {
+      currentNodeId: chapterSeven.chapter.startNode,
+      nodeEntered: false,
+      state,
+      history: [],
+    },
+  });
+
+  const view = session.enter();
+  assert.equal(view.id, "k7_010_synthesis");
+  assert.equal(session.state.doses_available, 3);
+  assert.equal(
+    session.state.doses_remaining,
+    3,
+    "deep and old material with stable power must produce three doses",
   );
 }
 

@@ -35,13 +35,14 @@ test("server-renders the Funkstille shell", async () => {
 });
 
 test("ships chapter data and production metadata", async () => {
-  const [chapter, chapterTwo, chapterThree, chapterFour, chapterFive, chapterSix, index, schema, page, layout] = await Promise.all([
+  const [chapter, chapterTwo, chapterThree, chapterFour, chapterFive, chapterSix, chapterSeven, index, schema, page, layout] = await Promise.all([
     readFile(new URL("../public/data/chapter-01.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/chapter-02.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/chapter-03.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/chapter-04.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/chapter-05.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/chapter-06.json", import.meta.url), "utf8"),
+    readFile(new URL("../public/data/chapter-07.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/story-index.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/state-schema.json", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
@@ -54,6 +55,7 @@ test("ships chapter data and production metadata", async () => {
   const chapterFourData = JSON.parse(chapterFour);
   const chapterFiveData = JSON.parse(chapterFive);
   const chapterSixData = JSON.parse(chapterSix);
+  const chapterSevenData = JSON.parse(chapterSeven);
   const indexData = JSON.parse(index);
   const schemaData = JSON.parse(schema);
 
@@ -64,9 +66,10 @@ test("ships chapter data and production metadata", async () => {
   assert.equal(chapterFourData.nodes.length, 38);
   assert.equal(chapterFiveData.nodes.length, 30);
   assert.equal(chapterSixData.nodes.length, 29);
+  assert.equal(chapterSevenData.nodes.length, 19);
   assert.deepEqual(
     indexData.chapters.map(({ id }) => id),
-    ["chapter_01", "chapter_02", "chapter_03", "chapter_04", "chapter_05", "chapter_06"],
+    ["chapter_01", "chapter_02", "chapter_03", "chapter_04", "chapter_05", "chapter_06", "chapter_07"],
   );
   assert.equal(schemaData.states.infection_source.visibility, "secret");
   assert.match(page, /Station Kaldstad/);

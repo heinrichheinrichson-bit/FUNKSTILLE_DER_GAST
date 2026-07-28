@@ -160,6 +160,11 @@
       "default": false,
       "visibility": "hidden"
     },
+    "chapter_07_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "lab_visited": {
       "type": "boolean",
       "default": false,
@@ -411,6 +416,66 @@
       "type": "boolean",
       "default": false,
       "visibility": "visible"
+    },
+    "doses_available": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 3,
+      "visibility": "visible"
+    },
+    "doses_remaining": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 3,
+      "visibility": "visible"
+    },
+    "aksel_treated": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "thal_treated": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "kader_treated": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "sample_preserved": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "station_final_choice": {
+      "type": "enum",
+      "default": "unset",
+      "values": ["unset", "locked", "destroy", "open"],
+      "visibility": "hidden"
+    },
+    "evac_mira": {
+      "type": "boolean",
+      "default": true,
+      "visibility": "hidden"
+    },
+    "evac_aksel": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "evac_thal": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "evac_kader": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
     },
     "infection_source": {
       "type": "enum",

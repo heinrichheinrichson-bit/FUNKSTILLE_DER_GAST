@@ -10,6 +10,8 @@ param(
     [string]$ChapterFivePreset = 'default',
     [ValidateSet('default', 'safe', 'thal', 'kader', 'unsafe')]
     [string]$ChapterSixPreset = 'default',
+    [ValidateSet('default', 'zero', 'one', 'full')]
+    [string]$ChapterSevenPreset = 'default',
     [int]$MaximumConfigurations = 50000
 )
 
@@ -128,6 +130,19 @@ if ($ChapterSixPreset -ne 'default') {
         $initialState['clarity'] = 0
         $initialState['relay_damaged'] = $true
         $initialState['generator_state'] = 'unstable'
+    }
+}
+if ($ChapterSevenPreset -ne 'default') {
+    $initialState['aksel_inside_after_return'] = $true
+    $initialState['thal_returning'] = $true
+    $initialState['kader_state'] = 'cooperative'
+    $initialState['containment'] = 'ready'
+    if ($ChapterSevenPreset -eq 'one') {
+        $initialState['cure_material'] = 1
+    }
+    elseif ($ChapterSevenPreset -eq 'full') {
+        $initialState['cure_material'] = 4
+        $initialState['generator_state'] = 'stable'
     }
 }
 

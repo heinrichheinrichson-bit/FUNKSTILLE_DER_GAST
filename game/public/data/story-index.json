@@ -37,6 +37,12 @@
       "number": 6,
       "title": "Unter dem Eis",
       "file": "chapter-06.json"
+    },
+    {
+      "id": "chapter_07",
+      "number": 7,
+      "title": "Eine Dosis",
+      "file": "chapter-07.json"
     }
   ]
 }
