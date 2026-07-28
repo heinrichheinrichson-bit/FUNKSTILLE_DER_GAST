@@ -10,8 +10,9 @@ Chatbasiertes Antarktis-Horrorspiel über Dr. Mira Lindner und eine zufällige V
 | `MASTER-STORY-MAP.md` | Gesamtfluss, Zustände und Enden |
 | `story/` | lesbare Produktionsfassungen aller acht Kapitel |
 | `data/state-schema.json` | zentrale Definition aller Spielzustände |
-| `data/chapter-01.json` | Beginn der drei vollständig strukturierten Kapitel |
+| `data/chapter-01.json` bis `chapter-08.json` | alle strukturierten Storykapitel |
 | `docs/STORY-DATENFORMAT.md` | technisches Storyformat |
+| `docs/QUALITAETSAUDIT-2026-07-28.md` | aktueller Prüfbericht und priorisierte Empfehlungen |
 | `src/story-engine.mjs` | UI-unabhängige Story-Engine |
 | `tools/validate-story.ps1` | statische Datenprüfung |
 | `tools/audit-paths.ps1` | Simulation aller erreichbaren Zustandswege |
@@ -52,12 +53,13 @@ Da Windows die lokale Skriptausführung standardmäßig blockieren kann:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\validate-story.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\audit-paths.ps1
 npm test
+npm run audit
 ```
 
 Die Ausführungsrichtlinie wird dabei nur für den gestarteten Prüfprozess umgangen und nicht dauerhaft geändert.
 
 ## Nächste technische Schritte
 
-1. Gesamtdurchläufe vom ersten Signal bis zu jedem Ende automatisieren.
-2. Ending-Titel und Spielstatistik gestalterisch ausarbeiten.
-3. Dialoge nach vollständigen Testdurchläufen redaktionell verdichten.
+1. Kuratierte Gesamtdurchläufe vom ersten Signal bis zu jedem Ende automatisieren.
+2. Kapitel 1 und 2 redaktionell auf Demoqualität bringen.
+3. Archiv, Save-Migration und Karteninformationen ausbauen.

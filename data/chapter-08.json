@@ -370,6 +370,18 @@
             { "speaker": "mira", "text": "Aber du bist geblieben. Danke." },
             { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
           ]
+        },
+        {
+          "requires": [
+            { "state": "player_name_known", "operator": "eq", "value": true },
+            { "state": "trust_mira", "operator": "lt", "value": 0 }
+          ],
+          "replaceMessages": [
+            { "speaker": "mira", "text": "Ich kenne deinen Namen, {{player_name}}. Wir waren uns trotzdem oft nicht einig." },
+            { "speaker": "mira", "text": "Ohne die Verbindung wäre ich nicht hier." },
+            { "speaker": "mira", "text": "Danke." },
+            { "speaker": "system", "text": "[VERBINDUNG BEENDET]" }
+          ]
         }
       ],
       "next": "k8_090_uncontrolled_mira",

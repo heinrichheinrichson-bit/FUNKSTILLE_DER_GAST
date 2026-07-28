@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/story-engine.test.mjs"
+    "test": "node tests/story-engine.test.mjs",
+    "audit": "node tools/audit-full-story.mjs"
   },
   "engines": {
     "node": ">=20"
   }
 }
-

@@ -13,15 +13,15 @@
 
 Die komplette Handlung vom ersten Kontakt bis zu allen acht Enden liegt als Produktionsfassung 0.1 vor.
 
-- Kapitel 1 besitzt bereits eine nahezu vollständige Chat-Node-Aufteilung.
-- Kapitel 2–4 enthalten Dialoge, Varianten und Zustandsfolgen in mittlerer Detailtiefe.
-- Kapitel 5–8 bilden alle Schlüsselszenen und Enden ab, benötigen beim nächsten Durchgang zusätzliche Dialogvarianten.
+- Alle acht Kapitel liegen als ausführbare Chat-Nodes vor.
+- Sämtliche Nodes sind erreichbar; die Kapitelpfade werden automatisch auf Sackgassen geprüft.
+- Kapitel 5–8 bilden alle Schlüsselszenen und Enden ab, benötigen beim nächsten redaktionellen Durchgang zusätzliche Dialogvarianten.
 - Es gibt keine zufallsbasierten Game-Overs.
 - Reyes und die alten `PENDING`-Enden wurden nicht übernommen.
 
 ## Nächster Durchgang
 
-1. Kapitel 2–8 in das inzwischen definierte Node-Format überführen.
-2. Dialogvarianten für Vertrauen, Klarheit und Begleitung ergänzen.
-3. Eine minimale Story-Engine mit Speichern/Laden implementieren.
-4. Kapitel 1 in den Prototyp integrieren und spielerisch testen.
+1. Dialogvarianten für Vertrauen, Klarheit und Begleitung ergänzen.
+2. Alle acht Enden in vollständigen Gesamtdurchläufen prüfen.
+3. Die lesbaren Produktionsfassungen mit den aktuellen Storydaten synchronisieren.
+4. Timing und Wirkung mit externen Testspielern beurteilen.

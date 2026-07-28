@@ -245,6 +245,49 @@ function makeSession() {
 }
 
 {
+  const resolverCases = [
+    ["ending_contained", { destruction_triggered: true, uncontrolled_evacuee: false }],
+    ["ending_one_dose", { dose_hoarded: true, mira_treated: true }],
+    ["ending_the_lie", { infection_source: "lab_aerosol", mira_treated: false, report_honesty: "false" }],
+    ["ending_hidden_guest", { uncontrolled_evacuee: true }],
+    ["ending_all_rescued", { evac_aksel: true, evac_thal: true, sample_preserved: true, evidence_level: 4 }],
+    ["ending_clean_rescue", {}],
+  ];
+
+  for (const [expectedEnding, overrides] of resolverCases) {
+    const state = Object.assign(createInitialState(schema), overrides);
+    const session = new StorySession({
+      schema,
+      chapter: chapterEight,
+      snapshot: {
+        currentNodeId: "k8_100_ending_resolver",
+        nodeEntered: false,
+        state,
+        history: [],
+      },
+    });
+    assert.equal(session.enter().ending, expectedEnding);
+  }
+
+  for (const [chapterData, nodeId, expectedEnding] of [
+    [chapterThree, "k3_073_whiteout_ending", "ending_whiteout"],
+    [chapterFive, "k5_077_radio_silence", "ending_radio_silence"],
+  ]) {
+    const session = new StorySession({
+      schema,
+      chapter: chapterData,
+      snapshot: {
+        currentNodeId: nodeId,
+        nodeEntered: false,
+        state: createInitialState(schema),
+        history: [],
+      },
+    });
+    assert.equal(session.enter().ending, expectedEnding);
+  }
+}
+
+{
   const session = makeSession();
   session.enter();
   session.choose("check_room");
