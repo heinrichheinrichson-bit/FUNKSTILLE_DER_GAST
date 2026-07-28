@@ -1971,7 +1971,7 @@
       "choices": [
         {
           "id": "keep_hidden",
-          "label": "Sag, das Gerät protokolliert nur Sensordaten.",
+          "label": "Sag, der Sender sei beschädigt. Du versuchst vergeblich, eine Verbindung nach draußen aufzubauen.",
           "next": "k1_120_double_crisis",
           "requires": [
             {
