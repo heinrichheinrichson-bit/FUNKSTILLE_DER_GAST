@@ -770,6 +770,17 @@ def update_schema():
 
 
 def main():
+    # The structural migration appends nodes and is intentionally a one-time
+    # operation. On an already migrated story, only reapply the idempotent
+    # editorial pass; otherwise duplicate nodes would be created.
+    current_chapter_four = load("chapter-04.json")
+    if any(node.get("id") == "k4_310_niko_open" for node in current_chapter_four["nodes"]):
+        from apply_editorial_rewrite import main as apply_editorial_rewrite
+
+        apply_editorial_rewrite()
+        print("structural migration already present; reapplied editorial rewrite")
+        return
+
     update_schema()
     rebuilders = {
         1: rebuild_chapter_1,
@@ -790,6 +801,12 @@ def main():
         add_locations(doc)
         save(name, doc)
         print(f"rebuilt {name}: {len(doc['nodes'])} nodes")
+
+    # The structural rebuild is always followed by the reviewed dialogue pass.
+    # This prevents older scaffold wording from reappearing in generated data.
+    from apply_editorial_rewrite import main as apply_editorial_rewrite
+
+    apply_editorial_rewrite()
 
 
 if __name__ == "__main__":

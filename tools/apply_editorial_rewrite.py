@@ -99,6 +99,11 @@ MESSAGE_REWRITES: dict[str, list[dict]] = {
         msg("Am Bündchen ist das graue Generator-Symbol. Auf der Oberfläche klebt derselbe helle Staub wie auf Aksels Jacke."),
         msg("Ich fotografiere ihn und bleibe eingehakt. Für einen Handschuh verlasse ich die Leine nicht."),
     ],
+    "k2_g_141_memory": [
+        msg("Aksel erinnert sich an den Generatoralarm und an Kaders Stimme aus dem Lautsprecher."),
+        msg("Danach hörte er dreimal etwas gegen die Außenwand schlagen. Er hielt es zuerst für jemanden vor dem Fenster, konnte im Schnee aber nichts erkennen."),
+        msg("Wie er anschließend wieder in den Wohntrakt kam, weiß er nicht. Genau dort beginnt seine Erinnerungslücke."),
+    ],
     "k2_g_150_exit": [
         msg("Die Anlage läuft. Wir gehen jetzt zurück zur Sicherungsleine."),
         msg("Sobald wir wieder im Wohntrakt sind, brauche ich Wasser und zwei Minuten zum Nachdenken."),
@@ -485,6 +490,14 @@ def rewrite_chapter(path: Path) -> None:
                     },
                 )
 
+        if node_id in {"k3_113_open", "k3_114_refuse"}:
+            node["next"] = "k3_101_checkin"
+
+        if node_id == "k3_100_after_march":
+            for redirect in node.get("redirects", []):
+                if redirect.get("next") == "k3_120_transition":
+                    redirect["next"] = "k3_101_checkin"
+
         if node_id == "k8_030_wait":
             node["variants"] = [
                 variant
@@ -516,6 +529,96 @@ def rewrite_chapter(path: Path) -> None:
                     },
                 ]
             )
+
+    if path.name == "chapter-03.json" and not any(
+        node["id"] == "k3_101_checkin" for node in document["nodes"]
+    ):
+        common_location = {
+            "area": "quarters",
+            "room": "corridor",
+            "stationLeft": 22,
+            "stationTop": 42,
+            "interiorLeft": 48,
+            "interiorTop": 50,
+            "activity": "Mira kommt nach dem Außenweg zur Ruhe",
+        }
+        document["nodes"].extend(
+            [
+                {
+                    "id": "k3_101_checkin",
+                    "chapter": 3,
+                    "delaySeconds": 20,
+                    "messages": [
+                        msg("Die Schleuse ist gesichert. Für einen Moment muss niemand irgendwohin."),
+                        msg("Ich merke erst jetzt, wie sehr meine Hände zittern."),
+                        msg("Kannst du kurz mit mir reden, bevor die nächste Entscheidung kommt? Nicht über Technik."),
+                    ],
+                    "choices": [
+                        {
+                            "id": "ask_mira_feeling",
+                            "label": "Wie geht es dir gerade – nicht Aksel oder der Station, sondern dir?",
+                            "next": "k3_102_feeling",
+                            "requires": [],
+                            "effects": [{"state": "trust_mira", "operation": "add", "value": 1}],
+                        },
+                        {
+                            "id": "ask_mira_missing",
+                            "label": "Was vermisst du gerade am meisten?",
+                            "next": "k3_103_missing",
+                            "requires": [],
+                            "effects": [{"state": "trust_mira", "operation": "add", "value": 1}],
+                        },
+                        {
+                            "id": "ground_mira",
+                            "label": "Du bist zurückgekommen. Atme erst einmal. Ich bleibe hier.",
+                            "next": "k3_104_grounded",
+                            "requires": [],
+                            "effects": [{"state": "clarity", "operation": "add", "value": 1}],
+                        },
+                    ],
+                    "location": common_location,
+                },
+                {
+                    "id": "k3_102_feeling",
+                    "chapter": 3,
+                    "delaySeconds": 15,
+                    "messages": [
+                        msg("Ehrlich? Wütend. Auf Aksel, auf Kader und vor allem darauf, dass ich meiner eigenen Erinnerung nicht trauen kann."),
+                        msg("Und ich habe Angst, irgendwann etwas Grausames für vernünftig zu halten, nur weil ich müde bin."),
+                        msg("Danke, dass du nach mir gefragt hast."),
+                    ],
+                    "next": "k3_120_transition",
+                    "nextDelaySeconds": 20,
+                    "location": common_location,
+                },
+                {
+                    "id": "k3_103_missing",
+                    "chapter": 3,
+                    "delaySeconds": 15,
+                    "messages": [
+                        msg("Meine Küche zu Hause. Das kleine Fenster über der Spüle, das nie richtig dicht war."),
+                        msg("Meine Mutter hat mir vor der Abreise ein Glas Aprikosenmarmelade mitgegeben. Ich habe es im Quartier versteckt, damit Aksel es nicht findet."),
+                        msg("Das klingt albern. Gerade würde ich sehr viel für klebrige Finger und eine undichte Küche geben."),
+                    ],
+                    "next": "k3_120_transition",
+                    "nextDelaySeconds": 20,
+                    "location": common_location,
+                },
+                {
+                    "id": "k3_104_grounded",
+                    "chapter": 3,
+                    "delaySeconds": 15,
+                    "messages": [
+                        msg("Okay. Einatmen. Lang ausatmen."),
+                        msg("Meine Füße stehen auf dem Boden. Die Schleusentür ist zu. Du bist noch da."),
+                        msg("Das reicht für den nächsten Schritt."),
+                    ],
+                    "next": "k3_120_transition",
+                    "nextDelaySeconds": 20,
+                    "location": common_location,
+                },
+            ]
+        )
 
         for choice in node.get("choices", []):
             replacement = CHOICE_REWRITES.get((node_id, choice["id"]))

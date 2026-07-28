@@ -68,7 +68,7 @@ test("ships chapter data and production metadata", async () => {
     chapterTwoData.nodes.find(({ id }) => id === "k2_l_020_locked").input.answers,
     ["0414"],
   );
-  assert.equal(chapterThreeData.nodes.length, 31);
+  assert.equal(chapterThreeData.nodes.length, 35);
   assert.equal(chapterFourData.nodes.length, 46);
   assert.equal(chapterFiveData.nodes.length, 30);
   assert.equal(chapterSixData.nodes.length, 29);

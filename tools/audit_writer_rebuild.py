@@ -149,6 +149,55 @@ seen_before_name = (
 if not seen_before_name:
     errors.append("Nikos Name erscheint nicht erst nach Miras tatsächlicher Sichtung")
 
+forbidden_phrases = {
+    "generator-team": "unverständliche Funktionsbezeichnung",
+    "danach ins labor": "abgehackte Übergangsantwort",
+    "prüf zuerst tür und boden": "unklare Handlungsanweisung",
+    "du kennst ihn bereits": "unbegründetes Rätselwissen",
+    "kilometerweit draußen verloren": "falsche Wegkontinuität",
+    "ich glaube, es bin ich": "unklare Thal-Aufnahme",
+    "bereite wasser und eine decke vor. dann öffne": "Niko wird vor der Sichtung verraten",
+    "das gerät protokolliert nur sensordaten": "unglaubwürdige Relais-Ausrede",
+    "niemand ist einfach irgendwann in der gruppe aufgetaucht": "Meta-Kommentar statt Dialog",
+}
+for node_id, node in sorted(all_nodes.items()):
+    visible_texts = [message.get("text", "") for message in node.get("messages", [])]
+    visible_texts.extend(choice.get("label", "") for choice in node.get("choices", []))
+    joined = " ".join(visible_texts).lower()
+    for phrase, reason in forbidden_phrases.items():
+        if phrase in joined:
+            errors.append(f"Verbotene Formulierung in {node_id}: {reason}")
+
+code_node = all_nodes.get("k2_l_020_locked", {})
+if code_node.get("input", {}).get("answers") != ["0414"]:
+    errors.append("Laborcode akzeptiert weiterhin Datumsvarianten statt nur 0414")
+thal_note = " ".join(
+    message.get("text", "") for message in all_nodes.get("k1_070_quarters", {}).get("messages", [])
+)
+if "0414" not in thal_note or len(thal_note) < 300:
+    errors.append("Laborcode ist nicht in einer ausführlichen, realistischen Schichtnotiz eingebettet")
+
+niko_open = all_nodes.get("k4_310_niko_open", {})
+if niko_open.get("nextDelaySeconds", 0) < 60:
+    errors.append("Niko-Enthüllung besitzt keine glaubhafte Sorgepause")
+
+departure_base = " ".join(
+    message.get("text", "") for message in all_nodes.get("k8_030_wait", {}).get("messages", [])
+).lower()
+if any(name in departure_base for name in ("aksel", "ingrid", "kader")):
+    errors.append("Rettungsweg nennt NPCs im Basistext unabhängig von ihrer Anwesenheit")
+
+kader_escort_sources = []
+for node_id, node in all_nodes.items():
+    for choice in node.get("choices", []):
+        if any(
+            effect.get("state") == "kader_escorted_to_lab" and effect.get("value") is True
+            for effect in choice.get("effects", [])
+        ):
+            kader_escort_sources.append((node_id, choice.get("id")))
+if kader_escort_sources != [("k5_083_coordinates", "escort_kader")]:
+    errors.append(f"Kaders Ortswechsel ins Labor ist nicht exklusiv an die Eskorte gebunden: {kader_escort_sources}")
+
 if errors:
     print("WRITER-REBUILD-AUDIT: FEHLGESCHLAGEN")
     for error in errors:

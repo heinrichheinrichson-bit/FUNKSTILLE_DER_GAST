@@ -1200,7 +1200,7 @@
             }
           ],
           "effects": [],
-          "next": "k3_120_transition"
+          "next": "k3_101_checkin"
         },
         {
           "requires": [],
@@ -1443,7 +1443,7 @@
           "text": "So können wir reden und ihn untersuchen, ohne ihn gleich in den Wohntrakt zu lassen."
         }
       ],
-      "next": "k3_120_transition",
+      "next": "k3_101_checkin",
       "nextDelaySeconds": 120,
       "location": {
         "area": "quarters",
@@ -1473,7 +1473,7 @@
           "text": "Das verschafft uns Zeit. Nicht viel."
         }
       ],
-      "next": "k3_120_transition",
+      "next": "k3_101_checkin",
       "nextDelaySeconds": 120,
       "location": {
         "area": "quarters",
@@ -1519,6 +1519,165 @@
         "interiorLeft": 48,
         "interiorTop": 50,
         "activity": "Mira ist im Wohntrakt"
+      }
+    },
+    {
+      "id": "k3_101_checkin",
+      "chapter": 3,
+      "delaySeconds": 20,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Die Schleuse ist gesichert. Für einen Moment muss niemand irgendwohin."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich merke erst jetzt, wie sehr meine Hände zittern."
+        },
+        {
+          "speaker": "mira",
+          "text": "Kannst du kurz mit mir reden, bevor die nächste Entscheidung kommt? Nicht über Technik."
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_mira_feeling",
+          "label": "Wie geht es dir gerade – nicht Aksel oder der Station, sondern dir?",
+          "next": "k3_102_feeling",
+          "requires": [],
+          "effects": [
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "ask_mira_missing",
+          "label": "Was vermisst du gerade am meisten?",
+          "next": "k3_103_missing",
+          "requires": [],
+          "effects": [
+            {
+              "state": "trust_mira",
+              "operation": "add",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "ground_mira",
+          "label": "Du bist zurückgekommen. Atme erst einmal. Ich bleibe hier.",
+          "next": "k3_104_grounded",
+          "requires": [],
+          "effects": [
+            {
+              "state": "clarity",
+              "operation": "add",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira kommt nach dem Außenweg zur Ruhe"
+      }
+    },
+    {
+      "id": "k3_102_feeling",
+      "chapter": 3,
+      "delaySeconds": 15,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Ehrlich? Wütend. Auf Aksel, auf Kader und vor allem darauf, dass ich meiner eigenen Erinnerung nicht trauen kann."
+        },
+        {
+          "speaker": "mira",
+          "text": "Und ich habe Angst, irgendwann etwas Grausames für vernünftig zu halten, nur weil ich müde bin."
+        },
+        {
+          "speaker": "mira",
+          "text": "Danke, dass du nach mir gefragt hast."
+        }
+      ],
+      "next": "k3_120_transition",
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira kommt nach dem Außenweg zur Ruhe"
+      }
+    },
+    {
+      "id": "k3_103_missing",
+      "chapter": 3,
+      "delaySeconds": 15,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Meine Küche zu Hause. Das kleine Fenster über der Spüle, das nie richtig dicht war."
+        },
+        {
+          "speaker": "mira",
+          "text": "Meine Mutter hat mir vor der Abreise ein Glas Aprikosenmarmelade mitgegeben. Ich habe es im Quartier versteckt, damit Aksel es nicht findet."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das klingt albern. Gerade würde ich sehr viel für klebrige Finger und eine undichte Küche geben."
+        }
+      ],
+      "next": "k3_120_transition",
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira kommt nach dem Außenweg zur Ruhe"
+      }
+    },
+    {
+      "id": "k3_104_grounded",
+      "chapter": 3,
+      "delaySeconds": 15,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Okay. Einatmen. Lang ausatmen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Meine Füße stehen auf dem Boden. Die Schleusentür ist zu. Du bist noch da."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das reicht für den nächsten Schritt."
+        }
+      ],
+      "next": "k3_120_transition",
+      "nextDelaySeconds": 20,
+      "location": {
+        "area": "quarters",
+        "room": "corridor",
+        "stationLeft": 22,
+        "stationTop": 42,
+        "interiorLeft": 48,
+        "interiorTop": 50,
+        "activity": "Mira kommt nach dem Außenweg zur Ruhe"
       }
     }
   ]

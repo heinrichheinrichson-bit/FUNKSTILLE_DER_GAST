@@ -1943,15 +1943,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Er erinnert sich an den Generator. Dann an Kaders Stimme aus einem Lautsprecher."
+          "text": "Aksel erinnert sich an den Generatoralarm und an Kaders Stimme aus dem Lautsprecher."
         },
         {
           "speaker": "mira",
-          "text": "Dann daran, wie jemand von außen an die Scheibe geklopft hat."
+          "text": "Danach hörte er dreimal etwas gegen die Außenwand schlagen. Er hielt es zuerst für jemanden vor dem Fenster, konnte im Schnee aber nichts erkennen."
         },
         {
           "speaker": "mira",
-          "text": "Die Scheibe im Generatorhaus hat keine Außentreppe."
+          "text": "Wie er anschließend wieder in den Wohntrakt kam, weiß er nicht. Genau dort beginnt seine Erinnerungslücke."
         }
       ],
       "next": "k2_g_150_exit",

@@ -111,11 +111,66 @@ const ENDING_TITLES: Record<string, string> = {
   ending_clean_rescue: "Saubere Rettung",
 };
 const ARCHIVE_ITEMS = [
-  { id: "thal07", title: "THAL · TAG −7", state: "log_thal_07", text: "Kader nennt die Probe inert. Im unbearbeiteten Sensorstream bewegt sie sich trotzdem. Warnbericht: 14.04." },
-  { id: "freight", title: "FRACHTMANIFEST", state: "log_freight_complete", text: "Medikamente und Atemfilter wurden zwischen Labor und Generator umgebucht. Empfänger: A. Berg." },
-  { id: "kader07", title: "KADER · PROBE 14C", state: "log_kader_07", text: "Probe 14C biologisch inert. Verworfene Passage: Strukturbildung nach Erwärmung." },
-  { id: "varga", title: "AUSWEIS · EMIL VARGA", state: "patient_zero_clue", text: "Dr. Emil Varga, Glaziologie. Auf der Rückseite befindet sich ein unvollständiges Koordinatenfragment." },
-  { id: "old", title: "ALTES PROJEKT", state: "old_project_log", text: "Es übernimmt nichts. Es verbindet. Nach einer Weile weiß keiner mehr, welcher Gedanke zuerst da war." },
+  {
+    id: "thal07",
+    title: "SCHICHTÜBERGABE · 14.04.",
+    state: "log_thal_07",
+    text: "Kader hat nach den Fehlalarmen den Zugang zu Labor 3 vorläufig geändert: 0414. Bitte nach der Wartung wieder auf persönlichen Code umstellen.\n\nProbe 14C wurde als inert eingetragen. Im unbearbeiteten Sensorstream reagiert sie trotzdem auf Wärme und elektrische Felder. Rohdaten lokal gespiegelt. Wenn der Uplink erneut ausfällt, Störung nicht als Wetterfehler schließen.\n\n— I. Thal",
+  },
+  {
+    id: "freight-a",
+    title: "FRACHTMANIFEST · BLATT 1/2",
+    state: "item_freight_manifest_a",
+    text: "Lieferung KS-118\n\n12 × Atemfilter P3\n8 × sterile Wundsets\n4 × Wechselrichterregler\n2 × isolierte Probenträger\n\nNach Entladung wurden zwei Kisten intern umgebucht. Ziel und Gegenzeichnung fehlen auf diesem Blatt.",
+  },
+  {
+    id: "kader07",
+    title: "LABORBERICHT · PROBE 14C",
+    state: "log_kader_07",
+    text: "Vorläufige Einstufung: biologisch inert. Keine Zellteilung, keine messbare Replikation.\n\nAus einer verworfenen Passage:\n„Nach Erwärmung Ausbildung gerichteter Strukturen. Reaktion auf elektrische Impulse nicht ausgeschlossen.“\n\nÄnderungsverlauf: Y. Kader",
+  },
+  {
+    id: "liv-medical",
+    title: "MEDIZINISCHER EINTRAG · VARGA",
+    state: "patient_zero_clue",
+    text: "Patient: Dr. Emil Varga\nVerletzung: Schnitt linke Hand, kontaminiertes Bergungswerkzeug\n\n12 Stunden nach Versorgung ist die Wunde oberflächlich geschlossen. Temperatur 39,1 °C. Patient wiederholt einzelne Antworten und kann sich an den Weg von Labor 3 zur Krankenstation nicht erinnern.\n\nWeitere Arbeit untersagt.\n— Dr. Liv Sørensen",
+  },
+  {
+    id: "freight",
+    title: "FRACHTMANIFEST · ABGLEICH",
+    state: "log_freight_complete",
+    text: "Blatt 1 und Werkstattkopie stimmen nicht überein.\n\nMedikamente und Atemfilter wurden zunächst ins Labor, sechs Stunden später ins Generatorhaus gebucht. Als Empfänger wurde A. Berg eingetragen; eine Unterschrift fehlt.",
+  },
+  {
+    id: "generator",
+    title: "GENERATOR · STÖRUNGSPROTOKOLL",
+    state: "item_generator_tool",
+    text: "Wechselrichter 2: Schutzabschaltung manuell überbrückt.\nLasttrenner: thermisch beschädigt.\nEmpfohlene Maßnahme: Anlage spannungsfrei schalten, Modul LT-4 ersetzen, Isolationsprüfung durchführen.\n\nEin Live-Bypass ist laut Wartungsvorschrift untersagt.",
+  },
+  {
+    id: "varga",
+    title: "AUSWEIS · EMIL VARGA",
+    state: "ice_coordinates_fragment",
+    text: "Dr. Emil Varga · Glaziologie / Bohrteam\n\nAuf der vereisten Rückseite wurden Koordinaten eingeritzt. Das Ende der Zahlenfolge ist abgebrochen.",
+  },
+  {
+    id: "weather",
+    title: "WETTERFENSTER · NORDKORRIDOR",
+    state: "weather_window_known",
+    text: "Prognose Außenposten Kaldstad\n\nWindabnahme aus Südwest, anschließend kurzer Nordkorridor. Nutzbare Flugzeit abhängig von Vereisung und Sicht: 40 bis 90 Minuten.\n\nEin Rettungsanflug benötigt bestätigte Koordinaten, Markierungsfeuer und medizinische Gefahrenmeldung.",
+  },
+  {
+    id: "old",
+    title: "ALTANLAGE · PROJEKTNOTIZ",
+    state: "old_project_log",
+    text: "Beobachtung 31\n\nDie Versuchspersonen beschreiben keine fremde Stimme und keinen Kontrollverlust. Sie sind überzeugt, ihre Entscheidungen selbst getroffen zu haben. Übereinstimmende Erinnerungen lassen sich keinem eindeutigen Ursprung mehr zuordnen.\n\nFormulierung „Übernahme“ vermeiden. Arbeitshypothese: Kopplung.",
+  },
+  {
+    id: "containment",
+    title: "EINDÄMMUNGSPLAN · SCHACHT",
+    state: "old_evidence_secured",
+    text: "Vier Ladungen schließen bei korrekter Zündfolge den alten Zugang und Ebene −3 des neuen Bohrturms.\n\nFernzündung nur bei freier Landezone. Verzögerung: vier Minuten. Die Auslösung ist nicht reversibel.",
+  },
 ];
 const MAP_AREAS = [
   { id: "quarters", label: "WOHNTRAKT", x: 9, y: 35, w: 27, h: 14, state: null, shape: "wing" },
