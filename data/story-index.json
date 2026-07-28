@@ -13,6 +13,12 @@
       "number": 2,
       "title": "Licht oder Wahrheit",
       "file": "chapter-02.json"
+    },
+    {
+      "id": "chapter_03",
+      "number": 3,
+      "title": "Der Marsch",
+      "file": "chapter-03.json"
     }
   ]
 }

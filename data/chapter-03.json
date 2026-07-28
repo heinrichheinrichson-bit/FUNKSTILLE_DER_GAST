@@ -1,0 +1,723 @@
+{
+  "formatVersion": 1,
+  "chapter": {
+    "id": "chapter_03",
+    "number": 3,
+    "title": "Der Marsch",
+    "startNode": "k3_001_resolve_aksel"
+  },
+  "nodes": [
+    {
+      "id": "k3_001_resolve_aksel",
+      "chapter": 3,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "first_route", "operator": "eq", "value": "labor" },
+            { "state": "aksel_restrained", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "aksel_state", "operation": "set", "value": "infected" }
+          ],
+          "next": "k3_010_rest"
+        },
+        {
+          "requires": [],
+          "effects": [
+            { "state": "aksel_state", "operation": "set", "value": "exposed" }
+          ],
+          "next": "k3_010_rest"
+        }
+      ]
+    },
+    {
+      "id": "k3_010_rest",
+      "chapter": 3,
+      "delaySeconds": 900,
+      "messages": [
+        { "speaker": "mira", "text": "Ich bin für ein paar Minuten eingeschlafen." },
+        { "speaker": "mira", "text": "Das Licht ist noch an. Draußen ist der Wind stärker geworden." },
+        { "speaker": "mira", "text": "Aksel ist nicht hier." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": true }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Die Gurte liegen auf dem Boden. Nicht zerrissen. Geöffnet." }
+          ]
+        }
+      ],
+      "next": "k3_020_window",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k3_020_window",
+      "chapter": 3,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Da. Hinter dem vereisten Fenster." },
+        { "speaker": "mira", "text": "Aksel läuft vom Wohntrakt weg. Ohne Maske. Ohne Sicherungsleine." },
+        { "speaker": "mira", "text": "Er geht gleichmäßig, als könnte er durch den Whiteout sehen." }
+      ],
+      "choices": [
+        {
+          "id": "call_first",
+          "label": "Ruf ihn über den Außenlautsprecher.",
+          "next": "k3_030_call",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "prepare_follow",
+          "label": "Anzug und Leine prüfen. Dann hinterher.",
+          "next": "k3_040_prepared",
+          "requires": [],
+          "effects": [
+            { "state": "return_security", "operation": "set", "value": "strong" },
+            { "state": "cold_exposure", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "rush_follow",
+          "label": "Sofort hinterher, bevor du ihn verlierst.",
+          "next": "k3_041_rushed",
+          "requires": [],
+          "effects": [
+            { "state": "return_security", "operation": "set", "value": "weak" },
+            { "state": "cold_exposure", "operation": "add", "value": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_030_call",
+      "chapter": 3,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Lautsprecher ist an. Ich habe seinen Namen gerufen." },
+        { "speaker": "mira", "text": "Er ist stehen geblieben." },
+        { "speaker": "mira", "text": "Nicht umgedreht. Nur stehen geblieben." }
+      ],
+      "choices": [
+        {
+          "id": "order_back",
+          "label": "Befiehl ihm zurückzukommen.",
+          "next": "k3_031_call_answer",
+          "requires": [],
+          "effects": [
+            { "state": "trust_aksel", "operation": "add", "value": -1 }
+          ]
+        },
+        {
+          "id": "ask_what_he_sees",
+          "label": "Frag, was er dort sieht.",
+          "next": "k3_031_call_answer",
+          "requires": [],
+          "effects": [
+            { "state": "trust_aksel", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "stay_inside",
+          "label": "Bleib in der Station. Das ist zu gefährlich.",
+          "next": "k3_032_stay",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "lost" },
+            { "state": "aksel_state", "operation": "set", "value": "lost" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_031_call_answer",
+      "chapter": 3,
+      "delaySeconds": 40,
+      "messages": [
+        { "speaker": "aksel", "text": "Ich weiß, wo Emil ist." },
+        { "speaker": "mira", "text": "Seine Stimme kam über den Außenlautsprecher zurück." },
+        { "speaker": "mira", "text": "Aksel trägt kein Funkgerät." }
+      ],
+      "choices": [
+        {
+          "id": "follow_prepared_after_call",
+          "label": "Bereite dich vor und folge ihm.",
+          "next": "k3_040_prepared",
+          "requires": [],
+          "effects": [
+            { "state": "return_security", "operation": "set", "value": "strong" },
+            { "state": "cold_exposure", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "lock_station",
+          "label": "Verriegle die Schleuse. Geh nicht hinaus.",
+          "next": "k3_032_stay",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "lost" },
+            { "state": "aksel_state", "operation": "set", "value": "lost" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_032_stay",
+      "chapter": 3,
+      "delaySeconds": 300,
+      "messages": [
+        { "speaker": "mira", "text": "Er ist im Weiß verschwunden." },
+        { "speaker": "mira", "text": "Ich habe die Schleuse verriegelt." },
+        { "speaker": "mira", "text": "Auf dem Außenmikrofon höre ich Schritte. Sie kommen nicht näher." }
+      ],
+      "next": "k3_100_after_march",
+      "nextDelaySeconds": 600
+    },
+    {
+      "id": "k3_040_prepared",
+      "chapter": 3,
+      "delaySeconds": 120,
+      "messages": [
+        { "speaker": "mira", "text": "Anzug dicht. Zwei Clips. Markierungslicht an der Schleuse." },
+        { "speaker": "mira", "text": "Ich sehe seine Spuren noch. Sie führen nicht zur Generatorleine." }
+      ],
+      "next": "k3_050_contact",
+      "nextDelaySeconds": 240
+    },
+    {
+      "id": "k3_041_rushed",
+      "chapter": 3,
+      "delaySeconds": 40,
+      "messages": [
+        { "speaker": "mira", "text": "Bin draußen. Nur ein Clip, keine Zeit fürs Markierungslicht." },
+        { "speaker": "mira", "text": "Seine Spuren verschwinden schon." }
+      ],
+      "next": "k3_050_contact",
+      "nextDelaySeconds": 240
+    },
+    {
+      "id": "k3_050_contact",
+      "chapter": 3,
+      "delaySeconds": 240,
+      "messages": [
+        { "speaker": "mira", "text": "Ich habe ihn erreicht. Vielleicht zwölf Meter vor mir." },
+        { "speaker": "mira", "text": "Er steht vor einer Schneewehe und starrt hinein." },
+        { "speaker": "mira", "text": "Seine Wimpern sind vereist. Er zittert nicht." }
+      ],
+      "choices": [
+        {
+          "id": "question_distance",
+          "label": "Abstand halten. Frag nach Emil.",
+          "next": "k3_051_emil",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "touch_aksel",
+          "label": "Zieh ihn zurück, bevor er zusammenbricht.",
+          "next": "k3_052_touch_resolve",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "inspect_snow",
+          "label": "Untersuche, worauf er starrt.",
+          "next": "k3_053_snow",
+          "requires": [],
+          "effects": [
+            { "state": "cold_exposure", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_051_emil",
+      "chapter": 3,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Wer ist Emil?" },
+        { "speaker": "aksel", "text": "Der Erste." },
+        { "speaker": "aksel", "text": "Er wartet unter uns." },
+        { "speaker": "mira", "text": "Er hat dabei nicht mich angesehen. Er hat dein Relais angesehen." }
+      ],
+      "next": "k3_060_turn_back",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k3_052_touch_resolve",
+      "chapter": 3,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "aksel_state", "operator": "eq", "value": "infected" },
+            { "state": "infection_source", "operator": "eq", "value": "none" }
+          ],
+          "effects": [
+            { "state": "infection_source", "operation": "set", "value": "aksel_contact" }
+          ],
+          "next": "k3_054_touch"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k3_054_touch"
+        }
+      ]
+    },
+    {
+      "id": "k3_054_touch",
+      "chapter": 3,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Ich habe seinen Arm gepackt." },
+        { "speaker": "mira", "text": "Er ist heiß. Durch Handschuh und Jacke." },
+        { "speaker": "aksel", "text": "Du hättest mich nicht berühren sollen." }
+      ],
+      "effects": [
+        { "state": "trust_mira", "operation": "add", "value": 1 }
+      ],
+      "next": "k3_060_turn_back",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k3_053_snow",
+      "chapter": 3,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Unter dem Schnee steckt eine alte orange Markierungsstange." },
+        { "speaker": "mira", "text": "Daran hängt eine vereiste Ausweiskarte: DR. EMIL VARGA, Glaziologie." },
+        { "speaker": "mira", "text": "Auf der Rückseite wurden Koordinaten eingeritzt. Die letzten Ziffern fehlen." }
+      ],
+      "effects": [
+        { "state": "patient_zero_clue", "operation": "set", "value": true },
+        { "state": "ice_coordinates_fragment", "operation": "set", "value": true },
+        { "state": "evidence_level", "operation": "add", "value": 1 }
+      ],
+      "next": "k3_060_turn_back",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k3_060_turn_back",
+      "chapter": 3,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Der Wind dreht. Unsere Spuren sind fast weg." },
+        { "speaker": "mira", "text": "Aksel folgt mir jetzt. Ich glaube zumindest, dass er es ist." }
+      ],
+      "next": "k3_061_return_check",
+      "nextDelaySeconds": 180
+    },
+    {
+      "id": "k3_061_return_check",
+      "chapter": 3,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "return_security", "operator": "eq", "value": "weak" }
+          ],
+          "effects": [
+            { "state": "mira_lost_time", "operation": "set", "value": true }
+          ],
+          "next": "k3_070_whiteout"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k3_080_airlock"
+        }
+      ]
+    },
+    {
+      "id": "k3_070_whiteout",
+      "chapter": 3,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Die Station müsste vor mir sein." },
+        { "speaker": "mira", "text": "Mein Kompass springt zwischen Nord und Süd. Das Markierungslicht ist nicht da." },
+        { "speaker": "mira", "text": "Ich weiß nicht, wie lange wir schon laufen." }
+      ],
+      "choices": [
+        {
+          "id": "follow_generator_hum",
+          "label": "Such nach dem tiefen Brummen des Generators.",
+          "next": "k3_071_recovered",
+          "requires": [
+            { "state": "generator_state", "operator": "eq", "value": "stable" }
+          ],
+          "effects": []
+        },
+        {
+          "id": "relay_bearing",
+          "label": "Nutze die Signalstärke des Relais als Peilung.",
+          "next": "k3_071_recovered",
+          "requires": [
+            { "state": "relay_damaged", "operator": "eq", "value": false }
+          ],
+          "effects": []
+        },
+        {
+          "id": "walk_straight",
+          "label": "Halte den Kurs. Die Station kann nicht weit sein.",
+          "next": "k3_072_warning",
+          "requires": [],
+          "effects": [
+            { "state": "cold_exposure", "operation": "add", "value": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_071_recovered",
+      "chapter": 3,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Da ist die Wand. Ich bin direkt dagegen gelaufen." },
+        { "speaker": "mira", "text": "Außenschleuse gefunden." },
+        { "speaker": "mira", "text": "Aksel steht drei Schritte hinter mir. Kein Schnee auf seinen Schultern." }
+      ],
+      "next": "k3_080_airlock",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k3_072_warning",
+      "chapter": 3,
+      "delaySeconds": 240,
+      "messages": [
+        { "speaker": "mira", "text": "Kein Gebäude. Kein Licht. Nur Wind." },
+        { "speaker": "mira", "text": "Meine Finger reagieren langsam. Wenn wir weitergehen, gibt es vielleicht keinen Rückweg." }
+      ],
+      "choices": [
+        {
+          "id": "reconsider_hum",
+          "label": "Stopp. Hör nach dem Generator.",
+          "next": "k3_071_recovered",
+          "requires": [
+            { "state": "generator_state", "operator": "eq", "value": "stable" }
+          ],
+          "effects": []
+        },
+        {
+          "id": "reconsider_relay",
+          "label": "Stopp. Peile das Relais.",
+          "next": "k3_071_recovered",
+          "requires": [
+            { "state": "relay_damaged", "operator": "eq", "value": false }
+          ],
+          "effects": []
+        },
+        {
+          "id": "continue_whiteout",
+          "label": "Weiter. Die Station muss vor dir sein.",
+          "next": "k3_073_whiteout_ending",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k3_073_whiteout_ending",
+      "chapter": 3,
+      "delaySeconds": 300,
+      "messages": [
+        { "speaker": "mira", "text": "Ich sehe ein Licht." },
+        { "speaker": "mira", "text": "Nein. Warte." },
+        { "speaker": "system", "text": "[SIGNAL VERLOREN]" }
+      ],
+      "ending": "ending_whiteout"
+    },
+    {
+      "id": "k3_080_airlock",
+      "chapter": 3,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Innere Schleusentür ist verriegelt. Aksel steht draußen mit mir." },
+        { "speaker": "mira", "text": "Der medizinische Sensor ist alt. Temperatur, Puls, grobe Blutwerte. Mehr nicht." }
+      ],
+      "choices": [
+        {
+          "id": "open_together",
+          "label": "Öffne. Ihr bleibt zusammen.",
+          "next": "k3_081_inside",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "returned" },
+            { "state": "aksel_inside_after_return", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "scan_first",
+          "label": "Scanne Aksel vor dem Öffnen.",
+          "next": "k3_082_scan_resolve",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "lock_him_out",
+          "label": "Geh hinein und verriegle hinter dir.",
+          "next": "k3_083_locked_out",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "locked_out" },
+            { "state": "trust_aksel", "operation": "add", "value": -2 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_082_scan_resolve",
+      "chapter": 3,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "aksel_state", "operator": "eq", "value": "infected" }
+          ],
+          "effects": [
+            { "state": "aksel_medical_scan", "operation": "set", "value": "abnormal" }
+          ],
+          "next": "k3_084_scan"
+        },
+        {
+          "requires": [],
+          "effects": [
+            { "state": "aksel_medical_scan", "operation": "set", "value": "normal" }
+          ],
+          "next": "k3_084_scan"
+        }
+      ]
+    },
+    {
+      "id": "k3_084_scan",
+      "chapter": 3,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Puls: achtunddreißig. Hauttemperatur: neununddreißig Komma zwei." },
+        { "speaker": "mira", "text": "Das Gerät meldet gleichzeitig Hypothermie und Fieber." },
+        { "speaker": "mira", "text": "Diagnose: SENSOR PRÜFEN. Sehr hilfreich." }
+      ],
+      "choices": [
+        {
+          "id": "admit_after_scan",
+          "label": "Lass ihn hinein, aber isoliere ihn.",
+          "next": "k3_081_inside",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "returned" },
+            { "state": "aksel_inside_after_return", "operation": "set", "value": true },
+            { "state": "containment", "operation": "set", "value": "partial" }
+          ]
+        },
+        {
+          "id": "exclude_after_scan",
+          "label": "Zu unsicher. Verriegle die Außentür.",
+          "next": "k3_083_locked_out",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "locked_out" },
+            { "state": "trust_aksel", "operation": "add", "value": -2 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_081_inside",
+      "chapter": 3,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Wir sind drin. Aksel sitzt auf dem Boden der Schleuse." },
+        { "speaker": "aksel", "text": "Emil war nicht der Erste, der hinunterging." },
+        { "speaker": "mira", "text": "Jetzt behauptet er, das nie gesagt zu haben." }
+      ],
+      "next": "k3_100_after_march",
+      "nextDelaySeconds": 600
+    },
+    {
+      "id": "k3_083_locked_out",
+      "chapter": 3,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Innere Tür geschlossen. Aksel ist draußen." },
+        { "speaker": "mira", "text": "Er klopft nicht. Er steht nur vor der Kamera." },
+        { "speaker": "aksel", "text": "Du wirst die Tür später öffnen." }
+      ],
+      "next": "k3_100_after_march",
+      "nextDelaySeconds": 600
+    },
+    {
+      "id": "k3_100_after_march",
+      "chapter": 3,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "aksel_inside_after_return", "operator": "eq", "value": true }
+          ],
+          "effects": [],
+          "next": "k3_120_transition"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k3_110_knock"
+        }
+      ]
+    },
+    {
+      "id": "k3_110_knock",
+      "chapter": 3,
+      "delaySeconds": 600,
+      "messages": [
+        { "speaker": "mira", "text": "Jemand klopft an die Außenschleuse." },
+        { "speaker": "mira", "text": "Dreimal. Pause. Dreimal." },
+        { "speaker": "mira", "text": "Auf der Kamera steht Aksel. Selbst wenn wir ihn kilometerweit draußen verloren haben." }
+      ],
+      "choices": [
+        {
+          "id": "camera_question",
+          "label": "Frag ihn über die Kamera nach Emil.",
+          "next": "k3_111_answer",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "remote_scan",
+          "label": "Starte den Außenscan.",
+          "next": "k3_112_remote_scan",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "open_directly",
+          "label": "Öffne die Schleuse.",
+          "next": "k3_113_open",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "returned" },
+            { "state": "aksel_inside_after_return", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "ignore_knock",
+          "label": "Nicht reagieren. Schleuse verriegelt lassen.",
+          "next": "k3_114_refuse",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "locked_out" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_111_answer",
+      "chapter": 3,
+      "delaySeconds": 40,
+      "messages": [
+        { "speaker": "mira", "text": "Wer ist Emil?" },
+        { "speaker": "aksel", "text": "Du kennst ihn bereits." },
+        { "speaker": "mira", "text": "Er hat dabei direkt in die Kamera gesehen. Nicht zu mir." }
+      ],
+      "choices": [
+        {
+          "id": "isolate_returnee",
+          "label": "Öffne die Außentür und verriegle die Quarantänekammer.",
+          "next": "k3_113_open",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "returned" },
+            { "state": "aksel_inside_after_return", "operation": "set", "value": true },
+            { "state": "containment", "operation": "set", "value": "partial" }
+          ]
+        },
+        {
+          "id": "refuse_returnee",
+          "label": "Lass die Tür zu.",
+          "next": "k3_114_refuse",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "locked_out" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_112_remote_scan",
+      "chapter": 3,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Der Sensor findet keinen Puls." },
+        { "speaker": "mira", "text": "Wärmebild zeigt einen Körper mit siebenunddreißig Grad." },
+        { "speaker": "mira", "text": "Aksel lächelt. Ich habe ihn das noch nie tun sehen." }
+      ],
+      "choices": [
+        {
+          "id": "open_quarantine",
+          "label": "Nur in die verriegelte Quarantänekammer lassen.",
+          "next": "k3_113_open",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "returned" },
+            { "state": "aksel_inside_after_return", "operation": "set", "value": true },
+            { "state": "containment", "operation": "set", "value": "partial" }
+          ]
+        },
+        {
+          "id": "keep_locked",
+          "label": "Nicht öffnen.",
+          "next": "k3_114_refuse",
+          "requires": [],
+          "effects": [
+            { "state": "aksel_march", "operation": "set", "value": "locked_out" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k3_113_open",
+      "chapter": 3,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Außentür offen. Kamera weiß vor Schnee." },
+        { "speaker": "mira", "text": "Jetzt geschlossen." },
+        { "speaker": "mira", "text": "Aksel ist in der Schleuse. Aber die Bodenwaage zeigt nur mein Gewicht." }
+      ],
+      "next": "k3_120_transition",
+      "nextDelaySeconds": 120
+    },
+    {
+      "id": "k3_114_refuse",
+      "chapter": 3,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Das Klopfen hat aufgehört." },
+        { "speaker": "mira", "text": "Die Kamera zeigt niemanden mehr." },
+        { "speaker": "mira", "text": "Auf der Innenseite der Schleusentür sind drei feuchte Fingerabdrücke." }
+      ],
+      "next": "k3_120_transition",
+      "nextDelaySeconds": 120
+    },
+    {
+      "id": "k3_120_transition",
+      "chapter": 3,
+      "delaySeconds": 120,
+      "messages": [
+        { "speaker": "mira", "text": "Kader hat sich gemeldet." },
+        { "speaker": "kader", "text": "LINDNER. KOMMEN SIE ZUM BOHRTURM. BRINGEN SIE DAS RELAIS. NICHT BERG." },
+        { "speaker": "mira", "text": "Im Hintergrund seiner Übertragung hört man dasselbe Klopfen." }
+      ],
+      "effects": [
+        { "state": "chapter_03_complete", "operation": "set", "value": true }
+      ],
+      "handoff": "chapter_04"
+    }
+  ]
+}

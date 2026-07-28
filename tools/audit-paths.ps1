@@ -133,6 +133,25 @@ while ($queue.Count -gt 0) {
         continue
     }
 
+    if ($node.redirects.Count -gt 0) {
+        $matchingRedirects = @($node.redirects | Where-Object {
+            Test-AllRequirements $_.requires $stateAfterNode
+        })
+        if ($matchingRedirects.Count -eq 0) {
+            $deadlocks.Add("$($configuration.NodeId): no redirect matches")
+            continue
+        }
+        $redirect = $matchingRedirects[0]
+        $nextState = Copy-State $stateAfterNode
+        Apply-Effects $redirect.effects $nextState $schema.states
+        $queue.Enqueue([pscustomobject]@{
+            NodeId = $redirect.next
+            State = $nextState
+            Path = @($configuration.Path + $redirect.next)
+        })
+        continue
+    }
+
     $available = @($node.choices | Where-Object {
         Test-AllRequirements $_.requires $stateAfterNode
     })

@@ -131,12 +131,22 @@ foreach ($file in $storyFiles) {
         if ($node.choices.Count -gt 0) { $terminalCount++ }
         if ($node.handoff) { $terminalCount++ }
         if ($node.ending) { $terminalCount++ }
+        if ($node.redirects.Count -gt 0) { $terminalCount++ }
         if ($terminalCount -ne 1) {
             Add-ValidationError "$context benoetigt genau einen Ausgangstyp (next, choices, handoff oder ending)."
         }
 
         if ($node.next -and -not $nodeMap.ContainsKey($node.next)) {
             Add-ValidationError "$context verweist auf fehlenden Next-Node '$($node.next)'."
+        }
+
+        foreach ($redirect in @($node.redirects)) {
+            if ($null -eq $redirect) { continue }
+            if (-not $nodeMap.ContainsKey($redirect.next)) {
+                Add-ValidationError "$context verweist auf fehlenden Redirect-Node '$($redirect.next)'."
+            }
+            Test-Conditions $redirect.requires $states "$context / Redirect"
+            Test-Effects $redirect.effects $states "$context / Redirect-Effekte"
         }
 
         $choiceIds = @{}
@@ -176,6 +186,11 @@ foreach ($file in $storyFiles) {
         $node = $nodeMap[$id]
         if ($node.next -and $nodeMap.ContainsKey($node.next)) {
             $queue.Enqueue($node.next)
+        }
+        foreach ($redirect in @($node.redirects)) {
+            if ($null -ne $redirect -and $nodeMap.ContainsKey($redirect.next)) {
+                $queue.Enqueue($redirect.next)
+            }
         }
         foreach ($choice in @($node.choices)) {
             if ($null -eq $choice) { continue }

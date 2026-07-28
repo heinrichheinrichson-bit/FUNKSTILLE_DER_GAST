@@ -17,6 +17,9 @@ const chapter = JSON.parse(
 const chapterTwo = JSON.parse(
   await readFile(new URL("data/chapter-02.json", projectRoot), "utf8"),
 );
+const chapterThree = JSON.parse(
+  await readFile(new URL("data/chapter-03.json", projectRoot), "utf8"),
+);
 
 function makeSession() {
   return new StorySession({ schema, chapter });
@@ -69,6 +72,34 @@ function makeSession() {
     view.choices.map(({ id }) => id),
     ["begin_generator"],
     "chapter two must resume the route selected in chapter one",
+  );
+}
+
+{
+  const state = createInitialState(schema);
+  state.first_route = "labor";
+  state.aksel_restrained = false;
+  const session = new StorySession({
+    schema,
+    chapter: chapterThree,
+    snapshot: {
+      currentNodeId: chapterThree.chapter.startNode,
+      nodeEntered: false,
+      state,
+      history: [],
+    },
+  });
+
+  const view = session.enter();
+  assert.equal(view.id, "k3_010_rest");
+  assert.equal(
+    session.state.aksel_state,
+    "infected",
+    "the unaccompanied generator route must resolve Aksel's hidden exposure",
+  );
+  assert.ok(
+    session.history.some(({ type }) => type === "redirect"),
+    "hidden redirects must be recorded without becoming visible nodes",
   );
 }
 

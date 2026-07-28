@@ -26,6 +26,11 @@ type Variant = {
   prependMessages?: Message[];
   appendMessages?: Message[];
 };
+type Redirect = {
+  requires?: Requirement[];
+  effects?: Effect[];
+  next: string;
+};
 type StoryNode = {
   id: string;
   chapter: number;
@@ -35,6 +40,7 @@ type StoryNode = {
   effects?: Effect[];
   choices?: Choice[];
   variants?: Variant[];
+  redirects?: Redirect[];
   next?: string;
   handoff?: string;
   ending?: string;
@@ -165,9 +171,25 @@ export default function Home() {
   const enterNode = useCallback(
     (nodeId: string, baseState: GameState, baseTimeline: TimelineItem[]) => {
       if (!schema) return;
-      const node = nodeMap.get(nodeId);
+      let node = nodeMap.get(nodeId);
       if (!node) return;
-      const nextState = applyEffects(baseState, node.effects, schema);
+      let nextState = applyEffects(baseState, node.effects, schema);
+      let redirectDepth = 0;
+
+      while (node.redirects?.length) {
+        const redirect = node.redirects.find(({ requires = [] }) =>
+          requirementsMatch(requires, nextState),
+        );
+        if (!redirect) return;
+        nextState = applyEffects(nextState, redirect.effects, schema);
+        const redirectedNode = nodeMap.get(redirect.next);
+        if (!redirectedNode) return;
+        node = redirectedNode;
+        nextState = applyEffects(nextState, node.effects, schema);
+        redirectDepth += 1;
+        if (redirectDepth > 20) return;
+      }
+
       const additions: TimelineItem[] = resolveMessages(node, nextState).map(
         (message, index) => ({
           kind: "message",
@@ -178,7 +200,7 @@ export default function Home() {
       );
       setGameState(nextState);
       setTimeline([...baseTimeline, ...additions]);
-      setCurrentNodeId(nodeId);
+      setCurrentNodeId(node.id);
       setWaiting(false);
       setPendingNode(null);
     },

@@ -140,6 +140,11 @@
       "default": false,
       "visibility": "hidden"
     },
+    "chapter_03_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "lab_visited": {
       "type": "boolean",
       "default": false,
@@ -232,6 +237,50 @@
       "type": "boolean",
       "default": false,
       "visibility": "visible"
+    },
+    "aksel_state": {
+      "type": "enum",
+      "default": "exposed",
+      "values": ["stable", "exposed", "infected", "lost", "dead"],
+      "visibility": "secret"
+    },
+    "aksel_march": {
+      "type": "enum",
+      "default": "not_triggered",
+      "values": ["not_triggered", "returned", "lost", "locked_out"],
+      "visibility": "hidden"
+    },
+    "patient_zero_clue": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "ice_coordinates_fragment": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "mira_lost_time": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "aksel_inside_after_return": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "aksel_medical_scan": {
+      "type": "enum",
+      "default": "unknown",
+      "values": ["unknown", "normal", "abnormal"],
+      "visibility": "hidden"
+    },
+    "return_security": {
+      "type": "enum",
+      "default": "strong",
+      "values": ["strong", "weak"],
+      "visibility": "hidden"
     },
     "infection_source": {
       "type": "enum",

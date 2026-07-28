@@ -118,12 +118,37 @@ export class StorySession {
   }
 
   enter() {
-    const node = this.currentNode;
+    let node = this.currentNode;
 
     if (!this.nodeEntered) {
       applyEffects(node.effects ?? [], this.state, this.schema);
       this.nodeEntered = true;
       this.history.push({ type: "enter", nodeId: node.id });
+    }
+
+    let redirectDepth = 0;
+    while (node.redirects?.length) {
+      const redirect = node.redirects.find(({ requires = [] }) =>
+        requirementsMatch(requires, this.state),
+      );
+      if (!redirect) {
+        throw new StoryDataError(`No redirect matches at '${node.id}'.`);
+      }
+      applyEffects(redirect.effects ?? [], this.state, this.schema);
+      this.history.push({
+        type: "redirect",
+        nodeId: node.id,
+        nextNodeId: redirect.next,
+      });
+      this.moveTo(redirect.next);
+      node = this.currentNode;
+      applyEffects(node.effects ?? [], this.state, this.schema);
+      this.nodeEntered = true;
+      this.history.push({ type: "enter", nodeId: node.id });
+      redirectDepth += 1;
+      if (redirectDepth > 20) {
+        throw new StoryDataError("Redirect chain exceeded 20 nodes.");
+      }
     }
 
     return this.view();
@@ -208,4 +233,3 @@ export class StorySession {
     });
   }
 }
-
