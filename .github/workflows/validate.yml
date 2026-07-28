@@ -34,5 +34,19 @@ jobs:
         run: npm ci
 
       - name: Build game prototype
+        id: game-build
+        continue-on-error: true
         working-directory: game
-        run: npm run build
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build.log
+
+      - name: Report game build failure
+        if: steps.game-build.outcome == 'failure'
+        working-directory: game
+        shell: bash
+        run: |
+          message="$(tail -n 24 build.log | tr '\n' ' ' | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')"
+          echo "::error title=Game build failed::$message"
+          exit 1
