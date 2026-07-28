@@ -7,7 +7,7 @@ on:
 
 jobs:
   validate:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
@@ -19,11 +19,11 @@ jobs:
           node-version: "22"
 
       - name: Validate story data
-        shell: powershell
+        shell: pwsh
         run: .\tools\validate-story.ps1
 
       - name: Audit story paths
-        shell: powershell
+        shell: pwsh
         run: .\tools\audit-paths.ps1
 
       - name: Test story engine
