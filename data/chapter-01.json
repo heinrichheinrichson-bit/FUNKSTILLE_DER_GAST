@@ -65,7 +65,7 @@
         { "state": "mira_wound_known", "operation": "set", "value": true },
         { "state": "trust_mira", "operation": "add", "value": 1 }
       ],
-      "next": "k1_025_name",
+      "next": "k1_023_why_contact",
       "nextDelaySeconds": 8
     },
     {
@@ -82,7 +82,7 @@
       "effects": [
         { "state": "mira_wound_known", "operation": "set", "value": true }
       ],
-      "next": "k1_025_name",
+      "next": "k1_023_why_contact",
       "nextDelaySeconds": 8
     },
     {
@@ -98,8 +98,80 @@
       "effects": [
         { "state": "mira_wound_known", "operation": "set", "value": true }
       ],
-      "next": "k1_025_name",
+      "next": "k1_023_why_contact",
       "nextDelaySeconds": 8
+    },
+    {
+      "id": "k1_023_why_contact",
+      "chapter": 1,
+      "delaySeconds": 0,
+      "messages": [
+        { "speaker": "mira", "text": "Ich habe dich nicht gezielt angerufen. Ich habe zuerst den internen Stationskanal versucht. Dann den Notkanal der Versorgungsstation." },
+        { "speaker": "mira", "text": "Niemand antwortet. Der Satelliten-Uplink ist tot, und das Relais hat sich stattdessen mit deinem Gerät verbunden." },
+        { "speaker": "mira", "text": "Meine letzte klare Erinnerung ist ein Alarm aus dem Labor. Kaders Stimme über den Lautsprecher. Jemand rannte durch den Gang." },
+        { "speaker": "mira", "text": "Dann ein Schlag, Dunkelheit – und jetzt bin ich hier. Ich weiß nicht, wie ich vom Labor in den Wohntrakt gekommen bin." },
+        { "speaker": "mira", "text": "Ich brauche Hilfe, weil ich verletzt bin, weil in der Station etwas ausgefallen ist und weil ich meiner Erinnerung gerade nicht vollständig trauen kann." }
+      ],
+      "choices": [
+        {
+          "id": "ask_last_memory",
+          "label": "Was genau ist das Letzte, woran du dich erinnerst?",
+          "next": "k1_024_last_memory",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "ask_crew_fear",
+          "label": "Warum hast du Angst vor den anderen, wenn du sie kennst?",
+          "next": "k1_024_crew_fear",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "offer_support",
+          "label": "Okay. Ich bin da. Wir finden gemeinsam heraus, was passiert ist.",
+          "next": "k1_024_support",
+          "requires": [],
+          "effects": [
+            { "state": "trust_mira", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k1_024_last_memory",
+      "chapter": 1,
+      "delaySeconds": 4,
+      "messages": [
+        { "speaker": "mira", "text": "Die Temperaturwarnung an Probenkammer Drei. Kader stritt über Funk mit jemandem. Ich konnte nicht verstehen, mit wem." },
+        { "speaker": "mira", "text": "Dann ging das Licht aus. Etwas traf mich seitlich am Kopf." },
+        { "speaker": "mira", "text": "Ob es eine herabfallende Verkleidung war oder jemand – da ist einfach nichts." }
+      ],
+      "next": "k1_025_name",
+      "nextDelaySeconds": 5
+    },
+    {
+      "id": "k1_024_crew_fear",
+      "chapter": 1,
+      "delaySeconds": 4,
+      "messages": [
+        { "speaker": "mira", "text": "Ich habe nicht grundsätzlich Angst vor ihnen. Ich kenne Aksel, Thal, Kader, Liv – wir leben seit Wochen auf engem Raum." },
+        { "speaker": "mira", "text": "Aber keiner antwortet. Jemand oder etwas hat mich vom Labor bis hierher gebracht, und ich erinnere mich nicht daran." },
+        { "speaker": "mira", "text": "Bis ich weiß, was passiert ist und wer verletzt oder verwirrt ist, will ich niemanden im Dunkeln überraschen." }
+      ],
+      "next": "k1_025_name",
+      "nextDelaySeconds": 5
+    },
+    {
+      "id": "k1_024_support",
+      "chapter": 1,
+      "delaySeconds": 3,
+      "messages": [
+        { "speaker": "mira", "text": "Danke." },
+        { "speaker": "mira", "text": "Das klingt vielleicht lächerlich, aber es hilft gerade schon, dass überhaupt jemand antwortet." }
+      ],
+      "next": "k1_025_name",
+      "nextDelaySeconds": 5
     },
     {
       "id": "k1_025_name",
@@ -141,6 +213,26 @@
         { "speaker": "mira", "text": "Das Relais sollte sich mit dem Notkanal der Versorgungsstation koppeln." },
         { "speaker": "mira", "text": "Stattdessen zeigt es nur eine Gerätekennung. Keine Rufnummer. Keinen Standort." },
         { "speaker": "mira", "text": "Wo bist du?" }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "player_name_known", "operator": "eq", "value": true }
+          ],
+          "prependMessages": [
+            { "speaker": "mira", "text": "Danke, {{player_name}}. Ich bin Mira." },
+            { "speaker": "mira", "text": "Unter anderen Umständen hätte ich gesagt: Freut mich. Im Moment bin ich einfach froh, nicht mehr allein zu sein." }
+          ]
+        },
+        {
+          "requires": [
+            { "state": "player_name_known", "operator": "eq", "value": false }
+          ],
+          "prependMessages": [
+            { "speaker": "mira", "text": "Okay. Dann bleibst du vorerst mein unbekannter Kontakt." },
+            { "speaker": "mira", "text": "Ich bin Mira. Und ich bin trotzdem froh, dass du antwortest." }
+          ]
+        }
       ],
       "choices": [
         {
@@ -291,8 +383,10 @@
       "chapter": 1,
       "delaySeconds": 20,
       "messages": [
-        { "speaker": "mira", "text": "Noch etwas: Das Relais ist das einzige funktionierende Gerät hier." },
-        { "speaker": "mira", "text": "Wenn jemand fragt, mit wem ich schreibe – was soll ich sagen?" }
+        { "speaker": "mira", "text": "Noch etwas: Das Relais ist im Moment meine einzige Verbindung nach draußen." },
+        { "speaker": "mira", "text": "Das Notfallprotokoll sagt, einen funktionierenden Ersatzkanal soll man nicht offen herumreichen, solange die Ursache des Ausfalls unbekannt ist." },
+        { "speaker": "mira", "text": "Das heißt nicht, dass ich meine Kollegen plötzlich für Feinde halte. Ich weiß nur nicht, wer verletzt ist, wer noch klar denkt oder warum niemand auf Funk antwortet." },
+        { "speaker": "mira", "text": "Wenn ich jemanden treffe und nach dem Gerät gefragt werde – wie offen soll ich sein?" }
       ],
       "choices": [
         {
@@ -330,33 +424,112 @@
       "delaySeconds": 30,
       "messages": [
         { "speaker": "mira", "text": "Der Wohntrakt hängt noch am Notstrom." },
-        { "speaker": "mira", "text": "Links sind die Schlafquartiere und die kleine Krankenstation. Rechts Kantine und Vorratsraum." },
+        { "speaker": "mira", "text": "Links sind die Schlafquartiere und ein kleiner Erste-Hilfe-Raum. Rechts Kantine und Vorratsraum." },
         { "speaker": "mira", "text": "Der Hauptgang zum Labor ist dunkel. Die Außenschleuse zeigt Grün, obwohl draußen Whiteout ist." },
         { "speaker": "mira", "text": "Ich sollte erst etwas Brauchbares suchen." }
       ],
       "choices": [
         {
           "id": "quarters_first",
-          "label": "Schlafquartiere und Krankenstation. Kümmere dich zuerst um die Verletzung.",
-          "next": "k1_070_quarters",
+          "label": "Schlafquartiere und Erste-Hilfe-Raum. Kümmere dich zuerst um die Verletzung.",
+          "next": "k1_061_quarters_depart",
           "requires": [],
           "effects": []
         },
         {
           "id": "canteen_first",
           "label": "Kantine und Vorräte. Wir müssen wissen, was dir zur Verfügung steht.",
-          "next": "k1_080_canteen",
+          "next": "k1_081_canteen_depart",
           "requires": [],
           "effects": []
         }
       ]
     },
     {
+      "id": "k1_061_quarters_depart",
+      "chapter": 1,
+      "delaySeconds": 2,
+      "messages": [
+        { "speaker": "mira", "text": "Okay. Erst der Erste-Hilfe-Raum." },
+        { "speaker": "mira", "text": "Ich gehe los. Der Gang ist nicht weit – bleib einfach da." }
+      ],
+      "next": "k1_062_quarters_walk",
+      "nextDelaySeconds": 10
+    },
+    {
+      "id": "k1_062_quarters_walk",
+      "chapter": 1,
+      "delaySeconds": 0,
+      "messages": [
+        { "speaker": "mira", "text": "Die Notlampen summen. Bei jedem Schritt knirscht etwas unter meinen Schuhen – Glas oder Eis." },
+        { "speaker": "mira", "text": "Schreib ruhig weiter. Die Vibration am Relais erinnert mich daran, dass du noch da bist." }
+      ],
+      "choices": [
+        {
+          "id": "encourage_quarters",
+          "label": "Ich bin noch da. Langsam und vorsichtig.",
+          "next": "k1_063_quarters_reassured",
+          "requires": [],
+          "effects": [
+            { "state": "trust_mira", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "ask_normal_station",
+          "label": "Lenk dich ab: Wie klingt die Station normalerweise?",
+          "next": "k1_064_quarters_normal",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "focus_quarters",
+          "label": "Konzentrier dich auf den Weg. Schreib, sobald du angekommen bist.",
+          "next": "k1_065_quarters_focus",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k1_063_quarters_reassured",
+      "chapter": 1,
+      "delaySeconds": 3,
+      "messages": [
+        { "speaker": "mira", "text": "Langsam und vorsichtig. Verstanden." },
+            { "speaker": "mira", "text": "Ich sehe schon die Tür zum Erste-Hilfe-Raum." }
+      ],
+      "next": "k1_070_quarters",
+      "nextDelaySeconds": 18
+    },
+    {
+      "id": "k1_064_quarters_normal",
+      "chapter": 1,
+      "delaySeconds": 3,
+      "messages": [
+        { "speaker": "mira", "text": "Normalerweise hört man überall die Lüftung, Wasserleitungen und irgendeinen Generator." },
+        { "speaker": "mira", "text": "Und fast immer jemanden fluchen, weil eine Tür klemmt. Diese Stille gehört nicht hierher." },
+        { "speaker": "mira", "text": "Ich bin am Erste-Hilfe-Raum." }
+      ],
+      "next": "k1_070_quarters",
+      "nextDelaySeconds": 18
+    },
+    {
+      "id": "k1_065_quarters_focus",
+      "chapter": 1,
+      "delaySeconds": 3,
+      "messages": [
+        { "speaker": "mira", "text": "Mach ich." },
+        { "speaker": "mira", "text": "Melde mich an der Tür zum Erste-Hilfe-Raum." }
+      ],
+      "next": "k1_070_quarters",
+      "nextDelaySeconds": 18
+    },
+    {
       "id": "k1_070_quarters",
       "chapter": 1,
-      "delaySeconds": 180,
+      "delaySeconds": 0,
       "messages": [
-        { "speaker": "mira", "text": "Bin in der Krankenstation. Eher ein Behandlungsraum als eine Station." },
+        { "speaker": "mira", "text": "Bin drin. Mehr ein Erste-Hilfe-Raum als eine richtige Krankenstation." },
         { "speaker": "mira", "text": "Verbandskasten ist offen. Eine Packung Kompressen liegt daneben." },
         { "speaker": "mira", "text": "Die Folie ist an einer Ecke eingerissen. Könnte beim Sturz aus dem Schrank passiert sein." },
         { "speaker": "mira", "text": "Ich benutze die lieber noch nicht." },
@@ -373,7 +546,7 @@
         {
           "id": "search_canteen",
           "label": "Sieh noch in der Kantine nach.",
-          "next": "k1_080_canteen",
+          "next": "k1_083_canteen_from_quarters",
           "requires": [
             { "state": "canteen_searched", "operator": "eq", "value": false }
           ],
@@ -391,9 +564,54 @@
       ]
     },
     {
+      "id": "k1_066_quarters_from_canteen",
+      "chapter": 1,
+      "delaySeconds": 2,
+      "messages": [
+        { "speaker": "mira", "text": "Okay. Jetzt die Quartiere und der Erste-Hilfe-Raum." },
+        { "speaker": "mira", "text": "Ich bin gleich dort. Ich melde mich an der Tür." }
+      ],
+      "next": "k1_070_quarters",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k1_081_canteen_depart",
+      "chapter": 1,
+      "delaySeconds": 2,
+      "messages": [
+        { "speaker": "mira", "text": "Okay. Erst Kantine und Vorräte." },
+        { "speaker": "mira", "text": "Ich gehe los. Schreib weiter, wenn dir etwas einfällt – ich lese mit." }
+      ],
+      "next": "k1_082_canteen_walk",
+      "nextDelaySeconds": 12
+    },
+    {
+      "id": "k1_082_canteen_walk",
+      "chapter": 1,
+      "delaySeconds": 0,
+      "messages": [
+        { "speaker": "mira", "text": "Der Geruch nach heißem Metall wird schwächer. Dafür riecht es hier nach altem Kaffee." },
+        { "speaker": "mira", "text": "Das ist gerade beinahe beruhigend." },
+        { "speaker": "mira", "text": "Bin an der Kantinentür. Ich sehe mich kurz um." }
+      ],
+      "next": "k1_080_canteen",
+      "nextDelaySeconds": 35
+    },
+    {
+      "id": "k1_083_canteen_from_quarters",
+      "chapter": 1,
+      "delaySeconds": 2,
+      "messages": [
+        { "speaker": "mira", "text": "Gut. Danach Kantine und Vorratsraum." },
+        { "speaker": "mira", "text": "Ich gehe rüber und melde mich, sobald ich drin bin." }
+      ],
+      "next": "k1_080_canteen",
+      "nextDelaySeconds": 25
+    },
+    {
       "id": "k1_080_canteen",
       "chapter": 1,
-      "delaySeconds": 180,
+      "delaySeconds": 0,
       "messages": [
         { "speaker": "mira", "text": "Kantine ist leer. Zwei Tassen auf dem Tisch. Eine davon umgestoßen." },
         { "speaker": "mira", "text": "Der Kaffee darin ist gefroren. Das sollte hier drinnen nicht möglich sein." },
@@ -411,7 +629,7 @@
         {
           "id": "search_quarters",
           "label": "Prüf jetzt die Quartiere und deine Verletzung.",
-          "next": "k1_070_quarters",
+          "next": "k1_066_quarters_from_canteen",
           "requires": [
             { "state": "quarters_searched", "operator": "eq", "value": false }
           ],
@@ -436,7 +654,9 @@
         { "speaker": "mira", "text": "Warte." },
         { "speaker": "mira", "text": "Schritte im Hauptgang." },
         { "speaker": "mira", "text": "Langsam. Jemand bleibt immer wieder stehen." },
-        { "speaker": "mira", "text": "Ich sehe einen Schatten unter der Brandschutztür." }
+        { "speaker": "mira", "text": "Ich sehe einen Schatten unter der Brandschutztür." },
+        { "speaker": "mira", "text": "Das könnte einer von uns sein. Aber warum antwortet die Person nicht auf den Stationsfunk?" },
+        { "speaker": "mira", "text": "Ich habe Angst, weil ich nicht weiß, ob sie verletzt, verwirrt oder bewaffnet ist – nicht weil ich meine Kollegen plötzlich nicht mehr kenne." }
       ],
       "choices": [
         {

@@ -68,6 +68,13 @@ function makeSession() {
   assert.equal(session.state.trust_mira, 1);
 
   view = session.advance();
+  assert.equal(view.id, "k1_023_why_contact");
+
+  view = session.choose("offer_support");
+  assert.equal(view.id, "k1_024_support");
+  assert.equal(session.state.trust_mira, 2);
+
+  view = session.advance();
   assert.equal(view.id, "k1_025_name");
 
   view = session.choose("withhold_name");
@@ -292,6 +299,8 @@ function makeSession() {
   session.enter();
   session.choose("check_room");
   session.advance();
+  session.choose("offer_support");
+  session.advance();
   session.choose("withhold_name");
   session.choose("location_not_helpful");
   session.advance();
@@ -299,6 +308,9 @@ function makeSession() {
   session.advance();
   session.choose("hide_relay");
   session.choose("quarters_first");
+  session.advance();
+  session.choose("focus_quarters");
+  session.advance();
 
   let view = session.view();
   assert.deepEqual(
@@ -307,6 +319,7 @@ function makeSession() {
   );
 
   view = session.choose("search_canteen");
+  view = session.advance();
   assert.deepEqual(
     view.choices.map(({ id }) => id),
     ["continue_after_both"],
@@ -318,6 +331,8 @@ function makeSession() {
   session.enter();
   session.choose("check_room");
   session.advance();
+  session.choose("offer_support");
+  session.advance();
   session.choose("withhold_name");
   session.choose("location_not_helpful");
   session.advance();
@@ -325,7 +340,10 @@ function makeSession() {
   session.advance();
   session.choose("hide_relay");
   session.choose("canteen_first");
+  session.advance();
+  session.advance();
   session.choose("search_quarters");
+  session.advance();
   session.choose("continue_after_both");
   session.choose("observe");
   session.advance();

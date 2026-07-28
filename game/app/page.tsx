@@ -17,6 +17,7 @@ type Choice = {
   id: string;
   label: string;
   next: string;
+  acknowledgement?: string;
   requires?: Requirement[];
   effects?: Effect[];
 };
@@ -706,17 +707,27 @@ export default function Home() {
     if (delay > 0) {
       setPendingNode(choice.next);
       setWaitMessageSent(false);
-      const recent = waitingTimeline.slice(-3).map((item) => item.text).join(" ").toLowerCase();
-      const needsNotice = delay >= 600 && !/melde|schreib|dauern|zurück|verbindung unterbrochen/.test(recent);
+      const recent = waitingTimeline
+        .slice(-8)
+        .filter((item) => item.kind === "message" && item.speaker === "mira")
+        .slice(-3)
+        .map((item) => item.text)
+        .join(" ")
+        .toLowerCase();
+      const needsNotice = delay >= 120 && !/melde|schreib|dauern|zurück|verbindung unterbrochen/.test(recent);
       if (needsNotice) {
         setDeferredWaitSeconds(delay);
         setDeliveryQueue([{
           kind: "message",
           id: `absence-${currentNode.id}-${Date.now()}`,
           speaker: "mira",
-          text: delay >= 1800
-            ? "Ich werde mich eine ganze Weile nicht melden können. Ich schreibe, sobald ich wieder kann."
-            : "Das kann eine Weile dauern. Ich melde mich, sobald ich fertig bin.",
+          text: choice.acknowledgement ?? (
+            delay >= 1800
+              ? "Okay. Ich mache mich auf den Weg. Ich werde eine ganze Weile nicht schreiben können, aber ich melde mich, sobald ich wieder kann."
+              : delay >= 600
+                ? "Okay. Ich kümmere mich darum. Das kann eine Weile dauern – ich melde mich zwischendurch, wenn ich kann."
+                : "Okay. Ich mache das jetzt. Gib mir ein paar Minuten, dann melde ich mich wieder."
+          ),
           time: Date.now(),
         }]);
         setDeliveryPhase("idle");

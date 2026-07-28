@@ -36,7 +36,9 @@ Der Wohntrakt ist zwischen den Kapiteln 2–7 der wiederkehrende Hub. Er bietet 
 
 ### K1.1 – Unbekannter Kontakt
 
-Mira meldet sich nach einer Bewusstlosigkeit. Notbeleuchtung, Kälte und ein metallischer Geruch. Sie weiß nicht, wie lange sie weg war.
+Mira meldet sich nach einer Bewusstlosigkeit. Notbeleuchtung, Kälte und ein metallischer Geruch. Sie weiß nicht, wie lange sie weg war. Vor dem Kontakt hat sie erfolglos den internen Stationskanal und den Notkanal der Versorgungsstation gerufen. Das ELF-Relais verbindet sie ungeplant mit dem Spieler.
+
+Ihre letzte klare Erinnerung besteht aus einer Temperaturwarnung im Labor, Kaders Stimme über den Lautsprecher, Schritten im Gang und einem Schlag gegen den Kopf. Sie weiß nicht, wie sie anschließend vom Labor in den Wohntrakt gelangte. Sie sucht deshalb nicht bloß Anweisungen, sondern einen außenstehenden Menschen, der ihr hilft, Beobachtungen zu ordnen, sie beruhigt und während der stillen Wege bei ihr bleibt.
 
 Antwort:
 
@@ -48,6 +50,8 @@ Beide Wege führen zu K1.2.
 ### K1.2 – Das Relais
 
 Mira erkennt, dass ihr Notrelais nicht mit dem Basislager, sondern mit einem fremden Gerät gekoppelt ist. Der Spieler kann seine Identität nicht verifizieren; Mira muss entscheiden, ob sie der Verbindung vertraut.
+
+Mira misstraut ihren Kollegen nicht grundlos. Ihre Vorsicht entsteht aus der unbeantworteten Stationskommunikation, ihrer Erinnerungslücke und der unbekannten Ursache des Ausfalls. Bekannte Personen werden zunächst als möglicherweise verletzt, desorientiert oder unter Schock betrachtet – nicht automatisch als Gegner.
 
 Frühe Tonentscheidung:
 
