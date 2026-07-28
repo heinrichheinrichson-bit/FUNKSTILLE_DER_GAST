@@ -29,13 +29,13 @@ Chatbasiertes Antarktis-Horrorspiel über Dr. Mira Lindner und eine zufällige V
 - keine ungültigen Übergänge oder Deadlocks
 - Story-Engine mit Zuständen, Bedingungen, verdeckten Weiterleitungen, Textvarianten und Save/Restore
 - optionaler Spielername mit zustandsabhängiger Ansprache
-- dauerhaftes Log-Archiv und progressive Stationskarte
+- dauerhaftes Log-Archiv und progressive Stationskarte mit Gesamtansicht, Wegen, Landeplatz, Gelände und Gebäudeplänen
 - freie Codeeingaben mit Fundvoraussetzungen
 - bestätigbare Mehrfachauswahl bei begrenztem Ausrüstungsplatz
-- Entwickler-Testmodus über `?test=1` mit Kapitel-/Node-Sprüngen und Spielstandtransfer
+- Entwickler-Testmodus über `?test=1` mit Kapitel-/Node-Sprüngen, vollständiger Entscheidungs-Zeitlinie und Spielstandtransfer
 - Relais-Privatsphäre, mögliche Entwendung und mehrstündige Funkstille
 - automatische GitHub-Prüfung bei jedem Push
-- vollständiger responsiver Acht-Kapitel-Prototyp mit lokalem Spielstand und Demo-Zeitsprüngen
+- vollständiger responsiver Acht-Kapitel-Prototyp mit lokalem Spielstand und echten, auch nach Schließen weiterlaufenden Wartezeiten
 - nahtlose, gespeicherte Übergänge zwischen allen spielbaren Kapiteln
 
 ## Prüfkommandos

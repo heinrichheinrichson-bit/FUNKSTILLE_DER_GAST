@@ -78,6 +78,16 @@ type GameState = Record<string, unknown>;
 type TimelineItem =
   | { kind: "message"; id: string; speaker: string; text: string }
   | { kind: "reply"; id: string; text: string };
+type DecisionSnapshot = {
+  id: string;
+  chapterId: string;
+  nodeId: string;
+  choiceId: string;
+  choiceLabel: string;
+  gameState: GameState;
+  timeline: TimelineItem[];
+};
+type MapView = "station" | "quarters" | "labor" | "generator";
 
 const SAVE_KEY = "funkstille-der-gast-save-v1";
 const ENDING_TITLES: Record<string, string> = {
@@ -98,13 +108,38 @@ const ARCHIVE_ITEMS = [
   { id: "old", title: "ALTES PROJEKT", state: "old_project_log", text: "Es übernimmt nichts. Es verbindet. Nach einer Weile weiß keiner mehr, welcher Gedanke zuerst da war." },
 ];
 const MAP_AREAS = [
-  { id: "quarters", label: "WOHNTRAKT", x: 8, y: 35, state: null },
-  { id: "labor", label: "LABOR", x: 36, y: 14, state: "lab_visited" },
-  { id: "generator", label: "GENERATOR", x: 37, y: 60, state: "generator_visited" },
-  { id: "outpost", label: "AUSSENPOSTEN", x: 68, y: 12, state: "weather_window_known" },
-  { id: "tower", label: "BOHRTURM", x: 67, y: 57, state: "bohrturm_access" },
-  { id: "shelter", label: "NOTUNTERKUNFT", x: 67, y: 82, state: "old_project_log" },
+  { id: "quarters", label: "WOHNTRAKT", x: 9, y: 35, w: 27, h: 14, state: null },
+  { id: "labor", label: "LABOR", x: 39, y: 18, w: 20, h: 17, state: "lab_visited" },
+  { id: "generator", label: "GENERATOR", x: 42, y: 57, w: 16, h: 12, state: "generator_visited" },
+  { id: "outpost", label: "AUSSENPOSTEN", x: 73, y: 12, w: 15, h: 10, state: "weather_window_known" },
+  { id: "tower", label: "BOHRTURM", x: 75, y: 52, w: 12, h: 12, state: "bohrturm_access" },
+  { id: "shelter", label: "NOTUNTERKUNFT", x: 65, y: 79, w: 19, h: 9, state: "old_project_log" },
 ];
+const BUILDING_ROOMS: Record<Exclude<MapView, "station">, Array<{ id: string; label: string; x: number; y: number; w: number; h: number }>> = {
+  quarters: [
+    { id: "airlock", label: "SCHLEUSE", x: 3, y: 38, w: 17, h: 25 },
+    { id: "corridor", label: "HAUPTGANG", x: 20, y: 43, w: 57, h: 15 },
+    { id: "radio", label: "FUNK / BÜRO", x: 25, y: 8, w: 22, h: 35 },
+    { id: "mess", label: "MESSE", x: 50, y: 8, w: 27, h: 35 },
+    { id: "bunks", label: "KABINEN", x: 25, y: 58, w: 27, h: 31 },
+    { id: "storage", label: "LAGER", x: 55, y: 58, w: 22, h: 31 },
+  ],
+  labor: [
+    { id: "airlock", label: "DEKON-SCHLEUSE", x: 3, y: 35, w: 20, h: 28 },
+    { id: "hall", label: "VERTEILER", x: 23, y: 42, w: 22, h: 16 },
+    { id: "analysis", label: "ANALYSE", x: 45, y: 8, w: 28, h: 34 },
+    { id: "cold", label: "KÜHLLAGER", x: 73, y: 8, w: 23, h: 34 },
+    { id: "chamber", label: "KAMMER 3", x: 45, y: 58, w: 29, h: 32 },
+    { id: "office", label: "KADER", x: 74, y: 58, w: 22, h: 32 },
+  ],
+  generator: [
+    { id: "airlock", label: "SERVICE-SCHLEUSE", x: 3, y: 38, w: 22, h: 24 },
+    { id: "control", label: "STEUERUNG", x: 25, y: 12, w: 25, h: 38 },
+    { id: "plant", label: "AGGREGATE", x: 50, y: 12, w: 46, h: 56 },
+    { id: "workshop", label: "WERKBANK", x: 25, y: 50, w: 25, h: 38 },
+    { id: "fuel", label: "TANKS", x: 50, y: 68, w: 46, h: 20 },
+  ],
+};
 
 function normalizeCode(value: string) {
   return value.toLowerCase().replace(/[\s._-]/g, "");
@@ -212,6 +247,25 @@ function formatDelay(seconds: number) {
   return `${minutes} Min.`;
 }
 
+function currentMapLocation(chapterId: string, nodeId: string) {
+  const text = nodeId.toLowerCase();
+  if (text.includes("lab")) return { area: "labor", left: 46, top: 27 };
+  if (text.includes("generator")) return { area: "generator", left: 47, top: 63 };
+  if (text.includes("tower") || text.includes("bohr")) return { area: "tower", left: 78, top: 57 };
+  if (text.includes("shelter") || text.includes("unter")) return { area: "shelter", left: 70, top: 83 };
+  const fallback: Record<string, { area: string; left: number; top: number }> = {
+    chapter_01: { area: "quarters", left: 20, top: 42 },
+    chapter_02: { area: "labor", left: 48, top: 27 },
+    chapter_03: { area: "outpost", left: 67, top: 36 },
+    chapter_04: { area: "outpost", left: 78, top: 18 },
+    chapter_05: { area: "tower", left: 80, top: 58 },
+    chapter_06: { area: "shelter", left: 72, top: 83 },
+    chapter_07: { area: "quarters", left: 20, top: 42 },
+    chapter_08: { area: "quarters", left: 19, top: 74 },
+  };
+  return fallback[chapterId] ?? fallback.chapter_01;
+}
+
 export default function Home() {
   const [storyIndex, setStoryIndex] = useState<StoryIndex | null>(null);
   const [chapters, setChapters] = useState<Record<string, StoryDocument>>({});
@@ -222,6 +276,8 @@ export default function Home() {
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [waiting, setWaiting] = useState(false);
   const [pendingNode, setPendingNode] = useState<string | null>(null);
+  const [waitUntil, setWaitUntil] = useState<number | null>(null);
+  const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [restored, setRestored] = useState(false);
   const [playerName, setPlayerName] = useState("");
   const [profileReady, setProfileReady] = useState(false);
@@ -231,6 +287,8 @@ export default function Home() {
   const [inputError, setInputError] = useState("");
   const [gearDraft, setGearDraft] = useState<string[]>([]);
   const [testMode, setTestMode] = useState(false);
+  const [decisionHistory, setDecisionHistory] = useState<DecisionSnapshot[]>([]);
+  const [mapView, setMapView] = useState<MapView>("station");
   const [saveTransfer, setSaveTransfer] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -245,6 +303,7 @@ export default function Home() {
     gameState.expedition_companion === "aksel"
       ? 3
       : 2;
+  const currentLocation = currentMapLocation(currentChapterId, currentNodeId);
 
   const enterNode = useCallback(
     (nodeId: string, baseState: GameState, baseTimeline: TimelineItem[]) => {
@@ -281,6 +340,8 @@ export default function Home() {
       setCurrentNodeId(node.id);
       setWaiting(false);
       setPendingNode(null);
+      setWaitUntil(null);
+      setRemainingSeconds(0);
     },
     [nodeMap, playerName, schema],
   );
@@ -323,6 +384,13 @@ export default function Home() {
         setCurrentNodeId(snapshot.currentNodeId);
         setTimeline(snapshot.timeline);
         setPlayerName(snapshot.playerName ?? "");
+        setDecisionHistory(snapshot.decisionHistory ?? []);
+        if (snapshot.pendingNode && snapshot.waitUntil) {
+          setPendingNode(snapshot.pendingNode);
+          setWaitUntil(Math.max(snapshot.waitUntil, Date.now()));
+          setRemainingSeconds(Math.max(0, Math.ceil((snapshot.waitUntil - Date.now()) / 1000)));
+          setWaiting(true);
+        }
         setProfileReady(true);
         setRestored(true);
         return;
@@ -363,9 +431,24 @@ export default function Home() {
         currentNodeId,
         timeline,
         playerName,
+        decisionHistory,
+        pendingNode,
+        waitUntil,
       }),
     );
-  }, [currentChapterId, currentNodeId, gameState, playerName, restored, timeline]);
+  }, [currentChapterId, currentNodeId, decisionHistory, gameState, pendingNode, playerName, restored, timeline, waitUntil]);
+
+  useEffect(() => {
+    if (!waiting || !pendingNode || !waitUntil) return;
+    const tick = () => {
+      const remaining = Math.max(0, Math.ceil((waitUntil - Date.now()) / 1000));
+      setRemainingSeconds(remaining);
+      if (remaining === 0) enterNode(pendingNode, gameState, timeline);
+    };
+    tick();
+    const timer = window.setInterval(tick, 1000);
+    return () => window.clearInterval(timer);
+  }, [enterNode, gameState, pendingNode, timeline, waitUntil, waiting]);
 
   useEffect(() => {
     if (currentNodeId !== "k5_010_pack") return;
@@ -395,6 +478,18 @@ export default function Home() {
 
   function selectChoice(choice: Choice) {
     if (!schema || !currentNode) return;
+    setDecisionHistory((history) => [
+      ...history,
+      {
+        id: `${currentChapterId}-${currentNode.id}-${choice.id}-${Date.now()}`,
+        chapterId: currentChapterId,
+        nodeId: currentNode.id,
+        choiceId: choice.id,
+        choiceLabel: choice.label,
+        gameState: structuredClone(gameState),
+        timeline: structuredClone(timeline),
+      },
+    ]);
     const nextState = applyEffects(gameState, choice.effects, schema);
     const nextTimeline: TimelineItem[] = [
       ...timeline,
@@ -411,6 +506,8 @@ export default function Home() {
     if (delay > 0) {
       setWaiting(true);
       setPendingNode(choice.next);
+      setWaitUntil(Date.now() + delay * 1000);
+      setRemainingSeconds(delay);
     } else {
       enterNode(choice.next, nextState, nextTimeline);
     }
@@ -423,6 +520,8 @@ export default function Home() {
     if (delay > 0) {
       setWaiting(true);
       setPendingNode(currentNode.next);
+      setWaitUntil(Date.now() + delay * 1000);
+      setRemainingSeconds(delay);
     } else {
       enterNode(currentNode.next, gameState, timeline);
     }
@@ -431,6 +530,21 @@ export default function Home() {
   function skipWait() {
     if (!pendingNode) return;
     enterNode(pendingNode, gameState, timeline);
+  }
+
+  function rewindToDecision(snapshot: DecisionSnapshot) {
+    setCurrentChapterId(snapshot.chapterId);
+    setCurrentNodeId(snapshot.nodeId);
+    setGameState(structuredClone(snapshot.gameState));
+    setTimeline(structuredClone(snapshot.timeline));
+    setDecisionHistory((history) =>
+      history.slice(0, history.findIndex(({ id }) => id === snapshot.id)),
+    );
+    setWaiting(false);
+    setPendingNode(null);
+    setWaitUntil(null);
+    setRemainingSeconds(0);
+    setOverlay(null);
   }
 
   function finishProfile() {
@@ -477,6 +591,18 @@ export default function Home() {
 
   function confirmGear() {
     if (!schema || gearDraft.length < 2) return;
+    setDecisionHistory((history) => [
+      ...history,
+      {
+        id: `${currentChapterId}-${currentNodeId}-gear-${Date.now()}`,
+        chapterId: currentChapterId,
+        nodeId: currentNodeId,
+        choiceId: "gear",
+        choiceLabel: `Ausrüstung: ${gearDraft.join(", ")}`,
+        gameState: structuredClone(gameState),
+        timeline: structuredClone(timeline),
+      },
+    ]);
     const nextState = {
       ...gameState,
       pack_protection: gearDraft.includes("protection"),
@@ -504,6 +630,7 @@ export default function Home() {
     if (!target) return;
     setWaiting(false);
     setPendingNode(null);
+    setWaitUntil(null);
     setCurrentChapterId(chapterId);
     setCurrentNodeId("");
     setTimeline([]);
@@ -513,6 +640,7 @@ export default function Home() {
   function jumpToNode(nodeId: string) {
     setWaiting(false);
     setPendingNode(null);
+    setWaitUntil(null);
     setTimeline([]);
     enterNode(nodeId, gameState, []);
     setOverlay(null);
@@ -557,8 +685,10 @@ export default function Home() {
       setCurrentNodeId(snapshot.currentNodeId);
       setTimeline(snapshot.timeline ?? []);
       setPlayerName(snapshot.playerName ?? playerName);
+      setDecisionHistory(snapshot.decisionHistory ?? []);
       setWaiting(false);
       setPendingNode(null);
+      setWaitUntil(null);
       setOverlay(null);
     } catch {
       setSaveTransfer("UNGÜLTIGER SPIELSTAND");
@@ -573,9 +703,11 @@ export default function Home() {
     setGameState(initialState);
     setWaiting(false);
     setPendingNode(null);
+    setWaitUntil(null);
     setCurrentChapterId(storyIndex.startChapter);
     setCurrentNodeId("");
     setPlayerName("");
+    setDecisionHistory([]);
     setProfileReady(false);
   }
 
@@ -583,6 +715,7 @@ export default function Home() {
     if (!currentNode?.handoff || !chapters[currentNode.handoff]) return;
     setWaiting(false);
     setPendingNode(null);
+    setWaitUntil(null);
     setCurrentChapterId(currentNode.handoff);
     setCurrentNodeId("");
   }
@@ -703,18 +836,9 @@ export default function Home() {
               </div>
               <div>
                 <strong>Mira ist unterwegs</strong>
-                <small>
-                  In der finalen Fassung:{" "}
-                  {formatDelay(
-                    nodeMap.get(pendingNode ?? "")?.delaySeconds ??
-                      currentNode?.nextDelaySeconds ??
-                      0,
-                  )}
-                </small>
+                <small>Nächste Übertragung in {formatDelay(remainingSeconds)}</small>
               </div>
-              <button type="button" onClick={skipWait}>
-                Demo: Zeit überspringen
-              </button>
+              {testMode && <button type="button" onClick={skipWait}>Test: Zeit überspringen</button>}
             </div>
           )}
 
@@ -847,17 +971,50 @@ export default function Home() {
 
             {overlay === "map" && (
               <div className="map-panel">
-                <div className="map-grid">
-                  {MAP_AREAS.map((area) => {
-                    const known = area.state === null || gameState[area.state] === true;
-                    return (
-                      <div className={known ? "map-room known" : "map-room"} key={area.id} style={{ left: `${area.x}%`, top: `${area.y}%` }}>
-                        <span>{known ? area.label : "?"}</span>
-                        {known && mapNotes(area.id, gameState).map((note) => <i key={note}>{note}</i>)}
+                <nav className="map-tabs" aria-label="Kartenebene">
+                  <button className={mapView === "station" ? "active" : ""} onClick={() => setMapView("station")}>GESAMT</button>
+                  <button className={mapView === "quarters" ? "active" : ""} onClick={() => setMapView("quarters")}>WOHNTRAKT</button>
+                  {gameState.lab_visited === true && <button className={mapView === "labor" ? "active" : ""} onClick={() => setMapView("labor")}>LABOR</button>}
+                  {gameState.generator_visited === true && <button className={mapView === "generator" ? "active" : ""} onClick={() => setMapView("generator")}>GENERATOR</button>}
+                </nav>
+                {mapView === "station" ? (
+                  <div className="map-grid station-map">
+                    <div className="mountain">HÖHENZUG 812 M</div>
+                    <div className="helipad"><span>H</span>LANDEPLATZ</div>
+                    <div className="route route-main" />
+                    <div className="route route-east" />
+                    <div className="route route-south" />
+                    <div className="safety-line">SICHERUNGSLEINE</div>
+                    {MAP_AREAS.map((area) => {
+                      const known = area.state === null || gameState[area.state] === true;
+                      return (
+                        <button
+                          type="button"
+                          className={known ? "map-room known" : "map-room"}
+                          key={area.id}
+                          style={{ left: `${area.x}%`, top: `${area.y}%`, width: `${area.w}%`, height: `${area.h}%` }}
+                          onClick={() => known && ["quarters", "labor", "generator"].includes(area.id) && setMapView(area.id as MapView)}
+                        >
+                          <span>{known ? area.label : "?"}</span>
+                          {known && mapNotes(area.id, gameState).map((note) => <i key={note}>{note}</i>)}
+                        </button>
+                      );
+                    })}
+                    <div className="map-marker current" style={{ left: `${currentLocation.left}%`, top: `${currentLocation.top}%` }}>MIRA · AKTUELL</div>
+                  </div>
+                ) : (
+                  <div className="map-grid interior-map">
+                    <div className="north">N ↑</div>
+                    {BUILDING_ROOMS[mapView].map((room) => (
+                      <div className="interior-room" key={room.id} style={{ left: `${room.x}%`, top: `${room.y}%`, width: `${room.w}%`, height: `${room.h}%` }}>
+                        <span>{room.label}</span>
                       </div>
-                    );
-                  })}
-                </div>
+                    ))}
+                    <div className="door door-entry">EINGANG</div>
+                    {currentLocation.area === mapView && <div className="map-marker current">MIRA · AKTUELL</div>}
+                    {mapNotes(mapView, gameState).map((note, index) => <div className="map-marker note" key={note} style={{ top: `${68 + index * 7}%` }}>{note}</div>)}
+                  </div>
+                )}
                 <p>Gestrichelte Bereiche sind nur aus Protokollen rekonstruiert. Personenmarkierungen zeigen den letzten bekannten Ort.</p>
               </div>
             )}
@@ -881,6 +1038,16 @@ export default function Home() {
                 <div className="test-actions">
                   <button type="button" onClick={skipWait} disabled={!waiting}>Wartezeit überspringen</button>
                   <button type="button" onClick={() => setSaveTransfer(localStorage.getItem(SAVE_KEY) ?? "")}>Spielstand exportieren</button>
+                </div>
+                <label>Entscheidungsverlauf · Auswahl zurücknehmen</label>
+                <div className="decision-history">
+                  {decisionHistory.length === 0 && <p>Noch keine Entscheidung in diesem Testlauf.</p>}
+                  {[...decisionHistory].reverse().map((snapshot, reverseIndex) => (
+                    <button type="button" key={snapshot.id} onClick={() => rewindToDecision(snapshot)}>
+                      <span>{snapshot.choiceLabel}</span>
+                      <b>{reverseIndex === 0 ? "LETZTE WAHL ÄNDERN" : "HIERHIN ZURÜCK"}</b>
+                    </button>
+                  ))}
                 </div>
                 <textarea value={saveTransfer} onChange={(event) => setSaveTransfer(event.target.value)} placeholder="Spielstand JSON" />
                 <button type="button" onClick={importSave}>Spielstand importieren</button>
