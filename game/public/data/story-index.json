@@ -19,6 +19,12 @@
       "number": 3,
       "title": "Der Marsch",
       "file": "chapter-03.json"
+    },
+    {
+      "id": "chapter_04",
+      "number": 4,
+      "title": "Das Wetterfenster",
+      "file": "chapter-04.json"
     }
   ]
 }

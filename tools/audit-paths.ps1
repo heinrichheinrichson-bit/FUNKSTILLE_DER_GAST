@@ -4,6 +4,8 @@ param(
     [ValidateSet('unset', 'labor', 'generator')]
     [string]$FirstRoute = 'unset',
     [switch]$AkselRestrained,
+    [ValidateSet('default', 'alive', 'missing', 'dead')]
+    [string]$ChapterFourPreset = 'default',
     [int]$MaximumConfigurations = 50000
 )
 
@@ -83,6 +85,20 @@ if ($FirstRoute -ne 'unset') {
 }
 if ($AkselRestrained) {
     $initialState['aksel_restrained'] = $true
+}
+if ($ChapterFourPreset -ne 'default') {
+    $initialState['generator_visited'] = $true
+    $initialState['lab_visited'] = $true
+    $initialState['item_sample_data'] = $true
+    $initialState['aksel_inside_after_return'] = $true
+    $initialState['generator_state'] = 'stable'
+    if ($ChapterFourPreset -eq 'missing') {
+        $initialState['global_time'] = 3
+    }
+    elseif ($ChapterFourPreset -eq 'dead') {
+        $initialState['global_time'] = 4
+        $initialState['generator_state'] = 'unstable'
+    }
 }
 
 $queue = [System.Collections.Generic.Queue[object]]::new()

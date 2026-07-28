@@ -35,10 +35,11 @@ test("server-renders the Funkstille shell", async () => {
 });
 
 test("ships chapter data and production metadata", async () => {
-  const [chapter, chapterTwo, chapterThree, index, schema, page, layout] = await Promise.all([
+  const [chapter, chapterTwo, chapterThree, chapterFour, index, schema, page, layout] = await Promise.all([
     readFile(new URL("../public/data/chapter-01.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/chapter-02.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/chapter-03.json", import.meta.url), "utf8"),
+    readFile(new URL("../public/data/chapter-04.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/story-index.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/state-schema.json", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
@@ -48,6 +49,7 @@ test("ships chapter data and production metadata", async () => {
   const chapterData = JSON.parse(chapter);
   const chapterTwoData = JSON.parse(chapterTwo);
   const chapterThreeData = JSON.parse(chapterThree);
+  const chapterFourData = JSON.parse(chapterFour);
   const indexData = JSON.parse(index);
   const schemaData = JSON.parse(schema);
 
@@ -55,9 +57,10 @@ test("ships chapter data and production metadata", async () => {
   assert.equal(chapterData.nodes.length, 27);
   assert.equal(chapterTwoData.nodes.length, 36);
   assert.equal(chapterThreeData.nodes.length, 31);
+  assert.equal(chapterFourData.nodes.length, 38);
   assert.deepEqual(
     indexData.chapters.map(({ id }) => id),
-    ["chapter_01", "chapter_02", "chapter_03"],
+    ["chapter_01", "chapter_02", "chapter_03", "chapter_04"],
   );
   assert.equal(schemaData.states.infection_source.visibility, "secret");
   assert.match(page, /Station Kaldstad/);

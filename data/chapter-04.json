@@ -1,0 +1,850 @@
+{
+  "formatVersion": 1,
+  "chapter": {
+    "id": "chapter_04",
+    "number": 4,
+    "title": "Das Wetterfenster",
+    "startNode": "k4_001_resolve_thal"
+  },
+  "nodes": [
+    {
+      "id": "k4_001_resolve_thal",
+      "chapter": 4,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "global_time", "operator": "gte", "value": 4 },
+            { "state": "generator_state", "operator": "eq", "value": "unstable" }
+          ],
+          "effects": [
+            { "state": "thal_state", "operation": "set", "value": "dead" }
+          ],
+          "next": "k4_010_briefing"
+        },
+        {
+          "requires": [
+            { "state": "global_time", "operator": "gte", "value": 3 }
+          ],
+          "effects": [
+            { "state": "thal_state", "operation": "set", "value": "missing" }
+          ],
+          "next": "k4_010_briefing"
+        },
+        {
+          "requires": [
+            { "state": "kader_relation", "operator": "lte", "value": -1 }
+          ],
+          "effects": [
+            { "state": "thal_state", "operation": "set", "value": "missing" }
+          ],
+          "next": "k4_010_briefing"
+        },
+        {
+          "requires": [],
+          "effects": [
+            { "state": "thal_state", "operation": "set", "value": "alive" }
+          ],
+          "next": "k4_010_briefing"
+        }
+      ]
+    },
+    {
+      "id": "k4_010_briefing",
+      "chapter": 4,
+      "delaySeconds": 300,
+      "messages": [
+        { "speaker": "mira", "text": "Der Außenposten ist 1,8 Kilometer entfernt." },
+        { "speaker": "mira", "text": "Wetterstation, Funkanlage, Notlager. Thal hat von dort die letzten lokalen Messwerte gespiegelt." },
+        { "speaker": "mira", "text": "Wenn wir ein Flugfenster finden wollen, dann dort. Der Weg ist fast dreimal so lang wie zum Generator." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "cold_gear", "operator": "eq", "value": 0 }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Mein Standardanzug reicht dafür nicht." }
+          ]
+        }
+      ],
+      "next": "k4_020_prepare",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_020_prepare",
+      "chapter": 4,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Ich kann noch Ausrüstung holen. Jede Vorbereitung kostet Zeit, aber draußen kostet ein Fehler mehr." }
+      ],
+      "choices": [
+        {
+          "id": "workshop_suit",
+          "label": "Hol den Überanzug aus der Generator-Werkstatt.",
+          "next": "k4_021_workshop",
+          "requires": [
+            { "state": "generator_visited", "operator": "eq", "value": true },
+            { "state": "cold_gear", "operator": "lt", "value": 2 }
+          ],
+          "effects": [
+            { "state": "cold_gear", "operation": "set", "value": 2 },
+            { "state": "global_time", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "labor_suit",
+          "label": "Nimm den Labor-Notanzug.",
+          "next": "k4_022_labor",
+          "requires": [
+            { "state": "lab_visited", "operator": "eq", "value": true },
+            { "state": "cold_gear", "operator": "eq", "value": 0 }
+          ],
+          "effects": [
+            { "state": "cold_gear", "operation": "set", "value": 1 },
+            { "state": "global_time", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "ask_aksel",
+          "label": "Bitte Aksel, dich zu begleiten.",
+          "next": "k4_023_aksel",
+          "requires": [
+            { "state": "aksel_inside_after_return", "operator": "eq", "value": true },
+            { "state": "expedition_companion", "operator": "eq", "value": "none" }
+          ],
+          "effects": [
+            { "state": "expedition_companion", "operation": "set", "value": "aksel" }
+          ]
+        },
+        {
+          "id": "depart",
+          "label": "Jetzt aufbrechen.",
+          "next": "k4_025_departure_gate",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k4_021_workshop",
+      "chapter": 4,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Überanzug gefunden. Unhandlich, aber dicht." },
+        { "speaker": "mira", "text": "Reserveakku innen an der Brust. Das reicht." }
+      ],
+      "next": "k4_020_prepare",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_022_labor",
+      "chapter": 4,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Der Notanzug ist für kurze Evakuierungen gedacht. Nicht für zwei Kilometer Sturm." },
+        { "speaker": "mira", "text": "Mit Wärmepacks und Vorsicht sollte er reichen." }
+      ],
+      "next": "k4_020_prepare",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_023_aksel",
+      "chapter": 4,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Aksel kommt mit. Er hat nicht gefragt, ob ich ihm vertraue." },
+        { "speaker": "aksel", "text": "Die gelbe Leine ist nicht überall befestigt. Jemand hat sie gelöst." }
+      ],
+      "next": "k4_020_prepare",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_025_departure_gate",
+      "chapter": 4,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "cold_gear", "operator": "gt", "value": 0 }
+          ],
+          "effects": [],
+          "next": "k4_030_departure"
+        },
+        {
+          "requires": [
+            { "state": "expedition_companion", "operator": "eq", "value": "aksel" }
+          ],
+          "effects": [],
+          "next": "k4_030_departure"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k4_026_warning"
+        }
+      ]
+    },
+    {
+      "id": "k4_026_warning",
+      "chapter": 4,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Mit dem, was ich trage, habe ich vielleicht zwanzig Minuten, bevor die Feinmotorik nachlässt." },
+        { "speaker": "mira", "text": "Der Hinweg dauert länger. Das ist keine mutige Entscheidung. Das ist Mathematik." }
+      ],
+      "choices": [
+        {
+          "id": "return_prepare",
+          "label": "Zurück. Erst Ausrüstung beschaffen.",
+          "next": "k4_020_prepare",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "insist",
+          "label": "Wir haben keine Zeit. Geh.",
+          "next": "k4_027_final_warning",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k4_027_final_warning",
+      "chapter": 4,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Wenn ich jetzt gehe, komme ich sehr wahrscheinlich nicht zurück." },
+        { "speaker": "mira", "text": "Ich brauche eine klare Antwort." }
+      ],
+      "choices": [
+        {
+          "id": "stop",
+          "label": "Abbrechen. Hol Ausrüstung.",
+          "next": "k4_020_prepare",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "accept_risk",
+          "label": "Geh trotzdem.",
+          "next": "k4_028_whiteout",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k4_028_whiteout",
+      "chapter": 4,
+      "delaySeconds": 1200,
+      "messages": [
+        { "speaker": "mira", "text": "Meine Hände schließen nicht mehr um die Leine." },
+        { "speaker": "mira", "text": "Ich sehe das Licht vom Außenposten. Oder einen Stern." },
+        { "speaker": "system", "text": "[SIGNAL VERLOREN]" }
+      ],
+      "ending": "ending_whiteout"
+    },
+    {
+      "id": "k4_030_departure",
+      "chapter": 4,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Zwei Karabiner. Reserveakku. Rote Leine bis zum Generator, danach gelb nach Osten." },
+        { "speaker": "mira", "text": "Ich melde mich am Abzweig." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "expedition_companion", "operator": "eq", "value": "aksel" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Aksel läuft hinter mir. Genug Abstand, dass wir nicht gleichzeitig stürzen." }
+          ]
+        }
+      ],
+      "next": "k4_040_long_walk",
+      "nextDelaySeconds": 720
+    },
+    {
+      "id": "k4_040_long_walk",
+      "chapter": 4,
+      "delaySeconds": 720,
+      "messages": [
+        { "speaker": "mira", "text": "Gelbe Leine erreicht. Sicht unter fünf Meter." },
+        { "speaker": "mira", "text": "Im Schnee neben mir läuft etwas mit. Ich höre Schritte, wenn ich stehen bleibe." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "expedition_companion", "operator": "eq", "value": "aksel" }
+          ],
+          "appendMessages": [
+            { "speaker": "aksel", "text": "Unsere eigenen Schritte. Vom Gebäude zurückgeworfen." },
+            { "speaker": "mira", "text": "Hier gibt es nichts, das Geräusche zurückwerfen könnte." }
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "stay_line",
+          "label": "Nicht von der Leine lösen. Weiter.",
+          "next": "k4_050_station",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "listen",
+          "label": "Licht aus und hören.",
+          "next": "k4_041_listen",
+          "requires": [],
+          "effects": [
+            { "state": "clarity", "operation": "add", "value": -1 }
+          ]
+        },
+        {
+          "id": "turn_back",
+          "label": "Umkehren und neu vorbereiten.",
+          "next": "k4_042_returned",
+          "requires": [],
+          "effects": [
+            { "state": "global_time", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k4_041_listen",
+      "chapter": 4,
+      "delaySeconds": 45,
+      "messages": [
+        { "speaker": "mira", "text": "Licht aus. Nur Wind." },
+        { "speaker": "mira", "text": "Nein. Jemand atmet direkt an meinem rechten Ohr." },
+        { "speaker": "mira", "text": "Licht wieder an. Nichts." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "expedition_companion", "operator": "eq", "value": "aksel" }
+          ],
+          "replaceMessages": [
+            { "speaker": "mira", "text": "Licht aus. Nur Wind." },
+            { "speaker": "mira", "text": "Jemand atmet rechts von mir. Aksel steht links." },
+            { "speaker": "mira", "text": "Licht wieder an. Nichts." }
+          ]
+        }
+      ],
+      "next": "k4_050_station",
+      "nextDelaySeconds": 480
+    },
+    {
+      "id": "k4_042_returned",
+      "chapter": 4,
+      "delaySeconds": 720,
+      "messages": [
+        { "speaker": "mira", "text": "Wieder im Wohntrakt. Finger warm, Akku geladen." },
+        { "speaker": "mira", "text": "Wir können es noch einmal versuchen." }
+      ],
+      "next": "k4_020_prepare",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k4_050_station",
+      "chapter": 4,
+      "delaySeconds": 480,
+      "messages": [
+        { "speaker": "mira", "text": "Gebäude. Fast dagegen gelaufen." },
+        { "speaker": "mira", "text": "Außenlicht aus. Innere Schleuse verriegelt." }
+      ],
+      "next": "k4_051_station_resolve",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_051_station_resolve",
+      "chapter": 4,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "thal_state", "operator": "eq", "value": "alive" }
+          ],
+          "effects": [],
+          "next": "k4_a_100_contact"
+        },
+        {
+          "requires": [
+            { "state": "thal_state", "operator": "eq", "value": "missing" }
+          ],
+          "effects": [],
+          "next": "k4_m_100_empty"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k4_d_100_found"
+        }
+      ]
+    },
+    {
+      "id": "k4_a_100_contact",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "thal", "text": "Name." },
+        { "speaker": "mira", "text": "Sie weiß, wer ich bin. Ich sage es trotzdem." },
+        { "speaker": "thal", "text": "Hände an die Scheibe. Drehen. Nacken zeigen. Jetzt erklären Sie mir Berg." }
+      ],
+      "choices": [
+        {
+          "id": "full_truth",
+          "label": "Erzähl alles: Labor, Marsch und mögliche Symptome.",
+          "next": "k4_a_110_entry",
+          "requires": [],
+          "effects": [
+            { "state": "trust_thal", "operation": "add", "value": 2 }
+          ]
+        },
+        {
+          "id": "technical_only",
+          "label": "Nenne nur überprüfbare technische Fakten.",
+          "next": "k4_a_110_entry",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "hide_symptoms",
+          "label": "Verschweige mögliche Symptome.",
+          "next": "k4_a_110_entry",
+          "requires": [],
+          "effects": [
+            { "state": "trust_thal", "operation": "add", "value": -1 },
+            { "state": "mira_hid_symptoms_from_thal", "operation": "set", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k4_a_110_entry",
+      "chapter": 4,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "thal", "text": "Innere Schleuse bleibt zu, bis ich Ihre Temperatur habe. Nicht persönlich nehmen." },
+        { "speaker": "mira", "text": "Tue ich nicht." },
+        { "speaker": "mira", "text": "Sie lässt mich hinein. Die Funkanlage hängt an drei verschiedenen Stromquellen." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "trust_thal", "operator": "lt", "value": 0 },
+            { "state": "expedition_companion", "operator": "eq", "value": "aksel" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Aksel bleibt in der Außenschleuse. Thals Bedingung." }
+          ]
+        }
+      ],
+      "next": "k4_a_120_conversation",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k4_a_120_conversation",
+      "chapter": 4,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "thal", "text": "Kader hat meinen ersten Warnruf blockiert. Dann hat jemand die Antenne von innen gedreht, während der Sturm lief." },
+        { "speaker": "thal", "text": "Ich bin raus, bevor sie mich auch noch zum technischen Fehler erklären." }
+      ],
+      "choices": [
+        {
+          "id": "ask_they",
+          "label": "Wen meint sie mit „sie“?",
+          "next": "k4_a_121_they",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "ask_window",
+          "label": "Frag nach dem Rettungsfenster.",
+          "next": "k4_a_122_window",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "ask_alone",
+          "label": "Warum hat sie niemanden mitgenommen?",
+          "next": "k4_a_123_alone",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k4_a_121_they",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "thal", "text": "Kader. Vielleicht Berg. Vielleicht ich." },
+        { "speaker": "thal", "text": "Ich habe Aufnahmen, auf denen ich Dinge tue, an die ich mich nicht erinnere." }
+      ],
+      "next": "k4_a_130_choice",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_a_122_window",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "thal", "text": "In ungefähr sechs Stunden öffnet sich ein Korridor nach Norden. Siebzehn Minuten, vielleicht weniger." }
+      ],
+      "next": "k4_a_130_choice",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_a_123_alone",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "thal", "text": "Ich habe es versucht. Niemand glaubte mir." },
+        { "speaker": "thal", "text": "Später war ich nicht mehr sicher, ob ich mir selbst glauben sollte." }
+      ],
+      "next": "k4_a_130_choice",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_a_130_choice",
+      "chapter": 4,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Thal gibt mir Wetterdaten und ihren Warnbericht. Zurückkommen will sie nicht." }
+      ],
+      "choices": [
+        {
+          "id": "come_with_trust",
+          "label": "Komm mit uns. Allein bist du nicht sicher.",
+          "next": "k4_x_200_weather",
+          "requires": [
+            { "state": "trust_thal", "operator": "gte", "value": 1 }
+          ],
+          "effects": [
+            { "state": "thal_returning", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "come_refused",
+          "label": "Komm mit uns. Allein bist du nicht sicher.",
+          "next": "k4_a_131_refusal",
+          "requires": [
+            { "state": "trust_thal", "operator": "lt", "value": 1 }
+          ],
+          "effects": []
+        },
+        {
+          "id": "stay_radio",
+          "label": "Bleib hier und halte die Funkanlage bereit.",
+          "next": "k4_x_200_weather",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "need_lab",
+          "label": "Wir brauchen dich im Labor.",
+          "next": "k4_x_200_weather",
+          "requires": [
+            { "state": "item_sample_data", "operator": "eq", "value": true }
+          ],
+          "effects": [
+            { "state": "thal_returning", "operation": "set", "value": true },
+            { "state": "trust_thal", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k4_a_131_refusal",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "thal", "text": "Sie brauchen die Antenne hier. Und ich brauche eine Tür zwischen mir und Berg." },
+        { "speaker": "mira", "text": "Sie bleibt." }
+      ],
+      "next": "k4_x_200_weather",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_m_100_empty",
+      "chapter": 4,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Schleuse manuell geöffnet. Drinnen ist es warm." },
+        { "speaker": "mira", "text": "Kaffee noch flüssig. Thals Außenanzug fehlt. Ihre Stiefel stehen hier. Beide." },
+        { "speaker": "mira", "text": "Eine Aufnahme läuft." }
+      ],
+      "next": "k4_m_110_recording",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k4_m_110_recording",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "thal", "text": "Wenn das jemand findet: Kader hat den Bericht geändert. Die Rohdaten liegen auf dem lokalen Sender." },
+        { "speaker": "thal", "text": "Da draußen steht seit zwanzig Minuten jemand an der Leine. Ich glaube, es bin ich." },
+        { "speaker": "mira", "text": "Zeitstempel vor zwei Stunden. Die Kamera zeigt, dass niemand hinausgeht." }
+      ],
+      "effects": [
+        { "state": "evidence_level", "operation": "add", "value": 1 }
+      ],
+      "choices": [
+        {
+          "id": "short_search",
+          "label": "Such kurz entlang der Leine.",
+          "next": "k4_m_111_tracks",
+          "requires": [],
+          "effects": [
+            { "state": "cold_exposure", "operation": "add", "value": 1 },
+            { "state": "global_time", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "preserve_time",
+          "label": "Nicht suchen. Sichere Wetterdaten und Bericht.",
+          "next": "k4_x_200_weather",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k4_m_111_tracks",
+      "chapter": 4,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Sockenlose Fußabdrücke. Vier Meter weit." },
+        { "speaker": "mira", "text": "Dann enden sie. Kein Rückweg, kein Körper." }
+      ],
+      "next": "k4_x_200_weather",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k4_d_100_found",
+      "chapter": 4,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Thal sitzt vor dem Sender. Eine Hand auf dem manuellen Schalter." },
+        { "speaker": "mira", "text": "Kein sichtbarer Kampf. Hauttemperatur wie der Raum." },
+        { "speaker": "mira", "text": "Ich fasse nichts an." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "clarity", "operator": "lte", "value": 1 }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Ihre Augen sind offen. Nein. Geschlossen. Das Licht flackert." }
+          ]
+        }
+      ],
+      "next": "k4_d_110_last_action",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k4_d_110_last_action",
+      "chapter": 4,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Der Senderpuffer enthält einen fast vollständigen Datenblock." },
+        { "speaker": "mira", "text": "Die Verbindung wurde lokal getrennt. Stromausfall, Fernzugriff oder Thal selbst – das Protokoll unterscheidet es nicht." },
+        { "speaker": "mira", "text": "Ihr persönlicher Schlüssel steckt noch im Terminal." }
+      ],
+      "effects": [
+        { "state": "evidence_level", "operation": "add", "value": 1 }
+      ],
+      "next": "k4_x_200_weather",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k4_x_200_weather",
+      "chapter": 4,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Das Wettermodell ist eindeutig. Ein Korridor öffnet sich nach Norden." },
+        { "speaker": "mira", "text": "Wenn die Versorgungsstation unseren Notruf erhält, haben sie genau einen Versuch." },
+        { "speaker": "mira", "text": "Wir brauchen Sender, Koordinaten und einen Grund, warum sie das Risiko eingehen sollen." }
+      ],
+      "effects": [
+        { "state": "weather_window_known", "operation": "set", "value": true },
+        { "state": "rescue_coordinates", "operation": "set", "value": true }
+      ],
+      "next": "k4_x_210_evidence",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k4_x_210_evidence",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Drei Datenpakete: Rohaufnahme der Probe, Kaders geänderter Bericht und Thals blockierter Warnruf." },
+        { "speaker": "mira", "text": "Ich kann das belastbare Minimum sichern oder jedes Paket prüfen und signieren." }
+      ],
+      "choices": [
+        {
+          "id": "minimum",
+          "label": "Sichere das belastbare Minimum. Zeit ist wichtiger.",
+          "next": "k4_x_220_kader",
+          "requires": [],
+          "effects": [
+            { "state": "evidence_level", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "complete",
+          "label": "Sichere und verifiziere alle drei Pakete.",
+          "next": "k4_x_220_kader",
+          "requires": [],
+          "effects": [
+            { "state": "evidence_level", "operation": "add", "value": 3 },
+            { "state": "global_time", "operation": "add", "value": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k4_x_220_kader",
+      "chapter": 4,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "log", "text": "THAL, SIE INTERPRETIEREN ARTEFAKTE ALS BIOLOGISCHE AKTIVITÄT. BEENDEN SIE DIE ÜBERTRAGUNG." },
+        { "speaker": "mira", "text": "Darunter, 43 Sekunden später:" },
+        { "speaker": "log", "text": "INGRID. BITTE. NOCH NICHT." },
+        { "speaker": "mira", "text": "Er wollte sie nicht nur zum Schweigen bringen. Er hatte Angst vor dem Zeitpunkt." }
+      ],
+      "effects": [
+        { "state": "kader_motive_clue", "operation": "set", "value": true }
+      ],
+      "next": "k4_x_230_access",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k4_x_230_access",
+      "chapter": 4,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Im Datenpuffer liegt ein manueller Zugang: Bohrturm, Ebene minus drei, Kernkammer." },
+        { "speaker": "mira", "text": "Kader hat dort nach dem Ausfall einen Lock gesetzt." }
+      ],
+      "effects": [
+        { "state": "bohrturm_access", "operation": "set", "value": true }
+      ],
+      "next": "k4_x_240_return_choice",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k4_x_240_return_choice",
+      "chapter": 4,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Der Sturm wird für ungefähr vierzig Minuten schwächer." },
+        { "speaker": "mira", "text": "Wir können warten und sicherer zurückgehen. Oder sofort los. Jede Minute fehlt später beim Flugfenster." }
+      ],
+      "choices": [
+        {
+          "id": "wait",
+          "label": "Warte auf die Abschwächung.",
+          "next": "k4_x_241_wait",
+          "requires": [],
+          "effects": [
+            { "state": "global_time", "operation": "add", "value": 2 }
+          ]
+        },
+        {
+          "id": "return_now",
+          "label": "Sofort zurück.",
+          "next": "k4_x_250_return",
+          "requires": [],
+          "effects": [
+            { "state": "cold_exposure", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "full_search",
+          "label": "Nutze die Zeit für eine vollständige Suche.",
+          "next": "k4_x_242_search",
+          "requires": [],
+          "effects": [
+            { "state": "evidence_level", "operation": "add", "value": 1 },
+            { "state": "global_time", "operation": "add", "value": 3 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k4_x_241_wait",
+      "chapter": 4,
+      "delaySeconds": 2400,
+      "messages": [
+        { "speaker": "mira", "text": "Wind fällt auf die Hälfte. Im Anzug wird es wieder warm." },
+        { "speaker": "mira", "text": "Jetzt zurück." }
+      ],
+      "next": "k4_x_250_return",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k4_x_242_search",
+      "chapter": 4,
+      "delaySeconds": 900,
+      "messages": [
+        { "speaker": "mira", "text": "Medikamentenkiste und ein archivierter Projektverweis. Jahre älter als Kaldstad." },
+        { "speaker": "mira", "text": "Der Inhalt fehlt, aber die Kennung ist echt. Das begann nicht mit uns." }
+      ],
+      "next": "k4_x_250_return",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k4_x_250_return",
+      "chapter": 4,
+      "delaySeconds": 840,
+      "messages": [
+        { "speaker": "mira", "text": "Gelbe Leine. Rote Leine. Wohntrakt in Sicht." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "thal_returning", "operator": "eq", "value": true }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Thal läuft hinter mir. So weit entfernt, dass die Leine zwischen uns gespannt bleibt." }
+          ]
+        },
+        {
+          "requires": [
+            { "state": "expedition_companion", "operator": "eq", "value": "none" },
+            { "state": "thal_returning", "operator": "eq", "value": false }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Hinter mir sind wieder Schritte. Ich drehe mich nicht um." }
+          ]
+        }
+      ],
+      "next": "k4_300_hub",
+      "nextDelaySeconds": 120
+    },
+    {
+      "id": "k4_300_hub",
+      "chapter": 4,
+      "delaySeconds": 120,
+      "messages": [
+        { "speaker": "mira", "text": "Zurück. Das Wetterfenster beginnt in wenigen Stunden." },
+        { "speaker": "mira", "text": "Wir können jetzt einen Notruf senden. Aber ohne zu wissen, was in der Kernkammer ist, holen wir vielleicht nicht Rettung hierher." },
+        { "speaker": "mira", "text": "Vielleicht liefern wir nur etwas aus. Kader wartet im Bohrturm." }
+      ],
+      "effects": [
+        { "state": "chapter_04_complete", "operation": "set", "value": true }
+      ],
+      "handoff": "chapter_05"
+    }
+  ]
+}

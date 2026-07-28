@@ -145,6 +145,11 @@
       "default": false,
       "visibility": "hidden"
     },
+    "chapter_04_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "lab_visited": {
       "type": "boolean",
       "default": false,
@@ -281,6 +286,45 @@
       "default": "strong",
       "values": ["strong", "weak"],
       "visibility": "hidden"
+    },
+    "thal_state": {
+      "type": "enum",
+      "default": "alive",
+      "values": ["alive", "missing", "dead"],
+      "visibility": "secret"
+    },
+    "cold_gear": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 2,
+      "visibility": "visible"
+    },
+    "expedition_companion": {
+      "type": "enum",
+      "default": "none",
+      "values": ["none", "aksel"],
+      "visibility": "hidden"
+    },
+    "thal_returning": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "bohrturm_access": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "mira_hid_symptoms_from_thal": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "kader_motive_clue": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
     },
     "infection_source": {
       "type": "enum",

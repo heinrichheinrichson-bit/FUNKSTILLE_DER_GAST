@@ -20,6 +20,9 @@ const chapterTwo = JSON.parse(
 const chapterThree = JSON.parse(
   await readFile(new URL("data/chapter-03.json", projectRoot), "utf8"),
 );
+const chapterFour = JSON.parse(
+  await readFile(new URL("data/chapter-04.json", projectRoot), "utf8"),
+);
 
 function makeSession() {
   return new StorySession({ schema, chapter });
@@ -100,6 +103,30 @@ function makeSession() {
   assert.ok(
     session.history.some(({ type }) => type === "redirect"),
     "hidden redirects must be recorded without becoming visible nodes",
+  );
+}
+
+{
+  const state = createInitialState(schema);
+  state.global_time = 4;
+  state.generator_state = "unstable";
+  const session = new StorySession({
+    schema,
+    chapter: chapterFour,
+    snapshot: {
+      currentNodeId: chapterFour.chapter.startNode,
+      nodeEntered: false,
+      state,
+      history: [],
+    },
+  });
+
+  const view = session.enter();
+  assert.equal(view.id, "k4_010_briefing");
+  assert.equal(
+    session.state.thal_state,
+    "dead",
+    "high time cost plus unstable heating must resolve Thal's fate",
   );
 }
 
