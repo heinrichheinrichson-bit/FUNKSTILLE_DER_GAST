@@ -259,6 +259,38 @@ button {
   font-size: 10px;
 }
 
+.sending-indicator {
+  margin: 8px 8px 0 auto;
+  color: var(--muted);
+  font-size: 9px;
+  text-align: right;
+}
+
+.time-separator {
+  margin: 18px auto 10px;
+  display: block;
+  color: #527277;
+  font: 8px var(--font-geist-mono), monospace;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.unread-button {
+  position: sticky;
+  bottom: 4px;
+  z-index: 4;
+  margin: 8px auto 0;
+  padding: 7px 11px;
+  display: block;
+  color: #071418;
+  background: var(--ice);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 5px 18px #000;
+  cursor: pointer;
+  font-size: 9px;
+}
+
 .typing {
   display: flex;
   gap: 3px;
@@ -493,8 +525,37 @@ button {
 .archive-list,
 .archive-detail,
 .test-panel,
-.map-panel {
+.map-panel,
+.settings-panel {
   padding: 20px;
+}
+
+.settings-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.settings-panel label {
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #c8dcde;
+  background: #102329;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.settings-panel input {
+  width: 18px;
+  height: 18px;
+  accent-color: #7ef0aa;
+}
+
+.settings-panel p {
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.5;
 }
 
 .archive-list {

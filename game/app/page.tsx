@@ -76,8 +76,8 @@ type StateDefinition = {
 type StateSchema = { states: Record<string, StateDefinition> };
 type GameState = Record<string, unknown>;
 type TimelineItem =
-  | { kind: "message"; id: string; speaker: string; text: string }
-  | { kind: "reply"; id: string; text: string };
+  | { kind: "message"; id: string; speaker: string; text: string; time?: number }
+  | { kind: "reply"; id: string; text: string; time?: number; sending?: boolean };
 type DecisionSnapshot = {
   id: string;
   chapterId: string;
@@ -241,29 +241,11 @@ function makeInitialState(schema: StateSchema) {
   );
 }
 
-function addAbsenceNotice(timeline: TimelineItem[], seconds: number) {
-  if (seconds < 120) return timeline;
-  const recentText = timeline
-    .slice(-3)
-    .map((item) => item.text)
-    .join(" ")
-    .toLowerCase();
-  if (/melde|schreib|dauern|unterwegs|zurück/.test(recentText)) return timeline;
-  const text =
-    seconds >= 1800
-      ? "Ich werde eine ganze Weile nicht schreiben können. Ich melde mich, sobald ich zurück bin."
-      : seconds >= 600
-        ? "Das kann etwas dauern. Ich melde mich, wenn ich fertig bin."
-        : "Ich gehe jetzt los. Ich melde mich, sobald ich angekommen bin.";
-  return [
-    ...timeline,
-    {
-      kind: "message",
-      id: `absence-${Date.now()}-${timeline.length}`,
-      speaker: "mira",
-      text,
-    },
-  ];
+function formatMessageTime(time: number) {
+  return new Intl.DateTimeFormat("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(time);
 }
 
 function currentMapLocation(chapterId: string, nodeId: string) {
@@ -298,10 +280,18 @@ export default function Home() {
   const [waitUntil, setWaitUntil] = useState<number | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [waitMessageSent, setWaitMessageSent] = useState(false);
+  const [deferredWaitSeconds, setDeferredWaitSeconds] = useState<number | null>(null);
+  const [deliveryQueue, setDeliveryQueue] = useState<Array<Extract<TimelineItem, { kind: "message" }>>>([]);
+  const [deliveryPhase, setDeliveryPhase] = useState<"idle" | "typing" | "reading" | "interrupted">("idle");
+  const [interruptedMessageId, setInterruptedMessageId] = useState("");
+  const [sendingReply, setSendingReply] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [vibrationEnabled, setVibrationEnabled] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [restored, setRestored] = useState(false);
   const [playerName, setPlayerName] = useState("");
   const [profileReady, setProfileReady] = useState(false);
-  const [overlay, setOverlay] = useState<"archive" | "map" | "test" | null>(null);
+  const [overlay, setOverlay] = useState<"archive" | "map" | "test" | "settings" | null>(null);
   const [archiveItem, setArchiveItem] = useState<(typeof ARCHIVE_ITEMS)[number] | null>(null);
   const [textInput, setTextInput] = useState("");
   const [inputError, setInputError] = useState("");
@@ -311,6 +301,8 @@ export default function Home() {
   const [mapView, setMapView] = useState<MapView>("station");
   const [saveTransfer, setSaveTransfer] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
+  const transcriptRef = useRef<HTMLElement>(null);
+  const nearBottomRef = useRef(true);
 
   const story = chapters[currentChapterId] ?? null;
   const nodeMap = useMemo(
@@ -353,16 +345,20 @@ export default function Home() {
           id: `${node.id}-${index}-${baseTimeline.length}`,
           speaker: message.speaker,
           text: message.text.replaceAll("{{player_name}}", playerName || "du"),
+          time: Date.now() + index,
         }),
       );
       setGameState(nextState);
-      setTimeline([...baseTimeline, ...additions]);
+      setTimeline(baseTimeline);
+      setDeliveryQueue(additions as Array<Extract<TimelineItem, { kind: "message" }>>);
+      setDeliveryPhase("idle");
       setCurrentNodeId(node.id);
       setWaiting(false);
       setPendingNode(null);
       setWaitUntil(null);
       setRemainingSeconds(0);
       setWaitMessageSent(false);
+      setDeferredWaitSeconds(null);
     },
     [nodeMap, playerName, schema],
   );
@@ -406,6 +402,8 @@ export default function Home() {
         setTimeline(snapshot.timeline);
         setPlayerName(snapshot.playerName ?? "");
         setDecisionHistory(snapshot.decisionHistory ?? []);
+        setDeliveryQueue(snapshot.deliveryQueue ?? []);
+        setDeferredWaitSeconds(snapshot.deferredWaitSeconds ?? null);
         if (snapshot.pendingNode && snapshot.waitUntil) {
           setPendingNode(snapshot.pendingNode);
           setWaitUntil(Math.max(snapshot.waitUntil, Date.now()));
@@ -457,9 +455,16 @@ export default function Home() {
         pendingNode,
         waitUntil,
         waitMessageSent,
+        deliveryQueue,
+        deferredWaitSeconds,
       }),
     );
-  }, [currentChapterId, currentNodeId, decisionHistory, gameState, pendingNode, playerName, restored, timeline, waitMessageSent, waitUntil]);
+  }, [currentChapterId, currentNodeId, decisionHistory, deferredWaitSeconds, deliveryQueue, gameState, pendingNode, playerName, restored, timeline, waitMessageSent, waitUntil]);
+
+  useEffect(() => {
+    setSoundEnabled(localStorage.getItem("funkstille-sound") === "1");
+    setVibrationEnabled(localStorage.getItem("funkstille-vibration") === "1");
+  }, []);
 
   useEffect(() => {
     if (!waiting || !pendingNode || !waitUntil) return;
@@ -488,8 +493,13 @@ export default function Home() {
   }, [currentNodeId, gameState]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [timeline, waiting]);
+    if (nearBottomRef.current) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      setUnreadCount(0);
+    } else if (timeline.length) {
+      setUnreadCount((count) => count + 1);
+    }
+  }, [timeline]);
 
   const availableChoices = useMemo(
     () =>
@@ -498,8 +508,98 @@ export default function Home() {
       ),
     [currentNode, gameState],
   );
+  const delivering = deliveryQueue.length > 0 || deliveryPhase !== "idle";
+
+  useEffect(() => {
+    if (!deferredWaitSeconds || delivering || !pendingNode || waiting) return;
+    setWaiting(true);
+    setWaitUntil(Date.now() + deferredWaitSeconds * 1000);
+    setRemainingSeconds(deferredWaitSeconds);
+    setDeferredWaitSeconds(null);
+  }, [deferredWaitSeconds, delivering, pendingNode, waiting]);
+
+  useEffect(() => {
+    if (waiting) return;
+    if (!deliveryQueue.length) {
+      if (deliveryPhase === "reading") {
+        const timer = window.setTimeout(() => setDeliveryPhase("idle"), testMode ? 70 : 650);
+        return () => window.clearTimeout(timer);
+      }
+      return;
+    }
+    const message = deliveryQueue[0];
+    const interruption =
+      !testMode &&
+      interruptedMessageId !== message.id &&
+      [...message.id].reduce((sum, character) => sum + character.charCodeAt(0), 0) % 19 === 0;
+
+    if (deliveryPhase === "idle") {
+      const timer = window.setTimeout(() => setDeliveryPhase("typing"), testMode ? 40 : 240);
+      return () => window.clearTimeout(timer);
+    }
+    if (deliveryPhase === "typing") {
+      const typingTime = testMode ? 90 : Math.min(4600, Math.max(700, 420 + message.text.length * 31));
+      const timer = window.setTimeout(() => {
+        if (interruption) {
+          setInterruptedMessageId(message.id);
+          setDeliveryPhase("interrupted");
+          return;
+        }
+        setTimeline((current) => [...current, { ...message, time: Date.now() }]);
+        setDeliveryQueue((current) => current.slice(1));
+        setDeliveryPhase("reading");
+        if (soundEnabled) {
+          const AudioContextClass = window.AudioContext;
+          const context = new AudioContextClass();
+          const oscillator = context.createOscillator();
+          const gain = context.createGain();
+          oscillator.frequency.value = 620;
+          gain.gain.value = 0.025;
+          oscillator.connect(gain);
+          gain.connect(context.destination);
+          oscillator.start();
+          oscillator.stop(context.currentTime + 0.06);
+        }
+        if (vibrationEnabled && navigator.vibrate) navigator.vibrate(25);
+      }, typingTime);
+      return () => window.clearTimeout(timer);
+    }
+    if (deliveryPhase === "interrupted") {
+      const timer = window.setTimeout(() => setDeliveryPhase("typing"), testMode ? 60 : 1400);
+      return () => window.clearTimeout(timer);
+    }
+    if (deliveryPhase === "reading") {
+      const pause = testMode ? 70 : Math.min(1800, Math.max(480, message.text.length * 13));
+      const timer = window.setTimeout(() => setDeliveryPhase("idle"), pause);
+      return () => window.clearTimeout(timer);
+    }
+  }, [deliveryPhase, deliveryQueue, interruptedMessageId, soundEnabled, testMode, vibrationEnabled, waiting]);
+
+  useEffect(() => {
+    if (
+      waiting ||
+      delivering ||
+      deferredWaitSeconds !== null ||
+      !currentNode?.next ||
+      currentNode.input ||
+      currentNode.ending ||
+      currentNode.handoff ||
+      availableChoices.length
+    ) return;
+    const timer = window.setTimeout(() => advance(), testMode ? 80 : 520);
+    return () => window.clearTimeout(timer);
+  }, [availableChoices.length, currentNode, deferredWaitSeconds, delivering, testMode, waiting]);
 
   function selectChoice(choice: Choice) {
+    if (sendingReply || delivering) return;
+    setSendingReply(true);
+    window.setTimeout(() => {
+      setSendingReply(false);
+      commitChoice(choice);
+    }, testMode ? 60 : 360);
+  }
+
+  function commitChoice(choice: Choice) {
     if (!schema || !currentNode) return;
     setDecisionHistory((history) => [
       ...history,
@@ -520,19 +620,36 @@ export default function Home() {
         kind: "reply",
         id: `reply-${currentNode.id}-${choice.id}-${timeline.length}`,
         text: choice.label,
+        time: Date.now(),
       },
     ];
     const target = nodeMap.get(choice.next);
     const delay = target?.delaySeconds ?? 0;
     setGameState(nextState);
-    const waitingTimeline = addAbsenceNotice(nextTimeline, delay);
+    const waitingTimeline = nextTimeline;
     setTimeline(waitingTimeline);
     if (delay > 0) {
-      setWaiting(true);
       setPendingNode(choice.next);
-      setWaitUntil(Date.now() + delay * 1000);
-      setRemainingSeconds(delay);
       setWaitMessageSent(false);
+      const recent = waitingTimeline.slice(-3).map((item) => item.text).join(" ").toLowerCase();
+      const needsNotice = delay >= 600 && !/melde|schreib|dauern|zurück|verbindung unterbrochen/.test(recent);
+      if (needsNotice) {
+        setDeferredWaitSeconds(delay);
+        setDeliveryQueue([{
+          kind: "message",
+          id: `absence-${currentNode.id}-${Date.now()}`,
+          speaker: "mira",
+          text: delay >= 1800
+            ? "Ich werde mich eine ganze Weile nicht melden können. Ich schreibe, sobald ich wieder kann."
+            : "Das kann eine Weile dauern. Ich melde mich, sobald ich fertig bin.",
+          time: Date.now(),
+        }]);
+        setDeliveryPhase("idle");
+      } else {
+        setWaiting(true);
+        setWaitUntil(Date.now() + delay * 1000);
+        setRemainingSeconds(delay);
+      }
     } else {
       enterNode(choice.next, nextState, waitingTimeline);
     }
@@ -542,14 +659,30 @@ export default function Home() {
     if (!currentNode?.next) return;
     const target = nodeMap.get(currentNode.next);
     const delay = currentNode.nextDelaySeconds ?? target?.delaySeconds ?? 0;
-    const waitingTimeline = addAbsenceNotice(timeline, delay);
+    const waitingTimeline = timeline;
     setTimeline(waitingTimeline);
     if (delay > 0) {
-      setWaiting(true);
       setPendingNode(currentNode.next);
-      setWaitUntil(Date.now() + delay * 1000);
-      setRemainingSeconds(delay);
       setWaitMessageSent(false);
+      const recent = waitingTimeline.slice(-3).map((item) => item.text).join(" ").toLowerCase();
+      const needsNotice = delay >= 600 && !/melde|schreib|dauern|zurück|verbindung unterbrochen/.test(recent);
+      if (needsNotice) {
+        setDeferredWaitSeconds(delay);
+        setDeliveryQueue([{
+          kind: "message",
+          id: `absence-${currentNode.id}-${Date.now()}`,
+          speaker: "mira",
+          text: delay >= 1800
+            ? "Ich werde mich eine ganze Weile nicht melden können. Ich schreibe, sobald ich wieder kann."
+            : "Das kann eine Weile dauern. Ich melde mich, sobald ich fertig bin.",
+          time: Date.now(),
+        }]);
+        setDeliveryPhase("idle");
+      } else {
+        setWaiting(true);
+        setWaitUntil(Date.now() + delay * 1000);
+        setRemainingSeconds(delay);
+      }
     } else {
       enterNode(currentNode.next, gameState, waitingTimeline);
     }
@@ -572,6 +705,9 @@ export default function Home() {
     setPendingNode(null);
     setWaitUntil(null);
     setRemainingSeconds(0);
+    setDeliveryQueue([]);
+    setDeliveryPhase("idle");
+    setDeferredWaitSeconds(null);
     setOverlay(null);
   }
 
@@ -583,9 +719,27 @@ export default function Home() {
         kind: "reply",
         id: `wait-message-${Date.now()}`,
         text,
+        time: Date.now(),
       },
     ]);
     setWaitMessageSent(true);
+  }
+
+  function flushDelivery() {
+    if (!deliveryQueue.length) return;
+    const now = Date.now();
+    setTimeline((current) => [
+      ...current,
+      ...deliveryQueue.map((message, index) => ({ ...message, time: now + index })),
+    ]);
+    setDeliveryQueue([]);
+    setDeliveryPhase("idle");
+  }
+
+  function updatePreference(kind: "sound" | "vibration", enabled: boolean) {
+    localStorage.setItem(`funkstille-${kind}`, enabled ? "1" : "0");
+    if (kind === "sound") setSoundEnabled(enabled);
+    else setVibrationEnabled(enabled);
   }
 
   function finishProfile() {
@@ -672,6 +826,9 @@ export default function Home() {
     setWaiting(false);
     setPendingNode(null);
     setWaitUntil(null);
+    setDeliveryQueue([]);
+    setDeliveryPhase("idle");
+    setDeferredWaitSeconds(null);
     setCurrentChapterId(chapterId);
     setCurrentNodeId("");
     setTimeline([]);
@@ -682,6 +839,9 @@ export default function Home() {
     setWaiting(false);
     setPendingNode(null);
     setWaitUntil(null);
+    setDeliveryQueue([]);
+    setDeliveryPhase("idle");
+    setDeferredWaitSeconds(null);
     setTimeline([]);
     enterNode(nodeId, gameState, []);
     setOverlay(null);
@@ -727,6 +887,9 @@ export default function Home() {
       setTimeline(snapshot.timeline ?? []);
       setPlayerName(snapshot.playerName ?? playerName);
       setDecisionHistory(snapshot.decisionHistory ?? []);
+      setDeliveryQueue(snapshot.deliveryQueue ?? []);
+      setDeliveryPhase("idle");
+      setDeferredWaitSeconds(snapshot.deferredWaitSeconds ?? null);
       setWaiting(false);
       setPendingNode(null);
       setWaitUntil(null);
@@ -745,6 +908,9 @@ export default function Home() {
     setWaiting(false);
     setPendingNode(null);
     setWaitUntil(null);
+    setDeliveryQueue([]);
+    setDeliveryPhase("idle");
+    setDeferredWaitSeconds(null);
     setCurrentChapterId(storyIndex.startChapter);
     setCurrentNodeId("");
     setPlayerName("");
@@ -757,6 +923,9 @@ export default function Home() {
     setWaiting(false);
     setPendingNode(null);
     setWaitUntil(null);
+    setDeliveryQueue([]);
+    setDeliveryPhase("idle");
+    setDeferredWaitSeconds(null);
     setCurrentChapterId(currentNode.handoff);
     setCurrentNodeId("");
   }
@@ -794,6 +963,12 @@ export default function Home() {
   }
 
   const connectionEnded = Boolean(currentNode?.handoff || currentNode?.ending);
+  const signalLabel =
+    gameState.relay_confiscated === true && gameState.relay_recovered !== true
+      ? "VERBINDUNG VERLOREN"
+      : gameState.relay_damaged === true
+        ? "SCHWACHES SIGNAL"
+        : "VERBUNDEN";
 
   return (
     <main className="app-shell">
@@ -806,11 +981,12 @@ export default function Home() {
           <div className="top-actions">
             <div className="connection">
               <span className="connection-dot" />
-              VERBUNDEN
+              {signalLabel}
             </div>
             <nav className="utility-nav" aria-label="Relaiswerkzeuge">
               <button type="button" onClick={() => setOverlay("archive")}>LOGS</button>
               <button type="button" onClick={() => setOverlay("map")}>KARTE</button>
+              <button type="button" onClick={() => setOverlay("settings")}>OPTIONEN</button>
               {testMode && <button type="button" onClick={() => setOverlay("test")}>TEST</button>}
             </nav>
           </div>
@@ -824,20 +1000,35 @@ export default function Home() {
           </button>
         </div>
 
-        <section className="transcript" aria-live="polite">
+        <section
+          className="transcript"
+          aria-live="polite"
+          ref={transcriptRef}
+          onScroll={(event) => {
+            const element = event.currentTarget;
+            nearBottomRef.current = element.scrollHeight - element.scrollTop - element.clientHeight < 90;
+            if (nearBottomRef.current) setUnreadCount(0);
+          }}
+        >
           <div className="encryption-note">
             Zufällige Kopplung · Identität nicht verifiziert
           </div>
 
-          {timeline.map((item) =>
-            item.kind === "reply" ? (
-              <div className="row row-player" key={item.id}>
+          {timeline.map((item, index) => (
+            <div className="message-entry" key={item.id}>
+              {item.time &&
+                index > 0 &&
+                timeline[index - 1].time &&
+                item.time - (timeline[index - 1].time ?? 0) > 300000 && (
+                  <time className="time-separator">{formatMessageTime(item.time)}</time>
+                )}
+              {item.kind === "reply" ? (
+              <div className="row row-player">
                 <div className="bubble bubble-player">{item.text}</div>
               </div>
             ) : (
               <div
                 className={`row ${item.speaker === "system" ? "row-system" : ""}`}
-                key={item.id}
               >
                 {item.speaker !== "system" && (
                   <span className="speaker">
@@ -865,10 +1056,11 @@ export default function Home() {
                   )}
                 </div>
               </div>
-            ),
-          )}
+            )}
+            </div>
+          ))}
 
-          {waiting && remainingSeconds <= 4 && (
+          {deliveryPhase === "typing" && (
             <div className="typing-presence">
               <div className="typing">
                 <span />
@@ -878,8 +1070,22 @@ export default function Home() {
               <span>Mira schreibt …</span>
             </div>
           )}
+          {sendingReply && <div className="sending-indicator">Nachricht wird gesendet …</div>}
 
           <div ref={bottomRef} />
+          {unreadCount > 0 && (
+            <button
+              className="unread-button"
+              type="button"
+              onClick={() => {
+                nearBottomRef.current = true;
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+                setUnreadCount(0);
+              }}
+            >
+              {unreadCount} neue Nachricht{unreadCount > 1 ? "en" : ""}
+            </button>
+          )}
         </section>
 
         <footer className="response-panel">
@@ -896,7 +1102,7 @@ export default function Home() {
               {testMode && <button className="test-skip" type="button" onClick={skipWait}>TEST · WARTEZEIT ÜBERSPRINGEN</button>}
             </div>
           )}
-          {!waiting && currentNode?.input && (
+          {!waiting && !delivering && deferredWaitSeconds === null && !sendingReply && currentNode?.input && (
             <form className="code-entry" onSubmit={(event) => { event.preventDefault(); submitNodeInput(); }}>
               <label htmlFor="story-code">{currentNode.input.prompt}</label>
               <div>
@@ -914,7 +1120,7 @@ export default function Home() {
             </form>
           )}
 
-          {!waiting && currentNodeId === "k5_010_pack" && (
+          {!waiting && !delivering && deferredWaitSeconds === null && !sendingReply && currentNodeId === "k5_010_pack" && (
             <div className="gear-picker">
               <div className="gear-heading">
                 <strong>Ausrüstung wählen</strong>
@@ -942,7 +1148,7 @@ export default function Home() {
             </div>
           )}
 
-          {!waiting &&
+          {!waiting && !delivering && deferredWaitSeconds === null && !sendingReply &&
             currentNodeId !== "k5_010_pack" &&
             availableChoices
               .filter((choice) => choice.id !== currentNode?.input?.choiceId)
@@ -958,14 +1164,7 @@ export default function Home() {
               </button>
             ))}
 
-          {!waiting && currentNode?.next && (
-            <button className="choice choice-continue" type="button" onClick={advance}>
-              <span>Weiter</span>
-              <b>›</b>
-            </button>
-          )}
-
-          {connectionEnded && (
+          {connectionEnded && !delivering && (
             <div className="handoff">
               <span>
                 {currentNode?.ending ? "Dein Ende" : "Kapitel abgeschlossen"}
@@ -992,7 +1191,7 @@ export default function Home() {
             <header>
               <div>
                 <span className="eyebrow">ELF-NOTRELAIS</span>
-                <h2>{overlay === "archive" ? "Archiv" : overlay === "map" ? "Stationskarte" : "Testmodus"}</h2>
+                <h2>{overlay === "archive" ? "Archiv" : overlay === "map" ? "Stationskarte" : overlay === "settings" ? "Optionen" : "Testmodus"}</h2>
               </div>
               <button type="button" onClick={() => { setOverlay(null); setArchiveItem(null); }}>×</button>
             </header>
@@ -1069,6 +1268,20 @@ export default function Home() {
               </div>
             )}
 
+            {overlay === "settings" && (
+              <div className="settings-panel">
+                <label>
+                  <span>Nachrichtenton</span>
+                  <input type="checkbox" checked={soundEnabled} onChange={(event) => updatePreference("sound", event.target.checked)} />
+                </label>
+                <label>
+                  <span>Vibration</span>
+                  <input type="checkbox" checked={vibrationEnabled} onChange={(event) => updatePreference("vibration", event.target.checked)} />
+                </label>
+                <p>Beide Signale sind standardmäßig ausgeschaltet und gelten nur für dieses Gerät.</p>
+              </div>
+            )}
+
             {overlay === "test" && (
               <div className="test-panel">
                 <label>Kapitel direkt öffnen</label>
@@ -1087,6 +1300,7 @@ export default function Home() {
                 </div>
                 <div className="test-actions">
                   <button type="button" onClick={skipWait} disabled={!waiting}>Wartezeit überspringen</button>
+                  <button type="button" onClick={flushDelivery} disabled={!deliveryQueue.length}>Nachrichten sofort anzeigen</button>
                   <button type="button" onClick={() => setSaveTransfer(localStorage.getItem(SAVE_KEY) ?? "")}>Spielstand exportieren</button>
                 </div>
                 <label>Entscheidungsverlauf · Auswahl zurücknehmen</label>
