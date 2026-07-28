@@ -87,6 +87,8 @@ test("ships chapter data and production metadata", async () => {
   assert.match(page, /Stationskarte/);
   assert.match(page, /Ausrüstung wählen/);
   assert.match(page, /Testmodus/);
+  assert.match(page, /targetWaitsForPlayer/);
+  assert.match(page, /if \(targetWaitsForPlayer\) return 0/);
   assert.match(layout, /lang="de"/);
   assert.doesNotMatch(page, /SkeletonPreview|codex-preview/);
 });

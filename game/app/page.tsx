@@ -242,6 +242,14 @@ function resolveMessages(node: StoryNode, state: GameState) {
   return messages;
 }
 
+function transitionDelay(current: StoryNode, target: StoryNode | undefined) {
+  const targetWaitsForPlayer =
+    (target?.messages?.length ?? 0) === 0 &&
+    Boolean(target?.input || target?.choices?.length);
+  if (targetWaitsForPlayer) return 0;
+  return current.nextDelaySeconds ?? target?.delaySeconds ?? 0;
+}
+
 function makeInitialState(schema: StateSchema) {
   return Object.fromEntries(
     Object.entries(schema.states).map(([key, definition]) => [
@@ -770,7 +778,7 @@ export default function Home() {
   function advance() {
     if (!currentNode?.next) return;
     const target = nodeMap.get(currentNode.next);
-    const delay = currentNode.nextDelaySeconds ?? target?.delaySeconds ?? 0;
+    const delay = transitionDelay(currentNode, target);
     const waitingTimeline = timeline;
     setTimeline(waitingTimeline);
     if (delay > 0) {
