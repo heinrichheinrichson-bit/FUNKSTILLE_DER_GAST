@@ -18,6 +18,6 @@ game/.git-init-backup/
 !.env.example
 
 # Build output
-dist/
-build/
-coverage/
+/dist/
+/build/
+/coverage/
