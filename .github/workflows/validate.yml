@@ -24,7 +24,11 @@ jobs:
 
       - name: Audit story paths
         shell: pwsh
-        run: .\tools\audit-paths.ps1
+        run: |
+          .\tools\audit-paths.ps1
+          .\tools\audit-paths.ps1 -ChapterFile chapter-02.json -FirstRoute labor
+          .\tools\audit-paths.ps1 -ChapterFile chapter-02.json -FirstRoute generator
+          .\tools\audit-paths.ps1 -ChapterFile chapter-02.json -FirstRoute generator -AkselRestrained
 
       - name: Test story engine
         run: npm test

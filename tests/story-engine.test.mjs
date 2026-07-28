@@ -14,6 +14,9 @@ const schema = JSON.parse(
 const chapter = JSON.parse(
   await readFile(new URL("data/chapter-01.json", projectRoot), "utf8"),
 );
+const chapterTwo = JSON.parse(
+  await readFile(new URL("data/chapter-02.json", projectRoot), "utf8"),
+);
 
 function makeSession() {
   return new StorySession({ schema, chapter });
@@ -45,6 +48,28 @@ function makeSession() {
 
   view = session.advance();
   assert.equal(view.id, "k1_030_identity");
+}
+
+{
+  const state = createInitialState(schema);
+  state.first_route = "generator";
+  const session = new StorySession({
+    schema,
+    chapter: chapterTwo,
+    snapshot: {
+      currentNodeId: chapterTwo.chapter.startNode,
+      nodeEntered: false,
+      state,
+      history: [],
+    },
+  });
+
+  const view = session.enter();
+  assert.deepEqual(
+    view.choices.map(({ id }) => id),
+    ["begin_generator"],
+    "chapter two must resume the route selected in chapter one",
+  );
 }
 
 {
@@ -116,4 +141,3 @@ function makeSession() {
 }
 
 console.log("story-engine tests passed");
-

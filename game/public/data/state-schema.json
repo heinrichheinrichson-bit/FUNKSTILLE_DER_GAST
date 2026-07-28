@@ -135,6 +135,21 @@
       "default": false,
       "visibility": "hidden"
     },
+    "chapter_02_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "lab_visited": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "generator_visited": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "generator_state": {
       "type": "enum",
       "default": "unknown",
@@ -146,6 +161,77 @@
       "default": "unknown",
       "values": ["unknown", "sealed", "analyzed", "degraded"],
       "visibility": "hidden"
+    },
+    "lab_protection": {
+      "type": "enum",
+      "default": "none",
+      "values": ["none", "filter", "full"],
+      "visibility": "visible"
+    },
+    "item_sample_data": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "log_kader_07": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "kader_knows_lab": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "kader_confronted": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "kader_thinks_data_hidden": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "kader_warned_about_aksel": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "log_freight_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "outside_prepared": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
+    "clue_outside_glove": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "item_generator_tool": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "relay_backup": {
+      "type": "boolean",
+      "default": true,
+      "visibility": "hidden"
+    },
+    "relay_damaged": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "narrative"
+    },
+    "clue_aksel_memory": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
     },
     "infection_source": {
       "type": "enum",

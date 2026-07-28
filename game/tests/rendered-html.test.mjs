@@ -35,18 +35,27 @@ test("server-renders the Funkstille shell", async () => {
 });
 
 test("ships chapter data and production metadata", async () => {
-  const [chapter, schema, page, layout] = await Promise.all([
+  const [chapter, chapterTwo, index, schema, page, layout] = await Promise.all([
     readFile(new URL("../public/data/chapter-01.json", import.meta.url), "utf8"),
+    readFile(new URL("../public/data/chapter-02.json", import.meta.url), "utf8"),
+    readFile(new URL("../public/data/story-index.json", import.meta.url), "utf8"),
     readFile(new URL("../public/data/state-schema.json", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
   ]);
 
   const chapterData = JSON.parse(chapter);
+  const chapterTwoData = JSON.parse(chapterTwo);
+  const indexData = JSON.parse(index);
   const schemaData = JSON.parse(schema);
 
   assert.equal(chapterData.chapter.startNode, "k1_001_signal");
   assert.equal(chapterData.nodes.length, 27);
+  assert.equal(chapterTwoData.nodes.length, 36);
+  assert.deepEqual(
+    indexData.chapters.map(({ id }) => id),
+    ["chapter_01", "chapter_02"],
+  );
   assert.equal(schemaData.states.infection_source.visibility, "secret");
   assert.match(page, /Station Kaldstad/);
   assert.match(page, /localStorage/);

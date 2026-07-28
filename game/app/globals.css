@@ -342,9 +342,22 @@ button {
   text-align: center;
 }
 
-.handoff strong {
+.handoff strong,
+.handoff button {
   color: var(--ice);
   font-size: 13px;
+}
+
+.handoff button {
+  padding: 9px 12px;
+  background: rgba(158, 232, 240, 0.08);
+  border: 1px solid rgba(158, 232, 240, 0.22);
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.handoff button:hover {
+  background: rgba(158, 232, 240, 0.14);
 }
 
 .loading-screen {

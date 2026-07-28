@@ -580,7 +580,7 @@
         { "speaker": "mira", "text": "Bin unterwegs. Wenn die Verbindung kurz weg ist: nicht trennen." },
         { "speaker": "mira", "text": "Ich komme zurück." }
       ],
-      "handoff": "chapter_02_labor"
+      "handoff": "chapter_02"
     },
     {
       "id": "k1_131_exit_generator",
@@ -632,7 +632,7 @@
       "chapter": 1,
       "delaySeconds": 0,
       "messages": [],
-      "handoff": "chapter_02_generator"
+      "handoff": "chapter_02"
     }
   ]
 }

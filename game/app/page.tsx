@@ -43,6 +43,15 @@ type StoryDocument = {
   chapter: { id: string; number: number; title: string; startNode: string };
   nodes: StoryNode[];
 };
+type StoryIndex = {
+  startChapter: string;
+  chapters: Array<{
+    id: string;
+    number: number;
+    title: string;
+    file: string;
+  }>;
+};
 type StateDefinition = {
   type: "boolean" | "integer" | "enum";
   default: unknown;
@@ -134,7 +143,9 @@ function formatDelay(seconds: number) {
 }
 
 export default function Home() {
-  const [story, setStory] = useState<StoryDocument | null>(null);
+  const [storyIndex, setStoryIndex] = useState<StoryIndex | null>(null);
+  const [chapters, setChapters] = useState<Record<string, StoryDocument>>({});
+  const [currentChapterId, setCurrentChapterId] = useState("");
   const [schema, setSchema] = useState<StateSchema | null>(null);
   const [gameState, setGameState] = useState<GameState>({});
   const [currentNodeId, setCurrentNodeId] = useState("");
@@ -144,6 +155,7 @@ export default function Home() {
   const [restored, setRestored] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  const story = chapters[currentChapterId] ?? null;
   const nodeMap = useMemo(
     () => new Map(story?.nodes.map((node) => [node.id, node]) ?? []),
     [story],
@@ -175,21 +187,35 @@ export default function Home() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/data/chapter-01.json").then((response) => response.json()),
+      fetch("/data/story-index.json").then((response) => response.json()),
       fetch("/data/state-schema.json").then((response) => response.json()),
-    ]).then(([storyData, schemaData]: [StoryDocument, StateSchema]) => {
-      setStory(storyData);
+    ]).then(async ([indexData, schemaData]: [StoryIndex, StateSchema]) => {
+      const documents = await Promise.all(
+        indexData.chapters.map(({ file }) =>
+          fetch(`/data/${file}`).then((response) => response.json()),
+        ),
+      );
+      setStoryIndex(indexData);
+      setChapters(
+        Object.fromEntries(
+          documents.map((document: StoryDocument) => [
+            document.chapter.id,
+            document,
+          ]),
+        ),
+      );
       setSchema(schemaData);
     });
   }, []);
 
   useEffect(() => {
-    if (!story || !schema || restored) return;
+    if (!storyIndex || !schema || restored) return;
     const saved = localStorage.getItem(SAVE_KEY);
     if (saved) {
       try {
         const snapshot = JSON.parse(saved);
         setGameState(snapshot.gameState);
+        setCurrentChapterId(snapshot.currentChapterId ?? storyIndex.startChapter);
         setCurrentNodeId(snapshot.currentNodeId);
         setTimeline(snapshot.timeline);
         setRestored(true);
@@ -199,17 +225,38 @@ export default function Home() {
       }
     }
     const initialState = makeInitialState(schema);
+    setCurrentChapterId(storyIndex.startChapter);
+    setCurrentNodeId("");
     setRestored(true);
-    enterNode(story.chapter.startNode, initialState, []);
-  }, [enterNode, restored, schema, story]);
+    setGameState(initialState);
+    setTimeline([]);
+  }, [restored, schema, storyIndex]);
+
+  useEffect(() => {
+    if (!restored || !story || !schema || currentNodeId) return;
+    enterNode(story.chapter.startNode, gameState, timeline);
+  }, [
+    currentNodeId,
+    enterNode,
+    gameState,
+    restored,
+    schema,
+    story,
+    timeline,
+  ]);
 
   useEffect(() => {
     if (!restored || !currentNodeId) return;
     localStorage.setItem(
       SAVE_KEY,
-      JSON.stringify({ gameState, currentNodeId, timeline }),
+      JSON.stringify({
+        gameState,
+        currentChapterId,
+        currentNodeId,
+        timeline,
+      }),
     );
-  }, [currentNodeId, gameState, restored, timeline]);
+  }, [currentChapterId, currentNodeId, gameState, restored, timeline]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -264,17 +311,26 @@ export default function Home() {
   }
 
   function restart() {
-    if (!story || !schema) return;
+    if (!storyIndex || !schema) return;
     localStorage.removeItem(SAVE_KEY);
     const initialState = makeInitialState(schema);
     setTimeline([]);
     setGameState(initialState);
     setWaiting(false);
     setPendingNode(null);
-    enterNode(story.chapter.startNode, initialState, []);
+    setCurrentChapterId(storyIndex.startChapter);
+    setCurrentNodeId("");
   }
 
-  if (!story || !schema || !restored) {
+  function continueChapter() {
+    if (!currentNode?.handoff || !chapters[currentNode.handoff]) return;
+    setWaiting(false);
+    setPendingNode(null);
+    setCurrentChapterId(currentNode.handoff);
+    setCurrentNodeId("");
+  }
+
+  if (!storyIndex || !story || !schema || !restored) {
     return (
       <main className="loading-screen">
         <div className="signal-mark" />
@@ -300,8 +356,8 @@ export default function Home() {
         </header>
 
         <div className="chapter-strip">
-          <span>KAPITEL 01</span>
-          <strong>Die Verbindung</strong>
+          <span>KAPITEL {String(story.chapter.number).padStart(2, "0")}</span>
+          <strong>{story.chapter.title}</strong>
           <button type="button" onClick={restart} aria-label="Spiel neu starten">
             Neustart
           </button>
@@ -395,11 +451,13 @@ export default function Home() {
           {connectionEnded && (
             <div className="handoff">
               <span>Kapitel abgeschlossen</span>
-              <strong>
-                {currentNode?.handoff === "chapter_02_labor"
-                  ? "Weiter: Laborflügel"
-                  : "Weiter: Generatorhaus"}
-              </strong>
+              {currentNode?.handoff && chapters[currentNode.handoff] ? (
+                <button type="button" onClick={continueChapter}>
+                  Weiter: {chapters[currentNode.handoff].chapter.title}
+                </button>
+              ) : (
+                <strong>Fortsetzung folgt</strong>
+              )}
             </div>
           )}
         </footer>

@@ -1,6 +1,9 @@
 param(
     [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
     [string]$ChapterFile = 'chapter-01.json',
+    [ValidateSet('unset', 'labor', 'generator')]
+    [string]$FirstRoute = 'unset',
+    [switch]$AkselRestrained,
     [int]$MaximumConfigurations = 50000
 )
 
@@ -74,6 +77,12 @@ foreach ($node in $chapter.nodes) {
 $initialState = @{}
 foreach ($property in $schema.states.PSObject.Properties) {
     $initialState[$property.Name] = $property.Value.default
+}
+if ($FirstRoute -ne 'unset') {
+    $initialState['first_route'] = $FirstRoute
+}
+if ($AkselRestrained) {
+    $initialState['aksel_restrained'] = $true
 }
 
 $queue = [System.Collections.Generic.Queue[object]]::new()

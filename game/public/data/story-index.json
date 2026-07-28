@@ -1,0 +1,18 @@
+{
+  "formatVersion": 1,
+  "startChapter": "chapter_01",
+  "chapters": [
+    {
+      "id": "chapter_01",
+      "number": 1,
+      "title": "Die Verbindung",
+      "file": "chapter-01.json"
+    },
+    {
+      "id": "chapter_02",
+      "number": 2,
+      "title": "Licht oder Wahrheit",
+      "file": "chapter-02.json"
+    }
+  ]
+}

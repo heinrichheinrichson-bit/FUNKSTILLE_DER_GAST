@@ -1,0 +1,879 @@
+{
+  "formatVersion": 1,
+  "chapter": {
+    "id": "chapter_02",
+    "number": 2,
+    "title": "Licht oder Wahrheit",
+    "startNode": "k2_001_entry"
+  },
+  "nodes": [
+    {
+      "id": "k2_001_entry",
+      "chapter": 2,
+      "delaySeconds": 0,
+      "messages": [
+        { "speaker": "system", "text": "[VERBINDUNG STABILISIERT]" }
+      ],
+      "choices": [
+        {
+          "id": "begin_labor",
+          "label": "Mira auf dem Weg zum Labor kontaktieren.",
+          "next": "k2_l_010_corridor",
+          "requires": [
+            { "state": "first_route", "operator": "eq", "value": "labor" }
+          ],
+          "effects": []
+        },
+        {
+          "id": "begin_generator",
+          "label": "Mira an der Außenschleuse kontaktieren.",
+          "next": "k2_g_100_airlock",
+          "requires": [
+            { "state": "first_route", "operator": "eq", "value": "generator" }
+          ],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k2_l_010_corridor",
+      "chapter": 2,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Der Laborgang ist vollständig dunkel." },
+        { "speaker": "mira", "text": "Notlicht müsste hier unabhängig laufen. Tut es nicht." },
+        { "speaker": "mira", "text": "Ich habe nur die Stirnlampe und dein Display am Relais." },
+        { "speaker": "mira", "text": "Hinter der Brandschutztür läuft noch die Kühlwarnung. Regelmäßig. Fast beruhigend." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "generator_visited", "operator": "eq", "value": true }
+          ],
+          "replaceMessages": [
+            { "speaker": "mira", "text": "Der Laborgang ist vollständig dunkel." },
+            { "speaker": "mira", "text": "Notlicht müsste hier unabhängig laufen. Tut es nicht." },
+            { "speaker": "mira", "text": "Die Kühlwarnung hat aufgehört." },
+            { "speaker": "mira", "text": "Entweder ist die Temperatur wieder normal oder der Sensor ist tot." }
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "careful_entry",
+          "label": "Prüf zuerst Tür und Boden. Langsam.",
+          "next": "k2_l_011_filter",
+          "requires": [],
+          "effects": [
+            { "state": "trust_mira", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "fast_entry",
+          "label": "Geh direkt zur Probenkammer.",
+          "next": "k2_l_012_fast",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k2_l_011_filter",
+      "chapter": 2,
+      "delaySeconds": 120,
+      "messages": [
+        { "speaker": "mira", "text": "Kabel im Gang. Eins davon frisch durchtrennt." },
+        { "speaker": "mira", "text": "Kein Bruch. Glatte Schnittkante." },
+        { "speaker": "mira", "text": "Daneben liegt ein Atemfilter. Verpackt. Nehm ich mit." }
+      ],
+      "effects": [
+        { "state": "lab_protection", "operation": "set", "value": "filter" }
+      ],
+      "next": "k2_l_020_locked",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k2_l_012_fast",
+      "chapter": 2,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Tür ist verriegelt. Natürlich." },
+        { "speaker": "mira", "text": "Das Bedienfeld nimmt meinen Code nicht." }
+      ],
+      "next": "k2_l_020_locked",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k2_l_020_locked",
+      "chapter": 2,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Thal könnte ihren Zugang irgendwo notiert haben. Kader hat Stationsleiterrechte." },
+        { "speaker": "mira", "text": "Oder Aksel kann die Verriegelung überbrücken." }
+      ],
+      "choices": [
+        {
+          "id": "thal_code",
+          "label": "Thals Log: Versuch das Datum ihres Warnberichts.",
+          "next": "k2_l_021_thal_code",
+          "requires": [
+            { "state": "log_thal_07", "operator": "eq", "value": true }
+          ],
+          "effects": []
+        },
+        {
+          "id": "call_kader",
+          "label": "Kontaktiere Kader über das interne Terminal.",
+          "next": "k2_l_022_call_kader",
+          "requires": [],
+          "effects": [
+            { "state": "kader_knows_lab", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "ask_aksel",
+          "label": "Aksel soll die Tür öffnen.",
+          "next": "k2_l_023_aksel_door",
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": false }
+          ],
+          "effects": []
+        },
+        {
+          "id": "ask_released_aksel",
+          "label": "Aksel soll die Tür öffnen.",
+          "next": "k2_l_023_aksel_door",
+          "requires": [
+            { "state": "aksel_released_for_generator", "operator": "eq", "value": true }
+          ],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k2_l_021_thal_code",
+      "chapter": 2,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Datum eingegeben." },
+        { "speaker": "mira", "text": "Tür offen." },
+        { "speaker": "mira", "text": "Entweder Thal ist erschreckend vorhersehbar oder sie wollte, dass jemand ihre Spuren findet." }
+      ],
+      "next": "k2_l_030_terminal",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_022_call_kader",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "kader", "text": "LINDNER? BESTÄTIGEN SIE IHREN STANDORT." },
+        { "speaker": "mira", "text": "Keine Begrüßung. Keine Frage, ob ich verletzt bin." }
+      ],
+      "choices": [
+        {
+          "id": "tell_truth",
+          "label": "Sag die Wahrheit und bitte um den Code.",
+          "next": "k2_l_024_kader_code",
+          "requires": [],
+          "effects": [
+            { "state": "kader_relation", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "medical_excuse",
+          "label": "Sag nur, dass du medizinisches Material brauchst.",
+          "next": "k2_l_024_kader_code",
+          "requires": [],
+          "effects": [
+            { "state": "kader_relation", "operation": "add", "value": -1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k2_l_024_kader_code",
+      "chapter": 2,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "kader", "text": "ZUGANG 0414. BERÜHREN SIE PROBENKAMMER DREI NICHT. KOMMEN SIE DANACH ZUM BOHRTURM." },
+        { "speaker": "mira", "text": "Tür ist offen." }
+      ],
+      "next": "k2_l_030_terminal",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_023_aksel_door",
+      "chapter": 2,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Aksel hat die Abdeckung abgenommen. Zwei Kabel getauscht. Tür offen." },
+        { "speaker": "mira", "text": "Er wusste genau, welche." }
+      ],
+      "effects": [
+        { "state": "trust_aksel", "operation": "add", "value": 1 }
+      ],
+      "next": "k2_l_030_terminal",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_030_terminal",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Hauptterminal läuft." },
+        { "speaker": "log", "text": "Probe 14C biologisch inert. Keine Replikation. Keine erkennbare Gefahr." },
+        { "speaker": "mira", "text": "Darunter eine verworfene Passage:" },
+        { "speaker": "log", "text": "Strukturbildung nach Erwärmung. Reaktion auf—" },
+        { "speaker": "mira", "text": "Der Rest wurde überschrieben. Die Zeitrafferaufnahme ist noch vollständig." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "generator_visited", "operator": "eq", "value": true }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Die letzten vier Stunden der Aufnahme fehlen. Stromunterbrechung." }
+          ]
+        }
+      ],
+      "effects": [
+        { "state": "log_kader_07", "operation": "set", "value": true }
+      ],
+      "next": "k2_l_040_sample",
+      "nextDelaySeconds": 40
+    },
+    {
+      "id": "k2_l_040_sample",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Auf den ersten Blick nur graues Material im Schmelzwasser." },
+        { "speaker": "mira", "text": "Im Zeitraffer entstehen feine Linien. Sie verbinden einzelne dunkle Punkte miteinander." },
+        { "speaker": "mira", "text": "Kein Wachstum im üblichen Sinn. Eher ein Netz." },
+        { "speaker": "mira", "text": "Jedes Mal, wenn jemand vor der Kammer stand, hat es sich zur Scheibe orientiert." },
+        { "speaker": "mira", "text": "Das kann Wärme sein. Muss Wärme sein." }
+      ],
+      "choices": [
+        {
+          "id": "fast_with_filter",
+          "label": "Schnellanalyse. Benutz den gefundenen Filter.",
+          "next": "k2_l_050_fast_filter",
+          "requires": [
+            { "state": "lab_protection", "operator": "eq", "value": "filter" }
+          ],
+          "effects": []
+        },
+        {
+          "id": "fast_unprotected",
+          "label": "Schnellanalyse. Wir brauchen jetzt Antworten.",
+          "next": "k2_l_051_fast_exposure",
+          "requires": [
+            { "state": "lab_protection", "operator": "eq", "value": "none" }
+          ],
+          "effects": []
+        },
+        {
+          "id": "safe_protocol",
+          "label": "Nur mit vollständigem Protokoll.",
+          "next": "k2_l_052_safe_analysis",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "seal",
+          "label": "Versiegle die Kammer. Nichts weiter anfassen.",
+          "next": "k2_l_053_seal",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k2_l_050_fast_filter",
+      "chapter": 2,
+      "delaySeconds": 240,
+      "messages": [
+        { "speaker": "mira", "text": "Filter sitzt. Nicht ideal, aber besser als nichts." },
+        { "speaker": "mira", "text": "Unter größerer Vergrößerung sind die Linien hohl." },
+        { "speaker": "mira", "text": "Wie Kapillaren. Oder Nerven. Nein. Zu früh für Vergleiche." }
+      ],
+      "effects": [
+        { "state": "lab_sample_state", "operation": "set", "value": "analyzed" },
+        { "state": "item_sample_data", "operation": "set", "value": true },
+        { "state": "clarity", "operation": "add", "value": -1 }
+      ],
+      "next": "k2_l_060_medical",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_051_fast_exposure",
+      "chapter": 2,
+      "delaySeconds": 240,
+      "messages": [
+        { "speaker": "mira", "text": "Schutzmaske ist nicht da, wo sie sein sollte. Ich halte Abstand." },
+        { "speaker": "mira", "text": "Unter größerer Vergrößerung sind die Linien hohl. Wie Kapillaren." },
+        { "speaker": "mira", "text": "Mir ist schwindlig. Wahrscheinlich die Kopfverletzung." }
+      ],
+      "effects": [
+        { "state": "lab_sample_state", "operation": "set", "value": "analyzed" },
+        { "state": "item_sample_data", "operation": "set", "value": true },
+        { "state": "infection_source", "operation": "set", "value": "lab_aerosol" },
+        { "state": "clarity", "operation": "add", "value": -1 }
+      ],
+      "next": "k2_l_060_medical",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_052_safe_analysis",
+      "chapter": 2,
+      "delaySeconds": 480,
+      "messages": [
+        { "speaker": "mira", "text": "Schleuse, Filtertest, Negativdruck. Dauert, aber sauber." },
+        { "speaker": "mira", "text": "Die Struktur reagiert auf elektrische Impulse. Nicht nur Wärme." },
+        { "speaker": "mira", "text": "Das ist der erste belastbare Befund." }
+      ],
+      "effects": [
+        { "state": "lab_sample_state", "operation": "set", "value": "analyzed" },
+        { "state": "lab_protection", "operation": "set", "value": "full" },
+        { "state": "item_sample_data", "operation": "set", "value": true },
+        { "state": "global_time", "operation": "add", "value": 2 }
+      ],
+      "next": "k2_l_060_medical",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_053_seal",
+      "chapter": 2,
+      "delaySeconds": 120,
+      "messages": [
+        { "speaker": "mira", "text": "Kammer mechanisch verriegelt. Zweite Dichtung gesetzt." },
+        { "speaker": "mira", "text": "Keine Probe. Keine Antworten." },
+        { "speaker": "mira", "text": "Im Moment kann ich damit leben." }
+      ],
+      "effects": [
+        { "state": "lab_sample_state", "operation": "set", "value": "sealed" }
+      ],
+      "next": "k2_l_060_medical",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_060_medical",
+      "chapter": 2,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Bevor ich gehe: die Wunde." },
+        { "speaker": "mira", "text": "Ich habe die eingerissene Packung aus dem Wohntrakt. Hier liegt auch eine versiegelte." }
+      ],
+      "choices": [
+        {
+          "id": "safe_bandage",
+          "label": "Nimm die versiegelte Packung aus dem Labor.",
+          "next": "k2_l_070_kader",
+          "requires": [],
+          "effects": [
+            { "state": "mira_wound_treated", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "damaged_bandage",
+          "label": "Die eingerissene Packung war nur heruntergefallen. Benutz sie.",
+          "next": "k2_l_070_kader",
+          "requires": [
+            { "state": "infection_source", "operator": "eq", "value": "none" }
+          ],
+          "effects": [
+            { "state": "mira_wound_treated", "operation": "set", "value": true },
+            { "state": "infection_source", "operation": "set", "value": "contaminated_dressing" }
+          ]
+        },
+        {
+          "id": "damaged_bandage_already_exposed",
+          "label": "Die eingerissene Packung war nur heruntergefallen. Benutz sie.",
+          "next": "k2_l_070_kader",
+          "requires": [
+            { "state": "infection_source", "operator": "neq", "value": "none" }
+          ],
+          "effects": [
+            { "state": "mira_wound_treated", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "leave_untreated",
+          "label": "Noch nicht behandeln.",
+          "next": "k2_l_070_kader",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k2_l_070_kader",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "kader", "text": "LINDNER. VERLASSEN SIE DAS LABOR. DIE PROBE IST NICHT DAS PRIMÄRE RISIKO." },
+        { "speaker": "mira", "text": "Dann weiß er, dass ich hier bin. Auch wenn ich seinen Code nicht benutzt habe." }
+      ],
+      "choices": [
+        {
+          "id": "confront",
+          "label": "Konfrontiere ihn mit dem gelöschten Bericht.",
+          "next": "k2_l_071_confront",
+          "requires": [],
+          "effects": [
+            { "state": "kader_relation", "operation": "add", "value": -1 },
+            { "state": "kader_confronted", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "hide",
+          "label": "Verschweige, was du gefunden hast.",
+          "next": "k2_l_072_hide",
+          "requires": [],
+          "effects": [
+            { "state": "kader_thinks_data_hidden", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "cooperate",
+          "label": "Biete Zusammenarbeit an, wenn er alles offenlegt.",
+          "next": "k2_l_073_cooperate",
+          "requires": [],
+          "effects": [
+            { "state": "kader_relation", "operation": "add", "value": 1 },
+            { "state": "kader_warned_about_aksel", "operation": "set", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k2_l_071_confront",
+      "chapter": 2,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "„Biologisch inert?“" },
+        { "speaker": "kader", "text": "DER BERICHT WAR ZU DIESEM ZEITPUNKT KORREKT. KOMMEN SIE ZUM BOHRTURM. NICHT ALLEIN." },
+        { "speaker": "mira", "text": "Eine wissenschaftlich elegante Art zu lügen." }
+      ],
+      "next": "k2_l_080_exit",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k2_l_072_hide",
+      "chapter": 2,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Hab nur medizinisches Material gesucht." },
+        { "speaker": "kader", "text": "GUT. VERLASSEN SIE DEN BEREICH." },
+        { "speaker": "mira", "text": "Er glaubt mir nicht. Oder er glaubt mir zu schnell." }
+      ],
+      "next": "k2_l_080_exit",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k2_l_073_cooperate",
+      "chapter": 2,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Ich helfe Ihnen. Dafür keine ausgelassenen Passagen mehr." },
+        { "speaker": "kader", "text": "DANN SICHERN SIE DIE STROMVERSORGUNG. UND LINDNER: FALLS BERG BEI IHNEN IST, LASSEN SIE IHN NICHT ALLEIN." }
+      ],
+      "next": "k2_l_080_exit",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k2_l_080_exit",
+      "chapter": 2,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Genug Labor." }
+      ],
+      "effects": [
+        { "state": "lab_visited", "operation": "set", "value": true }
+      ],
+      "choices": [
+        {
+          "id": "continue_generator",
+          "label": "Jetzt zum Generator. Die Temperatur im Wohntrakt sinkt.",
+          "next": "k2_g_100_airlock",
+          "requires": [
+            { "state": "generator_visited", "operator": "eq", "value": false }
+          ],
+          "effects": []
+        },
+        {
+          "id": "finish_chapter",
+          "label": "Zurück zum Wohntrakt.",
+          "next": "k2_x_200_return",
+          "requires": [
+            { "state": "generator_visited", "operator": "eq", "value": true }
+          ],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k2_g_100_airlock",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Außenschleuse. Wind bei neunzig Stundenkilometern. Sicht vielleicht acht Meter." },
+        { "speaker": "mira", "text": "Der Generator ist über eine rote Sicherungsleine verbunden." },
+        { "speaker": "mira", "text": "Ich prüfe den Anzug." }
+      ],
+      "choices": [
+        {
+          "id": "prepare",
+          "label": "Prüf Anzug, Clip und Ersatzlicht vollständig.",
+          "next": "k2_g_101_prepared",
+          "requires": [],
+          "effects": [
+            { "state": "outside_prepared", "operation": "set", "value": true },
+            { "state": "global_time", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "go_fast",
+          "label": "Die Leine reicht. Geh, bevor es schlimmer wird.",
+          "next": "k2_g_102_fast",
+          "requires": [],
+          "effects": [
+            { "state": "cold_exposure", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k2_g_101_prepared",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Clip war nicht vollständig geschlossen. Jetzt ist er es." },
+        { "speaker": "mira", "text": "Ersatzlicht funktioniert. Raus." }
+      ],
+      "next": "k2_g_110_crossing",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k2_g_102_fast",
+      "chapter": 2,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Bin an der Leine. Raus." }
+      ],
+      "next": "k2_g_110_crossing",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k2_g_110_crossing",
+      "chapter": 2,
+      "delaySeconds": 360,
+      "messages": [
+        { "speaker": "mira", "text": "Hälfte geschafft. Man sieht das Gebäude erst, wenn man fast dagegenläuft." },
+        { "speaker": "mira", "text": "Da sind Fußspuren neben der Leine. Hin und zurück." },
+        { "speaker": "mira", "text": "Eine Spur endet auf halbem Weg." }
+      ],
+      "choices": [
+        {
+          "id": "stay_on_line",
+          "label": "Nicht untersuchen. Bleib an der Leine.",
+          "next": "k2_g_120_entry",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "check_tracks",
+          "label": "Leuchte kurz hin, ohne die Leine loszulassen.",
+          "next": "k2_g_111_glove",
+          "requires": [],
+          "effects": [
+            { "state": "cold_exposure", "operation": "add", "value": 1 },
+            { "state": "clue_outside_glove", "operation": "set", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k2_g_111_glove",
+      "chapter": 2,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Ein einzelner Handschuh. Generator-Team." },
+        { "speaker": "mira", "text": "Auf der Oberfläche liegt derselbe graue Staub wie auf Aksels Jacke." },
+        { "speaker": "mira", "text": "Ich bleibe an der Leine." }
+      ],
+      "next": "k2_g_120_entry",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k2_g_120_entry",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Generatorhaus offen. Das sollte es nicht sein." },
+        { "speaker": "mira", "text": "Der Hauptdiesel läuft unregelmäßig. Einer der Wechselrichter ist tot." },
+        { "speaker": "mira", "text": "In der Werkstatt liegt eine geöffnete Frachtkiste. Medikamente und Atemfilter laut Aufschrift. Leer." },
+        { "speaker": "mira", "text": "Die Kisten wurden von Kader ins Labor umgebucht. Sechs Stunden später zurückgebucht. Empfänger: A. Berg." }
+      ],
+      "effects": [
+        { "state": "log_freight_complete", "operation": "set", "value": true },
+        { "state": "item_generator_tool", "operation": "set", "value": true }
+      ],
+      "next": "k2_g_130_repair",
+      "nextDelaySeconds": 40
+    },
+    {
+      "id": "k2_g_130_repair",
+      "chapter": 2,
+      "delaySeconds": 40,
+      "messages": [
+        { "speaker": "mira", "text": "Der Wechselrichter kann ersetzt werden." },
+        { "speaker": "mira", "text": "Langsam mit vollständiger Abschaltung. Oder als Überbrückung unter Last." },
+        { "speaker": "mira", "text": "Im Relais steckt außerdem ein kompatibler Spannungsregler." }
+      ],
+      "choices": [
+        {
+          "id": "safe_repair",
+          "label": "Vollständig abschalten und sauber reparieren.",
+          "next": "k2_g_131_safe",
+          "requires": [],
+          "effects": [
+            { "state": "generator_state", "operation": "set", "value": "stable" },
+            { "state": "global_time", "operation": "add", "value": 2 }
+          ]
+        },
+        {
+          "id": "bypass_with_free_aksel",
+          "label": "Überbrücken. Wir brauchen sofort Strom.",
+          "next": "k2_g_132_bypass",
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "generator_state", "operation": "set", "value": "unstable" }
+          ]
+        },
+        {
+          "id": "bypass_with_released_aksel",
+          "label": "Überbrücken. Wir brauchen sofort Strom.",
+          "next": "k2_g_132_bypass",
+          "requires": [
+            { "state": "aksel_released_for_generator", "operator": "eq", "value": true }
+          ],
+          "effects": [
+            { "state": "generator_state", "operation": "set", "value": "unstable" }
+          ]
+        },
+        {
+          "id": "bypass_alone",
+          "label": "Allein überbrücken. Wir brauchen sofort Strom.",
+          "next": "k2_g_133_bypass_accident",
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": true },
+            { "state": "aksel_released_for_generator", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "generator_state", "operation": "set", "value": "unstable" },
+            { "state": "relay_damaged", "operation": "set", "value": true },
+            { "state": "clarity", "operation": "add", "value": -1 }
+          ]
+        },
+        {
+          "id": "relay_part",
+          "label": "Nimm das Ersatzteil aus dem Relais.",
+          "next": "k2_g_134_relay_part",
+          "requires": [],
+          "effects": [
+            { "state": "generator_state", "operation": "set", "value": "stable" },
+            { "state": "relay_backup", "operation": "set", "value": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k2_g_131_safe",
+      "chapter": 2,
+      "delaySeconds": 720,
+      "messages": [
+        { "speaker": "mira", "text": "Hauptschalter aus. Vollkommene Dunkelheit." },
+        { "speaker": "mira", "text": "Nur das Relais leuchtet." },
+        { "speaker": "mira", "text": "Fertig. Generator läuft stabil." }
+      ],
+      "next": "k2_g_140_aksel",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_g_132_bypass",
+      "chapter": 2,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Überbrückung sitzt. Nicht schön. Hält fürs Erste." },
+        { "speaker": "mira", "text": "Das Licht im Wohntrakt ist wieder da." }
+      ],
+      "next": "k2_g_140_aksel",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_g_133_bypass_accident",
+      "chapter": 2,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Funke." },
+        { "speaker": "mira", "text": "Bin zurückgestürzt. Relais gegen die Werkbank." },
+        { "speaker": "mira", "text": "Display gesprungen. Verbindung hält." }
+      ],
+      "next": "k2_g_140_aksel",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_g_134_relay_part",
+      "chapter": 2,
+      "delaySeconds": 240,
+      "messages": [
+        { "speaker": "mira", "text": "Regler passt. Generator stabil." },
+        { "speaker": "mira", "text": "Das Relais läuft jetzt ohne Reserve." },
+        { "speaker": "mira", "text": "Wenn der zweite Regler ausfällt, ist unsere Verbindung weg. Endgültig." }
+      ],
+      "next": "k2_g_140_aksel",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_g_140_aksel",
+      "chapter": 2,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Noch eine Sache, bevor wir zurückgehen." }
+      ],
+      "choices": [
+        {
+          "id": "ask_memory_free",
+          "label": "Frag Aksel nach seiner letzten klaren Erinnerung.",
+          "next": "k2_g_141_memory",
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "clue_aksel_memory", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "ask_memory_released",
+          "label": "Frag Aksel nach seiner letzten klaren Erinnerung.",
+          "next": "k2_g_141_memory",
+          "requires": [
+            { "state": "aksel_released_for_generator", "operator": "eq", "value": true }
+          ],
+          "effects": [
+            { "state": "clue_aksel_memory", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "leave_alone",
+          "label": "Geh zurück. Aksel kann später befragt werden.",
+          "next": "k2_g_150_exit",
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": true },
+            { "state": "aksel_released_for_generator", "operator": "eq", "value": false }
+          ],
+          "effects": []
+        },
+        {
+          "id": "observe_free",
+          "label": "Lass es vorerst. Beobachte ihn.",
+          "next": "k2_g_150_exit",
+          "requires": [
+            { "state": "aksel_restrained", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "trust_aksel", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k2_g_141_memory",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Er erinnert sich an den Generator. Dann an Kaders Stimme aus einem Lautsprecher." },
+        { "speaker": "mira", "text": "Dann daran, wie jemand von außen an die Scheibe geklopft hat." },
+        { "speaker": "mira", "text": "Die Scheibe im Generatorhaus hat keine Außentreppe." }
+      ],
+      "next": "k2_g_150_exit",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_g_150_exit",
+      "chapter": 2,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Zurück an die Leine." }
+      ],
+      "effects": [
+        { "state": "generator_visited", "operation": "set", "value": true }
+      ],
+      "choices": [
+        {
+          "id": "continue_labor",
+          "label": "Danach ins Labor.",
+          "next": "k2_l_010_corridor",
+          "requires": [
+            { "state": "lab_visited", "operator": "eq", "value": false }
+          ],
+          "effects": []
+        },
+        {
+          "id": "finish_chapter",
+          "label": "Danach zurück zum Wohntrakt.",
+          "next": "k2_x_200_return",
+          "requires": [
+            { "state": "lab_visited", "operator": "eq", "value": true }
+          ],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k2_x_200_return",
+      "chapter": 2,
+      "delaySeconds": 300,
+      "messages": [
+        { "speaker": "mira", "text": "Wieder im Wohntrakt." },
+        { "speaker": "mira", "text": "Ich brauche Wasser. Dann entscheiden wir, wie es weitergeht." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "generator_state", "operator": "eq", "value": "stable" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Die Heizung kommt zurück. Rohre knacken, als würde das Gebäude auftauen." }
+          ]
+        },
+        {
+          "requires": [
+            { "state": "generator_state", "operator": "eq", "value": "unstable" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Das Licht flackert alle paar Sekunden. Die Überbrückung hält. Noch." }
+          ]
+        },
+        {
+          "requires": [
+            { "state": "lab_sample_state", "operator": "eq", "value": "analyzed" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Ich habe die Zeitrafferaufnahme dreimal angesehen." },
+            { "speaker": "mira", "text": "Beim dritten Mal war ich sicher, dass das Netz ein anderes Muster bildet." },
+            { "speaker": "mira", "text": "Dateien ändern sich nicht beim Ansehen." }
+          ]
+        }
+      ],
+      "effects": [
+        { "state": "chapter_02_complete", "operation": "set", "value": true }
+      ],
+      "handoff": "chapter_03"
+    }
+  ]
+}
