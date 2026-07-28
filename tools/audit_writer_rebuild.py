@@ -163,6 +163,9 @@ forbidden_phrases = {
 for node_id, node in sorted(all_nodes.items()):
     visible_texts = [message.get("text", "") for message in node.get("messages", [])]
     visible_texts.extend(choice.get("label", "") for choice in node.get("choices", []))
+    for variant in node.get("variants", []):
+        for field in ("appendMessages", "replaceMessages"):
+            visible_texts.extend(message.get("text", "") for message in variant.get(field, []))
     joined = " ".join(visible_texts).lower()
     for phrase, reason in forbidden_phrases.items():
         if phrase in joined:

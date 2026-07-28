@@ -530,6 +530,33 @@ def rewrite_chapter(path: Path) -> None:
                 ]
             )
 
+        if node_id == "k8_068_niko_capacity":
+            node["choices"] = []
+            if not any(not redirect.get("requires") for redirect in node.get("redirects", [])):
+                node["redirects"].append(
+                    {
+                        "requires": [],
+                        "effects": [],
+                        "next": "k8_068_niko_choice",
+                    }
+                )
+
+        for choice in node.get("choices", []):
+            replacement = CHOICE_REWRITES.get((node_id, choice["id"]))
+            if replacement:
+                choice["label"] = replacement
+
+        for message in node.get("messages", []):
+            message["text"] = message.get("text", "").replace(
+                "Kader sagt über den lokalen Stationskanal:", "Kader sagt:"
+            )
+        for variant in node.get("variants", []):
+            for field in ("appendMessages", "replaceMessages"):
+                for message in variant.get(field, []):
+                    message["text"] = message.get("text", "").replace(
+                        "Kader sagt über den lokalen Stationskanal:", "Kader sagt:"
+                    )
+
     if path.name == "chapter-03.json" and not any(
         node["id"] == "k3_101_checkin" for node in document["nodes"]
     ):
@@ -620,21 +647,51 @@ def rewrite_chapter(path: Path) -> None:
             ]
         )
 
-        for choice in node.get("choices", []):
-            replacement = CHOICE_REWRITES.get((node_id, choice["id"]))
-            if replacement:
-                choice["label"] = replacement
-
-        for message in node.get("messages", []):
-            message["text"] = message.get("text", "").replace(
-                "Kader sagt über den lokalen Stationskanal:", "Kader sagt:"
-            )
-        for variant in node.get("variants", []):
-            for field in ("appendMessages", "replaceMessages"):
-                for message in variant.get(field, []):
-                    message["text"] = message.get("text", "").replace(
-                        "Kader sagt über den lokalen Stationskanal:", "Kader sagt:"
-                    )
+    if path.name == "chapter-08.json" and not any(
+        node["id"] == "k8_068_niko_choice" for node in document["nodes"]
+    ):
+        document["nodes"].append(
+            {
+                "id": "k8_068_niko_choice",
+                "chapter": 8,
+                "delaySeconds": 0,
+                "messages": [
+                    msg("Wir haben keinen Platz für die Transportbox reserviert."),
+                    msg("Der Sanitäter kann Niko sichern, wenn eine der nicht lebenswichtigen Frachtkisten hierbleibt."),
+                ],
+                "choices": [
+                    {
+                        "id": "leave_material_for_niko",
+                        "label": "Die Materialkiste zurücklassen. Niko bekommt den gesicherten Platz.",
+                        "next": "k8_069_niko_boarded",
+                        "requires": [],
+                        "effects": [
+                            {"state": "niko_evacuated", "operation": "set", "value": True},
+                            {"state": "niko_state", "operation": "set", "value": "evacuated"},
+                            {"state": "sample_preserved", "operation": "set", "value": False},
+                        ],
+                    },
+                    {
+                        "id": "leave_niko",
+                        "label": "Die Fracht behalten und ohne Niko abheben.",
+                        "next": "k8_069_niko_left",
+                        "requires": [],
+                        "effects": [
+                            {"state": "niko_evacuated", "operation": "set", "value": False}
+                        ],
+                    },
+                ],
+                "location": {
+                    "area": "landing",
+                    "room": "landing_zone",
+                    "stationLeft": 91,
+                    "stationTop": 39,
+                    "interiorLeft": 50,
+                    "interiorTop": 50,
+                    "activity": "Mira ist an der Landezone",
+                },
+            }
+        )
 
     rendered = json.dumps(document, ensure_ascii=False, indent=2) + "\n"
     path.write_text(rendered, encoding="utf-8")

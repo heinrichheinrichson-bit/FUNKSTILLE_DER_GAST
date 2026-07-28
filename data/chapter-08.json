@@ -816,46 +816,14 @@
             }
           ],
           "next": "k8_069_niko_boarded"
-        }
-      ],
-      "choices": [
-        {
-          "id": "leave_material_for_niko",
-          "label": "Die nicht lebenswichtige Materialkiste zurücklassen. Niko kommt mit.",
-          "next": "k8_069_niko_boarded",
-          "requires": [],
-          "effects": [
-            {
-              "state": "niko_evacuated",
-              "operation": "set",
-              "value": true
-            },
-            {
-              "state": "niko_state",
-              "operation": "set",
-              "value": "evacuated"
-            },
-            {
-              "state": "sample_preserved",
-              "operation": "set",
-              "value": false
-            }
-          ]
         },
         {
-          "id": "leave_niko",
-          "label": "Die Fracht behalten und ohne Niko abheben.",
-          "next": "k8_069_niko_left",
           "requires": [],
-          "effects": [
-            {
-              "state": "niko_evacuated",
-              "operation": "set",
-              "value": false
-            }
-          ]
+          "effects": [],
+          "next": "k8_068_niko_choice"
         }
       ],
+      "choices": [],
       "location": {
         "area": "landing",
         "room": "landing_zone",
@@ -1895,6 +1863,68 @@
         "interiorLeft": 46,
         "interiorTop": 50,
         "activity": "Mira orientiert sich im Wohntrakt"
+      }
+    },
+    {
+      "id": "k8_068_niko_choice",
+      "chapter": 8,
+      "delaySeconds": 0,
+      "messages": [
+        {
+          "speaker": "mira",
+          "text": "Wir haben keinen Platz für die Transportbox reserviert."
+        },
+        {
+          "speaker": "mira",
+          "text": "Der Sanitäter kann Niko sichern, wenn eine der nicht lebenswichtigen Frachtkisten hierbleibt."
+        }
+      ],
+      "choices": [
+        {
+          "id": "leave_material_for_niko",
+          "label": "Die Materialkiste zurücklassen. Niko bekommt den gesicherten Platz.",
+          "next": "k8_069_niko_boarded",
+          "requires": [],
+          "effects": [
+            {
+              "state": "niko_evacuated",
+              "operation": "set",
+              "value": true
+            },
+            {
+              "state": "niko_state",
+              "operation": "set",
+              "value": "evacuated"
+            },
+            {
+              "state": "sample_preserved",
+              "operation": "set",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "leave_niko",
+          "label": "Die Fracht behalten und ohne Niko abheben.",
+          "next": "k8_069_niko_left",
+          "requires": [],
+          "effects": [
+            {
+              "state": "niko_evacuated",
+              "operation": "set",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "location": {
+        "area": "landing",
+        "room": "landing_zone",
+        "stationLeft": 91,
+        "stationTop": 39,
+        "interiorLeft": 50,
+        "interiorTop": 50,
+        "activity": "Mira ist an der Landezone"
       }
     }
   ]

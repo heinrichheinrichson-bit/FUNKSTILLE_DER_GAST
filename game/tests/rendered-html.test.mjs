@@ -73,7 +73,7 @@ test("ships chapter data and production metadata", async () => {
   assert.equal(chapterFiveData.nodes.length, 30);
   assert.equal(chapterSixData.nodes.length, 29);
   assert.equal(chapterSevenData.nodes.length, 21);
-  assert.equal(chapterEightData.nodes.length, 32);
+  assert.equal(chapterEightData.nodes.length, 33);
   assert.ok(chapterFourData.nodes.some(({ id }) => id === "k4_311_niko_found"));
   assert.ok(chapterEightData.nodes.some(({ id }) => id === "k8_067_niko_arrives"));
   assert.deepEqual(
