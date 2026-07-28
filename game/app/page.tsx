@@ -71,6 +71,16 @@ type TimelineItem =
   | { kind: "reply"; id: string; text: string };
 
 const SAVE_KEY = "funkstille-der-gast-save-v1";
+const ENDING_TITLES: Record<string, string> = {
+  ending_whiteout: "Im Whiteout",
+  ending_radio_silence: "Funkstille",
+  ending_contained: "Der Gast bleibt",
+  ending_one_dose: "Eine Dosis",
+  ending_the_lie: "Die Lüge",
+  ending_hidden_guest: "Der verborgene Gast",
+  ending_all_rescued: "Alle gerettet",
+  ending_clean_rescue: "Saubere Rettung",
+};
 
 function requirementMatches(requirement: Requirement, state: GameState) {
   const actual = state[requirement.state];
@@ -472,11 +482,17 @@ export default function Home() {
 
           {connectionEnded && (
             <div className="handoff">
-              <span>Kapitel abgeschlossen</span>
+              <span>
+                {currentNode?.ending ? "Dein Ende" : "Kapitel abgeschlossen"}
+              </span>
               {currentNode?.handoff && chapters[currentNode.handoff] ? (
                 <button type="button" onClick={continueChapter}>
                   Weiter: {chapters[currentNode.handoff].chapter.title}
                 </button>
+              ) : currentNode?.ending ? (
+                <strong>
+                  {ENDING_TITLES[currentNode.ending] ?? currentNode.ending}
+                </strong>
               ) : (
                 <strong>Fortsetzung folgt</strong>
               )}

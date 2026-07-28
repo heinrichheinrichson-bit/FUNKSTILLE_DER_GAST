@@ -12,6 +12,8 @@ param(
     [string]$ChapterSixPreset = 'default',
     [ValidateSet('default', 'zero', 'one', 'full')]
     [string]$ChapterSevenPreset = 'default',
+    [ValidateSet('default', 'weak', 'clean', 'infected', 'lie', 'contained', 'all', 'one')]
+    [string]$ChapterEightPreset = 'default',
     [int]$MaximumConfigurations = 50000
 )
 
@@ -143,6 +145,39 @@ if ($ChapterSevenPreset -ne 'default') {
     elseif ($ChapterSevenPreset -eq 'full') {
         $initialState['cure_material'] = 4
         $initialState['generator_state'] = 'stable'
+    }
+}
+if ($ChapterEightPreset -ne 'default') {
+    $initialState['weather_window_known'] = $true
+    $initialState['rescue_coordinates'] = $true
+    $initialState['evidence_level'] = 2
+    $initialState['report_honesty'] = 'full'
+    if ($ChapterEightPreset -eq 'weak') {
+        $initialState['weather_window_known'] = $false
+        $initialState['rescue_coordinates'] = $false
+        $initialState['evidence_level'] = 0
+        $initialState['report_honesty'] = 'false'
+    }
+    elseif ($ChapterEightPreset -eq 'infected') {
+        $initialState['infection_source'] = 'lab_aerosol'
+    }
+    elseif ($ChapterEightPreset -eq 'lie') {
+        $initialState['infection_source'] = 'lab_aerosol'
+        $initialState['report_honesty'] = 'false'
+    }
+    elseif ($ChapterEightPreset -eq 'contained') {
+        $initialState['station_final_choice'] = 'destroy'
+        $initialState['containment'] = 'ready'
+    }
+    elseif ($ChapterEightPreset -eq 'all') {
+        $initialState['evac_aksel'] = $true
+        $initialState['evac_thal'] = $true
+        $initialState['sample_preserved'] = $true
+        $initialState['evidence_level'] = 4
+    }
+    elseif ($ChapterEightPreset -eq 'one') {
+        $initialState['dose_hoarded'] = $true
+        $initialState['mira_treated'] = $true
     }
 }
 

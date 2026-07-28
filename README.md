@@ -22,14 +22,14 @@ Chatbasiertes Antarktis-Horrorspiel über Dr. Mira Lindner und eine zufällige V
 
 - Vollständige Story-Erstfassung für acht Kapitel
 - acht definierte Enden
-- Kapitel 1 bis 7 als maschinenlesbare Storydaten
-- 210 strukturierte Nodes in Kapitel 1 bis 7
+- alle acht Kapitel als maschinenlesbare Storydaten
+- 236 strukturierte Nodes in Kapitel 1 bis 8
 - alle Nodes erreichbar
-- Kapitel 7 mit null, einer und drei Dosen in insgesamt 1.868 Node-/State-Konfigurationen geprüft
+- das Finale mit sieben Ausgangslagen und 224 Node-/State-Konfigurationen geprüft
 - keine ungültigen Übergänge oder Deadlocks
 - Story-Engine mit Zuständen, Bedingungen, verdeckten Weiterleitungen, Textvarianten und Save/Restore
 - automatische GitHub-Prüfung bei jedem Push
-- responsiver Sieben-Kapitel-Prototyp mit lokalem Spielstand und Demo-Zeitsprüngen
+- vollständiger responsiver Acht-Kapitel-Prototyp mit lokalem Spielstand und Demo-Zeitsprüngen
 - nahtlose, gespeicherte Übergänge zwischen allen spielbaren Kapiteln
 
 ## Prüfkommandos
@@ -46,6 +46,6 @@ Die Ausführungsrichtlinie wird dabei nur für den gestarteten Prüfprozess umga
 
 ## Nächste technische Schritte
 
-1. Kapitel 8 und den globalen Ending-Resolver in das Datenformat überführen.
-2. Globale `endings.json` und Kapitelübergänge registrieren.
-3. Kapitel 8 „Rettung“ samt acht priorisierten Enden integrieren.
+1. Gesamtdurchläufe vom ersten Signal bis zu jedem Ende automatisieren.
+2. Ending-Titel und Spielstatistik gestalterisch ausarbeiten.
+3. Dialoge nach vollständigen Testdurchläufen redaktionell verdichten.

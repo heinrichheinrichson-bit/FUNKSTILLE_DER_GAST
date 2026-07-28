@@ -43,6 +43,12 @@
       "number": 7,
       "title": "Eine Dosis",
       "file": "chapter-07.json"
+    },
+    {
+      "id": "chapter_08",
+      "number": 8,
+      "title": "Rettung",
+      "file": "chapter-08.json"
     }
   ]
 }

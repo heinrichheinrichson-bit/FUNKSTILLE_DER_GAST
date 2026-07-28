@@ -32,6 +32,9 @@ const chapterSix = JSON.parse(
 const chapterSeven = JSON.parse(
   await readFile(new URL("data/chapter-07.json", projectRoot), "utf8"),
 );
+const chapterEight = JSON.parse(
+  await readFile(new URL("data/chapter-08.json", projectRoot), "utf8"),
+);
 
 function makeSession() {
   return new StorySession({ schema, chapter });
@@ -208,6 +211,31 @@ function makeSession() {
     3,
     "deep and old material with stable power must produce three doses",
   );
+}
+
+{
+  const state = createInitialState(schema);
+  state.weather_window_known = true;
+  state.rescue_coordinates = true;
+  state.evidence_level = 4;
+  state.report_honesty = "full";
+  state.evac_aksel = true;
+  state.evac_thal = true;
+  state.sample_preserved = true;
+  const session = new StorySession({
+    schema,
+    chapter: chapterEight,
+    snapshot: {
+      currentNodeId: "k8_100_ending_resolver",
+      nodeEntered: false,
+      state,
+      history: [],
+    },
+  });
+
+  const view = session.enter();
+  assert.equal(view.id, "k8_e_all_rescued");
+  assert.equal(view.ending, "ending_all_rescued");
 }
 
 {
