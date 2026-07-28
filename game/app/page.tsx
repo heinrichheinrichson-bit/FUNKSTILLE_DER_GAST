@@ -241,10 +241,29 @@ function makeInitialState(schema: StateSchema) {
   );
 }
 
-function formatDelay(seconds: number) {
-  if (seconds < 60) return `${seconds} Sek.`;
-  const minutes = Math.round(seconds / 60);
-  return `${minutes} Min.`;
+function addAbsenceNotice(timeline: TimelineItem[], seconds: number) {
+  if (seconds < 120) return timeline;
+  const recentText = timeline
+    .slice(-3)
+    .map((item) => item.text)
+    .join(" ")
+    .toLowerCase();
+  if (/melde|schreib|dauern|unterwegs|zurück/.test(recentText)) return timeline;
+  const text =
+    seconds >= 1800
+      ? "Ich werde eine ganze Weile nicht schreiben können. Ich melde mich, sobald ich zurück bin."
+      : seconds >= 600
+        ? "Das kann etwas dauern. Ich melde mich, wenn ich fertig bin."
+        : "Ich gehe jetzt los. Ich melde mich, sobald ich angekommen bin.";
+  return [
+    ...timeline,
+    {
+      kind: "message",
+      id: `absence-${Date.now()}-${timeline.length}`,
+      speaker: "mira",
+      text,
+    },
+  ];
 }
 
 function currentMapLocation(chapterId: string, nodeId: string) {
@@ -278,6 +297,7 @@ export default function Home() {
   const [pendingNode, setPendingNode] = useState<string | null>(null);
   const [waitUntil, setWaitUntil] = useState<number | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
+  const [waitMessageSent, setWaitMessageSent] = useState(false);
   const [restored, setRestored] = useState(false);
   const [playerName, setPlayerName] = useState("");
   const [profileReady, setProfileReady] = useState(false);
@@ -342,6 +362,7 @@ export default function Home() {
       setPendingNode(null);
       setWaitUntil(null);
       setRemainingSeconds(0);
+      setWaitMessageSent(false);
     },
     [nodeMap, playerName, schema],
   );
@@ -390,6 +411,7 @@ export default function Home() {
           setWaitUntil(Math.max(snapshot.waitUntil, Date.now()));
           setRemainingSeconds(Math.max(0, Math.ceil((snapshot.waitUntil - Date.now()) / 1000)));
           setWaiting(true);
+          setWaitMessageSent(snapshot.waitMessageSent ?? false);
         }
         setProfileReady(true);
         setRestored(true);
@@ -434,9 +456,10 @@ export default function Home() {
         decisionHistory,
         pendingNode,
         waitUntil,
+        waitMessageSent,
       }),
     );
-  }, [currentChapterId, currentNodeId, decisionHistory, gameState, pendingNode, playerName, restored, timeline, waitUntil]);
+  }, [currentChapterId, currentNodeId, decisionHistory, gameState, pendingNode, playerName, restored, timeline, waitMessageSent, waitUntil]);
 
   useEffect(() => {
     if (!waiting || !pendingNode || !waitUntil) return;
@@ -502,14 +525,16 @@ export default function Home() {
     const target = nodeMap.get(choice.next);
     const delay = target?.delaySeconds ?? 0;
     setGameState(nextState);
-    setTimeline(nextTimeline);
+    const waitingTimeline = addAbsenceNotice(nextTimeline, delay);
+    setTimeline(waitingTimeline);
     if (delay > 0) {
       setWaiting(true);
       setPendingNode(choice.next);
       setWaitUntil(Date.now() + delay * 1000);
       setRemainingSeconds(delay);
+      setWaitMessageSent(false);
     } else {
-      enterNode(choice.next, nextState, nextTimeline);
+      enterNode(choice.next, nextState, waitingTimeline);
     }
   }
 
@@ -517,13 +542,16 @@ export default function Home() {
     if (!currentNode?.next) return;
     const target = nodeMap.get(currentNode.next);
     const delay = currentNode.nextDelaySeconds ?? target?.delaySeconds ?? 0;
+    const waitingTimeline = addAbsenceNotice(timeline, delay);
+    setTimeline(waitingTimeline);
     if (delay > 0) {
       setWaiting(true);
       setPendingNode(currentNode.next);
       setWaitUntil(Date.now() + delay * 1000);
       setRemainingSeconds(delay);
+      setWaitMessageSent(false);
     } else {
-      enterNode(currentNode.next, gameState, timeline);
+      enterNode(currentNode.next, gameState, waitingTimeline);
     }
   }
 
@@ -545,6 +573,19 @@ export default function Home() {
     setWaitUntil(null);
     setRemainingSeconds(0);
     setOverlay(null);
+  }
+
+  function sendWaitMessage(text: string) {
+    if (!waiting || waitMessageSent) return;
+    setTimeline((current) => [
+      ...current,
+      {
+        kind: "reply",
+        id: `wait-message-${Date.now()}`,
+        text,
+      },
+    ]);
+    setWaitMessageSent(true);
   }
 
   function finishProfile() {
@@ -827,18 +868,14 @@ export default function Home() {
             ),
           )}
 
-          {waiting && (
-            <div className="waiting-card">
+          {waiting && remainingSeconds <= 4 && (
+            <div className="typing-presence">
               <div className="typing">
                 <span />
                 <span />
                 <span />
               </div>
-              <div>
-                <strong>Mira ist unterwegs</strong>
-                <small>Nächste Übertragung in {formatDelay(remainingSeconds)}</small>
-              </div>
-              {testMode && <button type="button" onClick={skipWait}>Test: Zeit überspringen</button>}
+              <span>Mira schreibt …</span>
             </div>
           )}
 
@@ -846,6 +883,19 @@ export default function Home() {
         </section>
 
         <footer className="response-panel">
+          {waiting && (
+            <div className="wait-composer">
+              <span>{waitMessageSent ? "Nachricht gesendet" : "Mira kann möglicherweise nicht sofort antworten."}</span>
+              {!waitMessageSent && (
+                <div>
+                  {["Geht es dir gut?", "Melde dich, wenn du kannst.", "Bitte antworte."].map((text) => (
+                    <button type="button" key={text} onClick={() => sendWaitMessage(text)}>{text}</button>
+                  ))}
+                </div>
+              )}
+              {testMode && <button className="test-skip" type="button" onClick={skipWait}>TEST · WARTEZEIT ÜBERSPRINGEN</button>}
+            </div>
+          )}
           {!waiting && currentNode?.input && (
             <form className="code-entry" onSubmit={(event) => { event.preventDefault(); submitNodeInput(); }}>
               <label htmlFor="story-code">{currentNode.input.prompt}</label>

@@ -249,42 +249,14 @@ button {
   text-align: center;
 }
 
-.waiting-card {
+.typing-presence {
   margin: 22px 0 0;
-  padding: 14px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 12px;
+  padding: 10px 13px;
+  display: inline-flex;
+  gap: 9px;
   align-items: center;
-  background: rgba(12, 31, 36, 0.8);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-}
-
-.waiting-card strong,
-.waiting-card small {
-  display: block;
-}
-
-.waiting-card strong {
-  margin-bottom: 4px;
-  font-size: 12px;
-}
-
-.waiting-card small {
   color: var(--muted);
   font-size: 10px;
-}
-
-.waiting-card button {
-  grid-column: 1 / -1;
-  padding: 9px;
-  color: var(--ice);
-  background: transparent;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  cursor: pointer;
-  font-size: 11px;
 }
 
 .typing {
@@ -316,6 +288,40 @@ button {
   gap: 8px;
   background: rgba(7, 19, 23, 0.98);
   border-top: 1px solid var(--line);
+}
+
+.wait-composer {
+  display: grid;
+  gap: 8px;
+}
+
+.wait-composer > span {
+  color: var(--muted);
+  font-size: 9px;
+  text-align: center;
+}
+
+.wait-composer > div {
+  display: grid;
+  gap: 6px;
+}
+
+.wait-composer button {
+  padding: 10px 12px;
+  color: #c9dcdf;
+  background: #102329;
+  border: 1px solid rgba(158, 232, 240, 0.13);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.wait-composer .test-skip {
+  color: #e0a86f;
+  background: transparent;
+  border-color: rgba(224, 168, 111, 0.35);
+  font-size: 8px;
+  text-align: center;
 }
 
 .code-entry,

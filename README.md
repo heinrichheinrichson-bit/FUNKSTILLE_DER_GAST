@@ -36,6 +36,7 @@ Chatbasiertes Antarktis-Horrorspiel über Dr. Mira Lindner und eine zufällige V
 - Relais-Privatsphäre, mögliche Entwendung und mehrstündige Funkstille
 - automatische GitHub-Prüfung bei jedem Push
 - vollständiger responsiver Acht-Kapitel-Prototyp mit lokalem Spielstand und echten, auch nach Schließen weiterlaufenden Wartezeiten
+- natürliche Funkpausen ohne sichtbaren Countdown, Tippanzeige erst bei tatsächlicher Antwort und optionale unbeantwortete Rückfragen
 - nahtlose, gespeicherte Übergänge zwischen allen spielbaren Kapiteln
 
 ## Prüfkommandos
