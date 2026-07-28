@@ -292,7 +292,7 @@
         {
           "id": "stay_line",
           "label": "Nicht von der Leine lösen. Weiter.",
-          "next": "k4_050_station",
+          "next": "k4_043_frozen_shape",
           "requires": [],
           "effects": []
         },
@@ -337,8 +337,88 @@
           ]
         }
       ],
-      "next": "k4_050_station",
+      "next": "k4_043_frozen_shape",
       "nextDelaySeconds": 480
+    },
+    {
+      "id": "k4_043_frozen_shape",
+      "chapter": 4,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Da ist etwas außerhalb der Leine. Vier oder fünf Meter rechts von mir." },
+        { "speaker": "mira", "text": "Eine orangefarbene Schulter im Schnee. Jemand kniet dort mit gesenktem Kopf, als würde er beten." },
+        { "speaker": "mira", "text": "Das ist Tomas Nybergs Parka. Er war Bohrhelfer." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "expedition_companion", "operator": "eq", "value": "aksel" }
+          ],
+          "appendMessages": [
+            { "speaker": "mira", "text": "Aksel hat seinen Namen gesagt. Nur einmal. Seitdem bewegt er sich nicht mehr." }
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_from_line",
+          "label": "Bleib an der Leine. Leuchte von dort hinüber.",
+          "next": "k4_044_frozen_distance",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "approach_secured",
+          "label": "Sichere den zweiten Karabiner und geh näher.",
+          "next": "k4_045_frozen_close",
+          "requires": [],
+          "effects": [
+            { "state": "cold_exposure", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k4_044_frozen_distance",
+      "chapter": 4,
+      "delaySeconds": 35,
+      "messages": [
+        { "speaker": "mira", "text": "Das Licht erreicht sein Gesicht." },
+        { "speaker": "mira", "text": "Seine Haut ist grau und hart. Vom Bart hängen lange Eiszapfen, und über Wimpern und Augenbrauen liegt weißer Reif. Der Mund steht offen, aber darin bewegt sich nichts." },
+        { "speaker": "mira", "text": "Der Wind drückt Schnee gegen ihn. Er fällt nicht um. Er ist am Boden festgefroren." },
+        { "speaker": "mira", "text": "Das ist schrecklich. Es sieht aus, als könnte er jeden Moment den Kopf heben." },
+        { "speaker": "mira", "text": "Ich weine schon wieder. Meine Tränen frieren am Rand der Maske." }
+      ],
+      "next": "k4_046_frozen_after",
+      "nextDelaySeconds": 45
+    },
+    {
+      "id": "k4_045_frozen_close",
+      "chapter": 4,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Zweiter Karabiner hält. Ich bin bei ihm." },
+        { "speaker": "mira", "text": "Tomas kniet tief im verwehten Schnee. Der Körper ist nach vorn gekrümmt, beide Hände stecken ohne Handschuhe vor ihm im Eis." },
+        { "speaker": "mira", "text": "Sein Gesicht ist grau, eingefallen und völlig starr. Reif verschließt fast die Augen. Aus seinem Bart wachsen Eiszapfen bis auf den Kragen, als wäre er mit dem Parka zusammengefroren." },
+        { "speaker": "mira", "text": "Ich habe seinen Namen gesagt. Für einen Moment war ich sicher, seine Augen würden sich bewegen." },
+        { "speaker": "mira", "text": "Tun sie nicht. Natürlich tun sie das nicht." },
+        { "speaker": "mira", "text": "Verdammt. Ich kann ihn nicht mitnehmen. Ich kann ihn nicht einmal hinlegen." },
+        { "speaker": "mira", "text": "Ich weine. In dieser Kälte brennt das im Gesicht. Wir müssen weiter, bevor ich neben ihm sitzen bleibe." }
+      ],
+      "next": "k4_046_frozen_after",
+      "nextDelaySeconds": 45
+    },
+    {
+      "id": "k4_046_frozen_after",
+      "chapter": 4,
+      "delaySeconds": 25,
+      "messages": [
+        { "speaker": "mira", "text": "Wieder an der gelben Leine." },
+        { "speaker": "mira", "text": "Hinter mir verschwindet Tomas schon wieder im Schnee. Erst die Beine, dann der orangefarbene Rücken." },
+        { "speaker": "mira", "text": "Jetzt verstehe ich, wie Menschen hier verschwinden können, obwohl sie nur wenige Meter entfernt sind." }
+      ],
+      "next": "k4_050_station",
+      "nextDelaySeconds": 300
     },
     {
       "id": "k4_042_returned",

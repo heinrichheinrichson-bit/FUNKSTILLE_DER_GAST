@@ -113,6 +113,8 @@ Wahl:
 
 ### K2-L3 – Krankenstation
 
+Die Tür wird von **Liv Sørensens** Leiche blockiert. Die Stationsärztin liegt blutend zwischen Untersuchungsliege und Medikamentenschrank. Mira kann ihr Gesicht bedecken und trauern oder trotz ihrer Erschütterung die Todesumstände untersuchen. Beide Varianten machen deutlich, dass Mira die Tote persönlich kannte.
+
 Mira kann ihre Wunde versorgen:
 
 - versiegeltes Material → sicher
@@ -277,6 +279,8 @@ Echte Wartephase. Währenddessen:
 - kurze Statusmeldung,
 - mögliches Geräusch neben der Leine,
 - bei niedriger Klarheit widersprüchliche Entfernungsangaben.
+
+Abseits der gelben Sicherungsleine entdeckt Mira **Tomas Nyberg**, einen tiefgefrorenen Bohrhelfer. Er kniet festgefroren im Schnee, Reif bedeckt sein Gesicht und Eiszapfen hängen aus seinem Bart. Der Spieler entscheidet, ob Mira ihn nur von der Leine aus beleuchtet oder gesichert näher herangeht. Der Fund belastet sie sichtbar und macht die tödliche Bedeutung des Whiteouts konkret.
 
 Der Spieler kann zum Umkehren raten. Das kostet Zeit, verhindert aber keinen späteren zweiten Versuch, sofern das Wetterfenster reicht.
 
@@ -744,4 +748,3 @@ Keine freien Textbedingungen wie `"relay_stable AND rescue_quality_sufficient"`.
 ## 17. Nächster Produktionsschritt
 
 Als nächstes wird Kapitel 1 vollständig in einzelne Nodes zerlegt und als Dialogfassung geschrieben. Parallel entsteht ein verbindliches State-Schema für die Engine. Erst wenn Kapitel 1 im Prototyp spielbar ist, werden die folgenden Kapitel dialogisch ausformuliert.
-

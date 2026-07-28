@@ -63,13 +63,13 @@ test("ships chapter data and production metadata", async () => {
 
   assert.equal(chapterData.chapter.startNode, "k1_001_signal");
   assert.equal(chapterData.nodes.length, 33);
-  assert.equal(chapterTwoData.nodes.length, 36);
+  assert.equal(chapterTwoData.nodes.length, 40);
   assert.deepEqual(
     chapterTwoData.nodes.find(({ id }) => id === "k2_l_020_locked").input.answers,
     ["0414", "14.04", "1404"],
   );
   assert.equal(chapterThreeData.nodes.length, 31);
-  assert.equal(chapterFourData.nodes.length, 38);
+  assert.equal(chapterFourData.nodes.length, 42);
   assert.equal(chapterFiveData.nodes.length, 30);
   assert.equal(chapterSixData.nodes.length, 29);
   assert.equal(chapterSevenData.nodes.length, 19);

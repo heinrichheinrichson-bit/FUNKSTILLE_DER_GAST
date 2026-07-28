@@ -74,8 +74,9 @@ Weitere Räume werden als Unterbereiche integriert:
 
 ### Weitere Crew
 
-- Patient Null ist ein zunächst nur aus Unterlagen bekannter Bohrarbeiter.
-- Seine Identität bleibt bis spät im Spiel unsicher.
+- **Dr. Emil Varga**, Glaziologe, ist der zunächst nur aus Unterlagen bekannte Patient Null. Seine Identität bleibt bis spät im Spiel unsicher.
+- **Liv Sørensen**, Stationsärztin, wird tot in der Krankenstation gefunden. Ihr Fund zeigt die menschlichen Folgen des Ausbruchs und erschüttert Mira sichtbar.
+- **Tomas Nyberg**, Bohrhelfer, wird abseits der Sicherungsleine kniend und tiefgefroren gefunden.
 - Weitere Crewmitglieder dienen der Vorgeschichte, werden aber nicht zu vollwertigen Vertrauensfiguren ausgebaut.
 
 ## 6. Anomalie
@@ -165,4 +166,3 @@ Kurze Todesvarianten werden als unterschiedliche Szenen innerhalb von `ending_wh
 - zusätzliche Haupt-Hubs für jeden Stationsraum
 - spielbarer mehrtägiger Alltag vor dem Ausbruch
 - 50.000 Wörter als Ziel der ersten Fassung
-

@@ -311,7 +311,7 @@
         { "state": "item_sample_data", "operation": "set", "value": true },
         { "state": "clarity", "operation": "add", "value": -1 }
       ],
-      "next": "k2_l_060_medical",
+      "next": "k2_l_055_body",
       "nextDelaySeconds": 30
     },
     {
@@ -329,7 +329,7 @@
         { "state": "infection_source", "operation": "set", "value": "lab_aerosol" },
         { "state": "clarity", "operation": "add", "value": -1 }
       ],
-      "next": "k2_l_060_medical",
+      "next": "k2_l_055_body",
       "nextDelaySeconds": 30
     },
     {
@@ -347,7 +347,7 @@
         { "state": "item_sample_data", "operation": "set", "value": true },
         { "state": "global_time", "operation": "add", "value": 2 }
       ],
-      "next": "k2_l_060_medical",
+      "next": "k2_l_055_body",
       "nextDelaySeconds": 30
     },
     {
@@ -362,8 +362,79 @@
       "effects": [
         { "state": "lab_sample_state", "operation": "set", "value": "sealed" }
       ],
-      "next": "k2_l_060_medical",
+      "next": "k2_l_055_body",
       "nextDelaySeconds": 30
+    },
+    {
+      "id": "k2_l_055_body",
+      "chapter": 2,
+      "delaySeconds": 25,
+      "messages": [
+        { "speaker": "mira", "text": "Die Tür zur kleinen Krankenstation geht nur eine Handbreit auf. Dahinter liegt etwas." },
+        { "speaker": "mira", "text": "Jemand." },
+        { "speaker": "mira", "text": "Liv Sørensen. Unsere Stationsärztin." },
+        { "speaker": "mira", "text": "Sie liegt zwischen Untersuchungsliege und Medikamentenschrank. Über die weißen Bodenplatten ist Blut gelaufen und in einer dunklen, glänzenden Spur angetrocknet." },
+        { "speaker": "mira", "text": "Ihre linke Hand hält noch den zerrissenen Ärmel an ihre Seite gepresst. Die Augen sind offen." },
+        { "speaker": "mira", "text": "Oh Gott. Nein. Liv." }
+      ],
+      "choices": [
+        {
+          "id": "cover_liv",
+          "label": "Deck ihr Gesicht zu. Nimm dir einen Moment.",
+          "next": "k2_l_056_body_cover",
+          "requires": [],
+          "effects": [
+            { "state": "trust_mira", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "inspect_liv",
+          "label": "Sieh nach, ob du erkennen kannst, was passiert ist.",
+          "next": "k2_l_057_body_inspect",
+          "requires": [],
+          "effects": [
+            { "state": "clarity", "operation": "add", "value": -1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k2_l_056_body_cover",
+      "chapter": 2,
+      "delaySeconds": 45,
+      "messages": [
+        { "speaker": "mira", "text": "Ich habe ihr ein Tuch über das Gesicht gelegt." },
+        { "speaker": "mira", "text": "Wir haben gestern noch zusammen Kaffee getrunken. Sie hat sich darüber beschwert, dass ich meine Handschuhe nie trocknen lasse." },
+        { "speaker": "mira", "text": "Entschuldige. Ich weine gerade. Ich dachte, ich könnte das hier sachlich beschreiben, aber ich kann es nicht." },
+        { "speaker": "mira", "text": "Gib mir eine Minute." }
+      ],
+      "next": "k2_l_058_body_after",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k2_l_057_body_inspect",
+      "chapter": 2,
+      "delaySeconds": 55,
+      "messages": [
+        { "speaker": "mira", "text": "Kein Puls. Die Haut ist kalt und starr. Das Blut kommt von einer tiefen Verletzung unter den Rippen." },
+        { "speaker": "mira", "text": "Am Schrank sind blutige Fingerabdrücke. Als hätte Liv noch versucht, an etwas darin heranzukommen." },
+        { "speaker": "mira", "text": "Ich kenne dieses Gesicht. Ich kenne ihre Stimme. Und jetzt starre ich sie an wie einen Befund." },
+        { "speaker": "mira", "text": "Ich muss kurz aufhören. Ich sehe die Tasten kaum noch." }
+      ],
+      "next": "k2_l_058_body_after",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k2_l_058_body_after",
+      "chapter": 2,
+      "delaySeconds": 20,
+      "messages": [
+        { "speaker": "mira", "text": "Bin wieder da." },
+        { "speaker": "mira", "text": "Die Lüftung klappert über mir. Sonst ist es vollkommen still." },
+        { "speaker": "mira", "text": "Liv würde mir sagen, ich soll zuerst meine eigene Wunde versorgen. Also mache ich das." }
+      ],
+      "next": "k2_l_060_medical",
+      "nextDelaySeconds": 15
     },
     {
       "id": "k2_l_060_medical",
