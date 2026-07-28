@@ -128,7 +128,7 @@ function makeInitialState(schema: StateSchema) {
 }
 
 function formatDelay(seconds: number) {
-  if (seconds < 60) return `${seconds Sek.`;
+  if (seconds < 60) return `${seconds} Sek.`;
   const minutes = Math.round(seconds / 60);
   return `${minutes} Min.`;
 }
