@@ -23,6 +23,9 @@ const chapterThree = JSON.parse(
 const chapterFour = JSON.parse(
   await readFile(new URL("data/chapter-04.json", projectRoot), "utf8"),
 );
+const chapterFive = JSON.parse(
+  await readFile(new URL("data/chapter-05.json", projectRoot), "utf8"),
+);
 
 function makeSession() {
   return new StorySession({ schema, chapter });
@@ -127,6 +130,29 @@ function makeSession() {
     session.state.thal_state,
     "dead",
     "high time cost plus unstable heating must resolve Thal's fate",
+  );
+}
+
+{
+  const state = createInitialState(schema);
+  state.global_time = 8;
+  const session = new StorySession({
+    schema,
+    chapter: chapterFive,
+    snapshot: {
+      currentNodeId: chapterFive.chapter.startNode,
+      nodeEntered: false,
+      state,
+      history: [],
+    },
+  });
+
+  const view = session.enter();
+  assert.equal(view.id, "k5_010_pack");
+  assert.equal(
+    session.state.kader_state,
+    "changed",
+    "late arrival must resolve Kader's changed state",
   );
 }
 

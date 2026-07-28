@@ -150,6 +150,11 @@
       "default": false,
       "visibility": "hidden"
     },
+    "chapter_05_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "lab_visited": {
       "type": "boolean",
       "default": false,
@@ -322,6 +327,60 @@
       "visibility": "hidden"
     },
     "kader_motive_clue": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "patient_zero_confirmed": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "pack_count": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 5,
+      "visibility": "hidden"
+    },
+    "pack_protection": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "pack_sealant": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "pack_container": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "pack_heat": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "pack_relay_battery": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "kader_state": {
+      "type": "enum",
+      "default": "independent",
+      "values": ["cooperative", "independent", "changed", "missing", "dead"],
+      "visibility": "secret"
+    },
+    "kader_companion_plan": {
+      "type": "enum",
+      "default": "alone",
+      "values": ["alone", "open", "waiting", "hidden"],
+      "visibility": "hidden"
+    },
+    "ice_coordinates_found": {
       "type": "boolean",
       "default": false,
       "visibility": "visible"

@@ -25,6 +25,12 @@
       "number": 4,
       "title": "Das Wetterfenster",
       "file": "chapter-04.json"
+    },
+    {
+      "id": "chapter_05",
+      "number": 5,
+      "title": "Der Ursprung",
+      "file": "chapter-05.json"
     }
   ]
 }

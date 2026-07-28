@@ -6,6 +6,8 @@ param(
     [switch]$AkselRestrained,
     [ValidateSet('default', 'alive', 'missing', 'dead')]
     [string]$ChapterFourPreset = 'default',
+    [ValidateSet('default', 'cooperative', 'independent', 'changed')]
+    [string]$ChapterFivePreset = 'default',
     [int]$MaximumConfigurations = 50000
 )
 
@@ -98,6 +100,17 @@ if ($ChapterFourPreset -ne 'default') {
     elseif ($ChapterFourPreset -eq 'dead') {
         $initialState['global_time'] = 4
         $initialState['generator_state'] = 'unstable'
+    }
+}
+if ($ChapterFivePreset -ne 'default') {
+    $initialState['generator_state'] = 'stable'
+    $initialState['thal_returning'] = $true
+    $initialState['evidence_level'] = 4
+    if ($ChapterFivePreset -eq 'cooperative') {
+        $initialState['kader_relation'] = 1
+    }
+    elseif ($ChapterFivePreset -eq 'changed') {
+        $initialState['global_time'] = 8
     }
 }
 
