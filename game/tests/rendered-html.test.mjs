@@ -66,7 +66,7 @@ test("ships chapter data and production metadata", async () => {
   assert.equal(chapterTwoData.nodes.length, 45);
   assert.deepEqual(
     chapterTwoData.nodes.find(({ id }) => id === "k2_l_020_locked").input.answers,
-    ["0414", "14.04", "1404"],
+    ["0414"],
   );
   assert.equal(chapterThreeData.nodes.length, 31);
   assert.equal(chapterFourData.nodes.length, 46);

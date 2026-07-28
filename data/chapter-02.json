@@ -66,15 +66,15 @@
         },
         {
           "speaker": "mira",
-          "text": "Notlicht müsste hier unabhängig laufen. Tut es nicht."
+          "text": "Das unabhängige Notlicht müsste laufen. Tut es nicht."
         },
         {
           "speaker": "mira",
-          "text": "Ich habe nur die Stirnlampe und dein Display am Relais."
+          "text": "Ich habe die Stirnlampe. Hinter der Brandschutztür piept noch die Temperaturwarnung."
         },
         {
           "speaker": "mira",
-          "text": "Hinter der Brandschutztür läuft noch die Kühlwarnung. Regelmäßig. Fast beruhigend."
+          "text": "Auf dem Boden liegen Kabel und Teile der Deckenverkleidung. Ich sehe nicht, ob die Tür frei zugänglich ist."
         }
       ],
       "variants": [
@@ -109,7 +109,7 @@
       "choices": [
         {
           "id": "careful_entry",
-          "label": "Prüf zuerst Tür und Boden. Langsam.",
+          "label": "Leuchte zuerst auf den Boden und prüf, ob der Weg zur Tür frei ist.",
           "next": "k2_l_011_filter",
           "requires": [],
           "effects": [
@@ -217,12 +217,10 @@
       ],
       "input": {
         "kind": "code",
-        "prompt": "Sende Mira den vierstelligen Zugangscode.",
+        "prompt": "Welcher vierstellige Zugang stand in Thals Schichtnotiz?",
         "placeholder": "••••",
         "answers": [
-          "0414",
-          "14.04",
-          "1404"
+          "0414"
         ],
         "choiceId": "thal_code",
         "errorText": "ZUGANG VERWEIGERT · Der Code stimmt nicht."
@@ -230,7 +228,7 @@
       "choices": [
         {
           "id": "thal_code",
-          "label": "Thals Log: Versuch das Datum ihres Warnberichts.",
+          "label": "Den vierstelligen Zugang aus Thals Schichtnotiz eingeben.",
           "next": "k2_l_021_thal_code",
           "requires": [
             {
@@ -298,15 +296,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Datum eingegeben."
+          "text": "0414 eingegeben."
         },
         {
           "speaker": "mira",
-          "text": "Tür offen."
+          "text": "Die Anzeige wird grün. Tür offen."
         },
         {
           "speaker": "mira",
-          "text": "Entweder Thal ist erschreckend vorhersehbar oder sie wollte, dass jemand ihre Spuren findet."
+          "text": "Thals Schichtnotiz war also noch aktuell. Gut, dass wir sie gelesen haben."
         }
       ],
       "next": "k2_l_030_terminal",
@@ -328,11 +326,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „LINDNER? BESTÄTIGEN SIE IHREN STANDORT.“"
+          "text": "Das Terminal hat Kader erreicht."
         },
         {
           "speaker": "mira",
-          "text": "Keine Begrüßung. Keine Frage, ob ich verletzt bin."
+          "text": "Seine erste Antwort lautet: „Lindner, bestätigen Sie Ihren Standort.“"
+        },
+        {
+          "speaker": "mira",
+          "text": "Keine Frage nach meiner Verletzung. Keine Erklärung zum Alarm."
         }
       ],
       "choices": [
@@ -380,11 +382,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „ZUGANG 0414. BERÜHREN SIE PROBENKAMMER DREI NICHT. KOMMEN SIE DANACH ZUM BOHRTURM.“"
+          "text": "Kader gibt denselben Zugang durch, der in Thals Schichtnotiz stand: 0414."
         },
         {
           "speaker": "mira",
-          "text": "Tür ist offen."
+          "text": "Danach warnt er mich, Probenkammer Drei nicht zu berühren, und verlangt, dass ich zum Bohrturm komme."
+        },
+        {
+          "speaker": "mira",
+          "text": "Die Labortür ist offen."
         }
       ],
       "next": "k2_l_030_terminal",
@@ -912,6 +918,18 @@
         {
           "speaker": "mira",
           "text": "Liv würde mir sagen, ich soll zuerst meine eigene Wunde versorgen. Also mache ich das."
+        },
+        {
+          "speaker": "mira",
+          "text": "Auf ihrem Tablet ist ein offener medizinischer Eintrag zu Emil Varga. Er war Glaziologe im Bohrteam und hat sich beim Bergen von Kern 14C an der Hand verletzt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Liv notierte danach Fieber, Erinnerungslücken und wiederholte Sätze. Der Eintrag bricht mitten in einer Untersuchung ab."
+        },
+        {
+          "speaker": "mira",
+          "text": "Jetzt weißt du, wer Emil ist. Ich wusste nur nicht, dass Liv ihn wegen der Probe beobachtet hat."
         }
       ],
       "next": "k2_l_060_medical",
@@ -956,7 +974,7 @@
         },
         {
           "id": "damaged_bandage",
-          "label": "Die eingerissene Packung war nur heruntergefallen. Benutz sie.",
+          "label": "Die geöffnete Packung sieht sauber aus. Trotzdem nur verwenden, wenn nichts Versiegeltes da ist.",
           "next": "k2_l_070_kader",
           "requires": [
             {
@@ -980,7 +998,7 @@
         },
         {
           "id": "damaged_bandage_already_exposed",
-          "label": "Die eingerissene Packung war nur heruntergefallen. Benutz sie.",
+          "label": "Die geöffnete Packung sieht sauber aus. Trotzdem nur verwenden, wenn nichts Versiegeltes da ist.",
           "next": "k2_l_070_kader",
           "requires": [
             {
@@ -1022,11 +1040,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „LINDNER. VERLASSEN SIE DAS LABOR. DIE PROBE IST NICHT DAS PRIMÄRE RISIKO.“"
+          "text": "Kader schreibt erneut über das Stationsnetz."
         },
         {
           "speaker": "mira",
-          "text": "Dann weiß er, dass ich hier bin. Auch wenn ich seinen Code nicht benutzt habe."
+          "text": "Er fordert mich auf, das Labor zu verlassen. Die Probe sei nicht das größte Risiko."
+        },
+        {
+          "speaker": "mira",
+          "text": "Damit weiß er, dass ich hier bin – entweder über die Türprotokolle oder über die Laborsensoren."
         }
       ],
       "choices": [
@@ -1097,15 +1119,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "„Biologisch inert?“"
+          "text": "Ich habe ihm die gelöschte Passage aus seinem Bericht geschickt und gefragt, wie „biologisch inert“ dazu passt."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „DER BERICHT WAR ZU DIESEM ZEITPUNKT KORREKT. KOMMEN SIE ZUM BOHRTURM. NICHT ALLEIN.“"
+          "text": "Er antwortet, die Einstufung sei zum damaligen Messzeitpunkt korrekt gewesen."
         },
         {
           "speaker": "mira",
-          "text": "Eine wissenschaftlich elegante Art zu lügen."
+          "text": "Dann verlangt er wieder, dass ich zum Bohrturm komme – diesmal ausdrücklich nicht allein."
         }
       ],
       "next": "k2_l_080_exit",
@@ -1127,15 +1149,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Hab nur medizinisches Material gesucht."
+          "text": "Ich habe nur geschrieben, dass ich medizinisches Material gesucht habe."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „GUT. VERLASSEN SIE DEN BEREICH.“"
+          "text": "Kader antwortet: „Verlassen Sie den Bereich.“"
         },
         {
           "speaker": "mira",
-          "text": "Er glaubt mir nicht. Oder er glaubt mir zu schnell."
+          "text": "Entweder glaubt er mir nicht, oder ihm ist gerade wichtiger, dass ich gehe."
         }
       ],
       "next": "k2_l_080_exit",
@@ -1157,11 +1179,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich helfe Ihnen. Dafür keine ausgelassenen Passagen mehr."
+          "text": "Ich habe Zusammenarbeit angeboten, wenn er ab jetzt keine Messwerte und Ereignisse mehr auslässt."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „DANN SICHERN SIE DIE STROMVERSORGUNG. UND LINDNER: FALLS BERG BEI IHNEN IST, LASSEN SIE IHN NICHT ALLEIN.“"
+          "text": "Er verlangt zuerst die Sicherung der Stromversorgung."
+        },
+        {
+          "speaker": "mira",
+          "text": "Außerdem warnt er mich, Aksel nicht allein zu lassen, falls er bei mir ist. Warum, erklärt er nicht."
         }
       ],
       "next": "k2_l_080_exit",
@@ -1478,15 +1504,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ein einzelner Handschuh. Generator-Team."
+          "text": "Da liegt ein einzelner Arbeitshandschuh neben der Leine."
         },
         {
           "speaker": "mira",
-          "text": "Auf der Oberfläche liegt derselbe graue Staub wie auf Aksels Jacke."
+          "text": "Am Bündchen ist das graue Generator-Symbol. Auf der Oberfläche klebt derselbe helle Staub wie auf Aksels Jacke."
         },
         {
           "speaker": "mira",
-          "text": "Ich bleibe an der Leine."
+          "text": "Ich fotografiere ihn und bleibe eingehakt. Für einen Handschuh verlasse ich die Leine nicht."
         }
       ],
       "next": "k2_g_120_entry",
@@ -1947,7 +1973,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Zurück an die Leine."
+          "text": "Die Anlage läuft. Wir gehen jetzt zurück zur Sicherungsleine."
+        },
+        {
+          "speaker": "mira",
+          "text": "Sobald wir wieder im Wohntrakt sind, brauche ich Wasser und zwei Minuten zum Nachdenken."
         }
       ],
       "effects": [
@@ -1960,7 +1990,7 @@
       "choices": [
         {
           "id": "continue_labor",
-          "label": "Danach ins Labor.",
+          "label": "Nach dem Aufwärmen zum Labor. Die Kühlwarnung läuft noch.",
           "next": "k2_l_010_corridor",
           "requires": [
             {
@@ -1973,7 +2003,7 @@
         },
         {
           "id": "finish_chapter",
-          "label": "Danach zurück zum Wohntrakt.",
+          "label": "Zurück in den Wohntrakt und dort erst die Lage ordnen.",
           "next": "k2_x_200_return",
           "requires": [
             {

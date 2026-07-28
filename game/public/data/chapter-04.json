@@ -145,7 +145,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich kann noch Ausrüstung holen. Jede Vorbereitung kostet Zeit, aber draußen kostet ein Fehler mehr."
+          "text": "Der Weg zum Außenposten ist lang genug, dass ein fehlendes Ausrüstungsteil tödlich werden kann."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich prüfe, was wir bereits haben. Danach können wir fehlende Ausrüstung holen, eine Begleitung mitnehmen oder bewusst aufbrechen."
         }
       ],
       "choices": [
@@ -233,7 +237,7 @@
         },
         {
           "id": "depart",
-          "label": "Jetzt aufbrechen.",
+          "label": "Ausrüstung prüfen und dann den Aufbruch bestätigen.",
           "next": "k4_025_departure_gate",
           "requires": [],
           "effects": []
@@ -1324,15 +1328,19 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ingrid sagt: „Wenn das jemand findet: Kader hat den Bericht geändert. Die Rohdaten liegen auf dem lokalen Sender.“"
+          "text": "Auf Ingrids Terminal läuft eine Aufnahme."
         },
         {
           "speaker": "mira",
-          "text": "Ingrid sagt: „Da draußen steht seit zwanzig Minuten jemand an der Leine. Ich glaube, es bin ich.“"
+          "text": "Sie sagt, Kader habe ihren Bericht verändert. Die unveränderten Rohdaten lägen auf dem lokalen Sender."
         },
         {
           "speaker": "mira",
-          "text": "Zeitstempel vor zwei Stunden. Die Kamera zeigt, dass niemand hinausgeht."
+          "text": "Dann zeigt sie zur Außenkamera: An der Leine stehe seit zwanzig Minuten jemand in ihrer orangefarbenen Reservejacke. Ingrid selbst sitzt während der Aufnahme sichtbar vor dem Terminal."
+        },
+        {
+          "speaker": "mira",
+          "text": "Der Zeitstempel ist zwei Stunden alt. Im Kameraprotokoll gibt es keinen aufgezeichneten Schleusenvorgang."
         }
       ],
       "effects": [
@@ -1850,27 +1858,23 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Zurück. Das Wetterfenster beginnt in wenigen Stunden."
+          "text": "Zurück im Wohntrakt. Das Wetterfenster beginnt in wenigen Stunden."
         },
         {
           "speaker": "mira",
-          "text": "Wir können jetzt einen Notruf senden. Aber ohne zu wissen, was in der Kernkammer ist, holen wir vielleicht nicht Rettung hierher."
+          "text": "Wir können einen Notruf vorbereiten. Vor dem Senden müssen wir aber klären, was in der Kernkammer liegt und welches Quarantänerisiko wir melden."
         },
         {
           "speaker": "mira",
-          "text": "Vielleicht liefern wir nur etwas aus. Kader wartet im Bohrturm."
+          "text": "Warte. Aus dem Vorratsraum kommt wieder dieses Kratzen."
         },
         {
           "speaker": "mira",
-          "text": "Aus dem Vorratsraum kommt wieder dieses Kratzen."
+          "text": "Jetzt stößt etwas von innen gegen einen der hohen Metallschränke."
         },
         {
           "speaker": "mira",
-          "text": "Diesmal folgt ein kurzer, gepresster Laut. Dann stößt von innen etwas gegen die Schranktür."
-        },
-        {
-          "speaker": "mira",
-          "text": "Ich kann nicht sagen, ob dort ein verletzter Mensch, ein Tier oder nur lose Fracht eingeschlossen ist."
+          "text": "Ich sehe nicht, was darin ist. Die Schranktür ist geschlossen."
         }
       ],
       "effects": [
@@ -1883,7 +1887,7 @@
       "choices": [
         {
           "id": "find_niko_now",
-          "label": "Bereite Wasser und eine Decke vor. Dann öffne den Schrank vorsichtig.",
+          "label": "Öffne den Schrank vorsichtig. Bleib seitlich und halte Abstand.",
           "next": "k4_310_niko_open",
           "requires": [],
           "effects": [
@@ -1896,7 +1900,7 @@
         },
         {
           "id": "niko_later",
-          "label": "Markiere den Raum. Sichert zuerst das Wetterfenster und den Bohrturm.",
+          "label": "Vorratsraum schließen und markieren. Erst nach dem Bohrturm nachsehen.",
           "next": "k4_312_niko_deferred",
           "requires": [],
           "effects": [
@@ -1925,7 +1929,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Na gut. Warte kurz."
+          "text": "Okay. Ich stelle mich seitlich neben die Tür und öffne sie nur einen Spalt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Warte kurz."
         }
       ],
       "next": "k4_311_niko_found",
@@ -1947,27 +1955,31 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich sehe ihn. Es ist Niko."
+          "text": "Alles gut. Ich bin da."
         },
         {
           "speaker": "mira",
-          "text": "Livs Kater. Ich dachte, er wäre bei ihr gewesen."
+          "text": "Die Schranktür ist offen. Ich sehe jetzt, was darin saß."
         },
         {
           "speaker": "mira",
-          "text": "Der kleine Idiot ist mir beim Öffnen auf die Schulter gesprungen. Deshalb hat es so lange gedauert."
+          "text": "Es ist Niko. Livs Kater."
         },
         {
           "speaker": "mira",
-          "text": "Er ist staubig und eine Pfote ist wund, aber er lebt. Er schnurrt so laut, dass du es durch das Relais hören müsstest."
+          "text": "Beim Öffnen ist er mir direkt gegen die Brust gesprungen. Das Relais lag unter mir, und ich wollte ihn nicht wieder loslassen. Deshalb war ich so lange still."
         },
         {
           "speaker": "mira",
-          "text": "Liv hat ihm diese rote Decke gekauft. Ich wickle ihn darin ein."
+          "text": "Er ist staubig, hungrig und eine Pfote ist wund. Aber er lebt."
         },
         {
           "speaker": "mira",
-          "text": "Ich habe gerade gleichzeitig gelacht und geweint. Das fühlt sich fast unanständig gut an."
+          "text": "Jetzt stelle ich Wasser hin und hole Livs rote Fleecedecke. Er schnurrt, als müsste er den ganzen Generator ersetzen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich lache gerade und weine gleichzeitig. Nach Liv hatte ich nicht mehr damit gerechnet, noch etwas von ihr retten zu können."
         }
       ],
       "effects": [
@@ -2011,11 +2023,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Du hast recht. Wenn ich jetzt alles aufreiße, verlieren wir Zeit."
+          "text": "In Ordnung. Ich markiere den Schrank und lasse die Tür zum Vorratsraum geschlossen."
         },
         {
           "speaker": "mira",
-          "text": "Ich stelle Wasser vor die Tür und markiere den Vorratsraum. Was immer dort drin ist, muss noch warten."
+          "text": "Wir wissen nicht, was darin ist. Wenn wir zurückkommen, sehen wir nach – mit Zeit und ohne dass jemand allein davorsteht."
         }
       ],
       "next": "k4_320_transition",

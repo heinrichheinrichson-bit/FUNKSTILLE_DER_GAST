@@ -64,7 +64,7 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich bin für ein paar Minuten eingeschlafen."
+          "text": "Ich bin für ein paar Minuten eingeschlafen. Nicht geplant."
         },
         {
           "speaker": "mira",
@@ -72,7 +72,7 @@
         },
         {
           "speaker": "mira",
-          "text": "Aksel ist nicht hier."
+          "text": "Aksel sollte im Verbindungsgang sitzen. Er ist nicht mehr da."
         }
       ],
       "variants": [
@@ -111,15 +111,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Da. Hinter dem vereisten Fenster."
+          "text": "Ich sehe ihn durch das Fenster."
         },
         {
           "speaker": "mira",
-          "text": "Aksel läuft vom Wohntrakt weg. Ohne Maske. Ohne Sicherungsleine."
+          "text": "Aksel geht vom Wohntrakt weg. Er trägt Parka und Maske, aber seine Sicherungsleine hängt lose hinter ihm."
         },
         {
           "speaker": "mira",
-          "text": "Er geht gleichmäßig, als könnte er durch den Whiteout sehen."
+          "text": "Er bewegt sich entlang der Masten, ohne sich einzuhaken. Im Whiteout reicht ein Fehltritt, und ich verliere ihn."
         }
       ],
       "variants": [
@@ -259,7 +259,7 @@
       "choices": [
         {
           "id": "order_back",
-          "label": "Befiehl ihm zurückzukommen.",
+          "label": "Sag ihm, er soll stehen bleiben und auf deine Stimme reagieren.",
           "next": "k3_031_call_answer",
           "requires": [],
           "effects": [
@@ -272,7 +272,7 @@
         },
         {
           "id": "ask_what_he_sees",
-          "label": "Frag, was er dort sieht.",
+          "label": "Frag ihn, wen oder was er dort draußen sieht.",
           "next": "k3_031_call_answer",
           "requires": [],
           "effects": [
@@ -319,15 +319,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Aksel sagt: „Ich weiß, wo Emil ist.“"
+          "text": "Der Lautsprecher ist offen. Aksel hat zurückgerufen; das Außenmikrofon nimmt seine Stimme auf."
         },
         {
           "speaker": "mira",
-          "text": "Seine Stimme kam über den Außenlautsprecher zurück."
+          "text": "Er sagt, Emil sei draußen und er müsse ihn holen."
         },
         {
           "speaker": "mira",
-          "text": "Aksel trägt kein Funkgerät."
+          "text": "Emil ist der Glaziologe aus Livs medizinischem Eintrag. Laut Stationsliste gilt er seit dem Alarm als vermisst."
         }
       ],
       "choices": [
@@ -415,11 +415,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Anzug dicht. Zwei Clips. Markierungslicht an der Schleuse."
+          "text": "Anzug dicht. Zwei Sicherungsclips. Zweite Leine am Gurt. Markierungslicht an der Schleuse."
         },
         {
           "speaker": "mira",
-          "text": "Ich sehe seine Spuren noch. Sie führen nicht zur Generatorleine."
+          "text": "Ich sehe Aksels Spuren noch. Sie führen am nächsten Leinenmast vorbei."
         }
       ],
       "next": "k3_050_contact",
@@ -441,11 +441,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Bin draußen. Nur ein Clip, keine Zeit fürs Markierungslicht."
+          "text": "Bin draußen. Ich habe nur den Hauptclip geschlossen und kein Markierungslicht gesetzt."
         },
         {
           "speaker": "mira",
-          "text": "Seine Spuren verschwinden schon."
+          "text": "Das war zu schnell. Seine Spuren verschwinden bereits im Triebschnee."
         }
       ],
       "next": "k3_050_contact",
@@ -467,21 +467,21 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich habe ihn erreicht. Vielleicht zwölf Meter vor mir."
+          "text": "Ich habe ihn erreicht. Ungefähr zwölf Meter vor mir."
         },
         {
           "speaker": "mira",
-          "text": "Er steht vor einer Schneewehe und starrt hinein."
+          "text": "Er steht vor einer Schneewehe und starrt auf etwas Orangefarbenes im Schnee."
         },
         {
           "speaker": "mira",
-          "text": "Seine Wimpern sind vereist. Er zittert nicht."
+          "text": "Seine Wimpern sind vereist. Er reagiert auf seinen Namen, aber erst beim dritten Mal."
         }
       ],
       "choices": [
         {
           "id": "question_distance",
-          "label": "Abstand halten. Frag nach Emil.",
+          "label": "Abstand halten. Frag, warum er Emil hier draußen vermutet.",
           "next": "k3_051_emil",
           "requires": [],
           "effects": []
@@ -524,19 +524,19 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Wer ist Emil?"
+          "text": "Ich habe ihn gefragt, warum er Emil hier draußen vermutet."
         },
         {
           "speaker": "mira",
-          "text": "Aksel sagt: „Der Erste.“"
+          "text": "Aksel sagt, Emil sei nach dem Alarm zum Bohrturm gegangen und nicht zurückgekommen."
         },
         {
           "speaker": "mira",
-          "text": "Aksel sagt: „Er wartet unter uns.“"
+          "text": "Unter dem Schnee steckt Emils vereiste Ausweiskarte. Auf der Rückseite sind unvollständige Koordinaten eingeritzt."
         },
         {
           "speaker": "mira",
-          "text": "Er hat dabei nicht mich angesehen. Er hat dein Relais angesehen."
+          "text": "Aksel klingt nicht geheimnisvoll. Er klingt erschöpft und völlig überzeugt, dass Emil noch irgendwo vor uns läuft."
         }
       ],
       "next": "k3_060_turn_back",
@@ -602,15 +602,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich habe seinen Arm gepackt."
+          "text": "Ich habe seinen Arm durch beide Jacken gepackt und die zweite Leine an seinem Gurt eingehängt."
         },
         {
           "speaker": "mira",
-          "text": "Er ist heiß. Durch Handschuh und Jacke."
+          "text": "Er ist auffallend warm. Das kann Fieber sein; durch den Anzug kann ich es nicht zuverlässig beurteilen."
         },
         {
           "speaker": "mira",
-          "text": "Aksel sagt: „Du hättest mich nicht berühren sollen.“"
+          "text": "Aksel sagt nur: „Bring mich zurück, bevor ich wieder vergesse, wohin ich wollte.“"
         }
       ],
       "effects": [
@@ -686,11 +686,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Der Wind dreht. Unsere Spuren sind fast weg."
+          "text": "Der Wind dreht. Unsere Spuren verschwinden bereits."
         },
         {
           "speaker": "mira",
-          "text": "Aksel folgt mir jetzt. Ich glaube zumindest, dass er es ist."
+          "text": "Aksel ist an meiner zweiten Leine. Ich gehe voraus, er antwortet jedes Mal, wenn ich seinen Namen rufe."
         }
       ],
       "next": "k3_061_return_check",
@@ -820,15 +820,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Da ist die Wand. Ich bin direkt dagegen gelaufen."
+          "text": "Da ist die Außenwand. Ich bin beinahe direkt dagegen gelaufen."
         },
         {
           "speaker": "mira",
-          "text": "Außenschleuse gefunden."
-        },
-        {
-          "speaker": "mira",
-          "text": "Aksel steht drei Schritte hinter mir. Kein Schnee auf seinen Schultern."
+          "text": "Schleuse gefunden. Aksel steht drei Schritte hinter mir und ist noch eingehakt."
         }
       ],
       "next": "k3_080_airlock",
@@ -1123,15 +1119,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Wir sind drin. Aksel sitzt auf dem Boden der Schleuse."
+          "text": "Wir sind drin. Aksel sitzt auf dem Boden der Schleuse und hält die Hände vor die Heizung."
         },
         {
           "speaker": "mira",
-          "text": "Aksel sagt: „Emil war nicht der Erste, der hinunterging.“"
+          "text": "Er erinnert sich an Emils Karte und daran, dass ich ihn zurückgerufen habe. An den Weg von der Station bis zum Mast erinnert er sich nicht."
         },
         {
           "speaker": "mira",
-          "text": "Jetzt behauptet er, das nie gesagt zu haben."
+          "text": "Das macht ihm sichtbar Angst. Mir auch."
         }
       ],
       "next": "k3_100_after_march",
@@ -1153,15 +1149,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Innere Tür geschlossen. Aksel ist draußen."
+          "text": "Ich bin durch die innere Tür. Aksel bleibt in der geschlossenen Außenschleuse."
         },
         {
           "speaker": "mira",
-          "text": "Er klopft nicht. Er steht nur vor der Kamera."
+          "text": "Er steht vor der Kamera und bittet mich, wenigstens die Heizung der Schleuse eingeschaltet zu lassen."
         },
         {
           "speaker": "mira",
-          "text": "Aksel sagt: „Du wirst die Tür später öffnen.“"
+          "text": "Wenn wir ihn dort behalten, müssen wir bald entscheiden, ob wir ihn hereinholen oder bewusst der Kälte aussetzen."
         }
       ],
       "next": "k3_100_after_march",
@@ -1183,11 +1179,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Aksel sitzt jetzt im Verbindungsgang, falls er es wirklich ist. Ich kann jeden seiner Atemzüge hören."
+          "text": "Aksel sitzt jetzt im Verbindungsgang. Ich habe ihm eine Decke gegeben und Abstand gehalten."
         },
         {
           "speaker": "mira",
-          "text": "Ich möchte nicht nur wissen, was ich mit ihm tun soll. Sag mir bitte, dass Angst nicht automatisch bedeutet, dass ich ihm etwas Schreckliches antun muss."
+          "text": "Er ist krank oder unter Schock. Vielleicht beides. Ich will vorsichtig sein, aber ich will aus meiner Angst auch kein Todesurteil machen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bleib kurz bei mir, während ich überlege, wie wir ihn untersuchen können."
         }
       ],
       "redirects": [
@@ -1225,28 +1225,28 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Jemand klopft an die Außenschleuse."
+          "text": "Jemand klopft an die Außenschleuse. Dreimal, dann eine Pause."
         },
         {
           "speaker": "mira",
-          "text": "Dreimal. Pause. Dreimal."
+          "text": "Auf der Kamera steht Aksel."
         },
         {
           "speaker": "mira",
-          "text": "Auf der Kamera steht Aksel. Selbst wenn wir ihn kilometerweit draußen verloren haben."
+          "text": "Ich habe ihn zuletzt im Whiteout hinter dem nächsten Leinenmast verschwinden sehen. Er könnte zurückgefunden haben – aber ich öffne nicht, bevor wir wissen, in welchem Zustand er ist."
         }
       ],
       "choices": [
         {
           "id": "camera_question",
-          "label": "Frag ihn über die Kamera nach Emil.",
+          "label": "Sprich über die Anlage mit ihm. Lass ihn erklären, was passiert ist.",
           "next": "k3_111_answer",
           "requires": [],
           "effects": []
         },
         {
           "id": "remote_scan",
-          "label": "Starte den Außenscan.",
+          "label": "Erst Wärmebild und medizinischen Außensensor prüfen.",
           "next": "k3_112_remote_scan",
           "requires": [],
           "effects": []
@@ -1300,15 +1300,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Wer ist Emil?"
+          "text": "Ich habe über die Sprechanlage gefragt, was passiert ist und warum er zurückkam."
         },
         {
           "speaker": "mira",
-          "text": "Aksel sagt: „Du kennst ihn bereits.“"
+          "text": "Aksel sagt, er habe Emils Ausweiskarte gefunden, dann die Orientierung verloren und irgendwann wieder das Licht unserer Schleuse gesehen."
         },
         {
           "speaker": "mira",
-          "text": "Er hat dabei direkt in die Kamera gesehen. Nicht zu mir."
+          "text": "Er nennt meinen Namen, den Namen der Station und das heutige Datum richtig. Seine Stimme zittert."
         }
       ],
       "choices": [
@@ -1366,15 +1366,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Der Sensor findet keinen Puls."
+          "text": "Der medizinische Sensor bekommt durch den vereisten Parka keinen verlässlichen Puls."
         },
         {
           "speaker": "mira",
-          "text": "Wärmebild zeigt einen Körper mit siebenunddreißig Grad."
+          "text": "Das Wärmebild zeigt einen lebenden, stark ausgekühlten Menschen. Mehr kann die Kamera nicht feststellen."
         },
         {
           "speaker": "mira",
-          "text": "Aksel lächelt. Ich habe ihn das noch nie tun sehen."
+          "text": "Aksel wartet vor der Tür und hält beide Hände sichtbar."
         }
       ],
       "choices": [
@@ -1432,15 +1432,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Außentür offen. Kamera weiß vor Schnee."
+          "text": "Außentür offen. Aksel ist in der Schleuse."
         },
         {
           "speaker": "mira",
-          "text": "Jetzt geschlossen."
+          "text": "Ich habe die Außentür wieder geschlossen und die Innentür verriegelt. Er bleibt zunächst im beheizten Quarantäneabschnitt."
         },
         {
           "speaker": "mira",
-          "text": "Aksel ist in der Schleuse. Aber die Bodenwaage zeigt nur mein Gewicht."
+          "text": "So können wir reden und ihn untersuchen, ohne ihn gleich in den Wohntrakt zu lassen."
         }
       ],
       "next": "k3_120_transition",
@@ -1462,15 +1462,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Das Klopfen hat aufgehört."
+          "text": "Ich habe ihm gesagt, dass ich die Tür nicht öffne."
         },
         {
           "speaker": "mira",
-          "text": "Die Kamera zeigt niemanden mehr."
+          "text": "Das Klopfen hat aufgehört. Auf der Kamera sehe ich, wie er sich an die Außenwand setzt, so nah wie möglich am warmen Schleusengehäuse."
         },
         {
           "speaker": "mira",
-          "text": "Auf der Innenseite der Schleusentür sind drei feuchte Fingerabdrücke."
+          "text": "Das verschafft uns Zeit. Nicht viel."
         }
       ],
       "next": "k3_120_transition",
@@ -1492,19 +1492,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Auf dem lokalen Terminal ist eine Nachricht von Kader eingegangen."
+          "text": "Auf dem Stationsnetz ist eine Nachricht von Kader eingegangen."
         },
         {
           "speaker": "mira",
-          "text": "Er verlangt, dass ich zum Bohrturm komme und das Relais mitbringe. Aksel soll ausdrücklich nicht mit."
+          "text": "Er will, dass ich zum Bohrturm komme und das Relais mitbringe. Aksel soll nicht mit."
         },
         {
           "speaker": "mira",
-          "text": "Im Hintergrund seiner kurzen Audioübertragung hört man dreimaliges Klopfen – dasselbe Muster wie an unserer Schleuse."
-        },
-        {
-          "speaker": "mira",
-          "text": "Er kann nicht mit dir sprechen. Dieses Relais erreicht weiterhin nur dich. Alles von Kader kommt über das interne Stationsnetz zu mir."
+          "text": "Mehr erklärt er nicht. Ich antworte erst, wenn wir entschieden haben, ob wir ihm unseren Standort und Aksels Zustand verraten."
         }
       ],
       "effects": [

@@ -1339,11 +1339,11 @@ export default function Home() {
           {connectionEnded && !delivering && (currentNode?.ending || testMode) && (
             <div className="handoff">
               <span>
-                {currentNode?.ending ? "Dein Ende" : "Kapitel abgeschlossen"}
+                {currentNode?.ending ? "Dein Ende" : "Testnavigation"}
               </span>
               {currentNode?.handoff && chapters[currentNode.handoff] ? (
                 <button type="button" onClick={continueChapter}>
-                  Weiter: {chapters[currentNode.handoff].chapter.title}
+                  Nächste Szene
                 </button>
               ) : currentNode?.ending ? (
                 <strong>

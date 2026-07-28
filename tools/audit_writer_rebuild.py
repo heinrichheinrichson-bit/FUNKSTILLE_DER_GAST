@@ -134,8 +134,20 @@ for node_id in sorted(pre_reveal_nodes):
         errors.append(f"Vorzeitige Niko-Enthüllung in {node_id}: {found_words}")
 
 first_reveal = all_nodes.get("k4_311_niko_found", {}).get("messages", [])
-if not first_reveal or "ich sehe ihn. es ist niko." not in first_reveal[0].get("text", "").lower():
-    errors.append("Nikos erste Enthüllung beginnt nicht mit einer tatsächlichen Sichtung")
+first_niko_index = next(
+    (index for index, message in enumerate(first_reveal) if "niko" in message.get("text", "").lower()),
+    None,
+)
+seen_before_name = (
+    first_niko_index is not None
+    and any(
+        "schranktür ist offen" in message.get("text", "").lower()
+        and "ich sehe" in message.get("text", "").lower()
+        for message in first_reveal[:first_niko_index]
+    )
+)
+if not seen_before_name:
+    errors.append("Nikos Name erscheint nicht erst nach Miras tatsächlicher Sichtung")
 
 if errors:
     print("WRITER-REBUILD-AUDIT: FEHLGESCHLAGEN")

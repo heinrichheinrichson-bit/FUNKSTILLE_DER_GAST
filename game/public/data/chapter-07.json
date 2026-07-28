@@ -107,7 +107,7 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Ich bin im Labor. Bevor wir über Dosen reden: Ich sage dir genau, wer tatsächlich hier ist."
+          "text": "Ich bin im Labor. Bevor wir über den Hemmstoff entscheiden, sage ich dir genau, wer wirklich hier ist und wie die Person hergekommen ist."
         }
       ],
       "variants": [
@@ -191,15 +191,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Der Hemmstoff ist fertig."
+          "text": "Der Hemmstoffansatz ist fertig."
         },
         {
           "speaker": "mira",
-          "text": "„Gegenmittel“ wäre zu viel gesagt. Er blockiert die Netzstruktur in Zellkulturen."
+          "text": "Ein Gegenmittel ist es nicht. In den Zellkulturen stoppt er die Ausbildung der netzartigen Strukturen für mehrere Stunden."
         },
         {
           "speaker": "mira",
-          "text": "Ob er in einem Menschen dasselbe tut, weiß niemand."
+          "text": "Er wurde nie an Menschen getestet. Nutzen und Nebenwirkungen sind unbekannt."
         }
       ],
       "variants": [
@@ -283,15 +283,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Jetzt zu den tatsächlich anwesenden Personen. Ich untersuche nur Menschen, die vor mir stehen – keine Namen auf einer Liste."
+          "text": "Ich behandle niemanden nach Gefühl oder nach einer Namensliste. Nur Menschen, die tatsächlich hier sind und deren Befunde wir vergleichen können."
         },
         {
           "speaker": "mira",
-          "text": "Bei mir: mögliche Exposition, Erinnerungslücken, Kopfverletzung, Kälte und Erschöpfung."
+          "text": "Bei mir sprechen Erinnerungslücke und mögliche Exposition für ein Risiko. Kopfverletzung, Kälte und Erschöpfung erklären dieselben Symptome aber ebenfalls."
         },
         {
           "speaker": "mira",
-          "text": "Die Befunde sind Indizien. Keine sichere Diagnose."
+          "text": "Es gibt keine sichere Diagnose. Jede Dosisentscheidung bleibt eine Abwägung."
         }
       ],
       "next": "k7_030_distribution_gate",
@@ -393,7 +393,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Die nächste Entscheidung ist endgültig. Jede Behandlung verbraucht eine Dosis."
+          "text": "Wir haben nur die angezeigte Zahl an Dosen. Jede Anwendung ist endgültig."
+        },
+        {
+          "speaker": "mira",
+          "text": "Du kannst eine Person auswählen, eine Dosis für ein externes Labor versiegeln oder die Verteilung beenden."
         }
       ],
       "choices": [
@@ -534,7 +538,7 @@
         },
         {
           "id": "finish_early",
-          "label": "Keine weitere Dosis verwenden.",
+          "label": "Verteilung beenden und verbleibende Dosen versiegelt lassen.",
           "next": "k7_050_distribution_done",
           "requires": [],
           "effects": []
@@ -660,7 +664,7 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Sie geben dem Verantwortlichen die Dosis.“"
+          "text": "Kader sagt: „Sie geben dem Verantwortlichen die Dosis.“"
         },
         {
           "speaker": "mira",
@@ -712,15 +716,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Wenn wir falschliegen, haben wir einen Gesunden mit etwas behandelt, das nie an Menschen getestet wurde."
+          "text": "Die Verteilung ist beendet."
         },
         {
           "speaker": "mira",
-          "text": "Wenn wir gar nichts tun, nehmen wir vielleicht etwas Lebendes mit in den Hubschrauber."
+          "text": "Wir könnten einen gesunden Menschen einem ungetesteten Stoff ausgesetzt haben. Oder jemanden unbehandelt lassen, der tatsächlich exponiert wurde."
         },
         {
           "speaker": "mira",
-          "text": "Die Verteilung steht."
+          "text": "Ich dokumentiere jede Entscheidung für das Rettungsteam. Nichts davon wird verschwiegen."
         }
       ],
       "next": "k7_060_report",
@@ -1151,11 +1155,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Thal erstellt das Rettungsmanifest: Menschen, biologische Proben und Beweiskisten."
+          "text": "Wir erstellen jetzt das Rettungsmanifest: jede anwesende Person, medizinische Risiken, Proben, Beweise und Wärmeausrüstung."
         },
         {
           "speaker": "mira",
-          "text": "Der Helikopter kann die Menschen aufnehmen. Bei zusätzlicher Fracht müssen wir an der Landezone möglicherweise Material zurücklassen."
+          "text": "Für alle anwesenden Menschen gibt es Plätze. Zusätzliche Fracht konkurriert nur mit anderem Material, nicht mit einem Menschenleben."
         }
       ],
       "variants": [
@@ -1226,11 +1230,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Das Manifest steht. Die Station ist vorbereitet."
+          "text": "Das Manifest ist bestätigt. Die Station ist für den Abmarsch vorbereitet."
         },
         {
           "speaker": "mira",
-          "text": "Wir brechen jetzt zur Landezone auf. Ich kann unterwegs nur an den Leinenmasten schreiben."
+          "text": "Wir gehen gemeinsam zur nördlichen Landezone. Ich melde mich an jedem Leinenmast; dazwischen brauche ich beide Hände."
         }
       ],
       "variants": [

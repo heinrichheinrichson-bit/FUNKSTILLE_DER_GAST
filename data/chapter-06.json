@@ -375,15 +375,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Provisorisches Labor. Alt. Mindestens mehrere Jahre."
+          "text": "Hinter der Tür liegt ein aufgegebenes Behelfslabor. Die Geräte sind älter als alles auf Kaldstad."
         },
         {
           "speaker": "mira",
-          "text": "Dieselben Probenbehälter wie auf Kaldstad, aber eine andere Projektnummer."
+          "text": "Die Probenbehälter tragen dieselbe Baureihe, aber eine andere Projektnummer."
         },
         {
           "speaker": "mira",
-          "text": "Sie wussten es. Nicht Kader. Jemand vor ihm."
+          "text": "Kaldstad war nicht der erste Fund. Jemand hat später mit neuem Namen am selben Material weitergearbeitet."
         }
       ],
       "effects": [
@@ -475,15 +475,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "In der hinteren Kammer sitzt Kader. Keine Außenkleidung."
+          "text": "In der hinteren Kammer sitzt Kader ohne Außenjacke."
         },
         {
           "speaker": "mira",
-          "text": "Er müsste tot sein."
+          "text": "Der Raum ist nur wenige Grad warm. Er ist ansprechbar, stark unterkühlt und hätte den Weg hierher ohne Ausrüstung kaum überleben können."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Sie haben lange gebraucht.“"
+          "text": "Ich weiß nicht, wann er den Bohrturm verlassen hat. Ich gehe nicht näher heran, bevor er seine Hände zeigt."
         }
       ],
       "choices": [
@@ -532,15 +532,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Sie haben den Schacht nicht aufgegeben. Sie haben nur gelernt, ihn aus der Ferne zu beobachten.“"
+          "text": "Kader sagt, das frühere Projekt sei nie vollständig beendet worden. Die Sensoren im alten Schacht seien weiter aus der Ferne ausgelesen worden."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Der Sprengplan im Hauptterminal ist keine Evakuierungsanweisung. Er ist eine Eindämmung.“"
+          "text": "Der Sprengplan im Hauptterminal diene nicht der Evakuierung, sondern dem kontrollierten Einsturz beider Zugänge."
         },
         {
           "speaker": "mira",
-          "text": "Als ich wieder in die Kammer sehe, ist Kader nicht mehr dort."
+          "text": "Während ich die Datei prüfe, zieht er sich in den hinteren Gang zurück. Ich folge ihm nicht."
         }
       ],
       "next": "k6_060_priority",
@@ -601,15 +601,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Seine Hand ist warm. Zu warm."
+          "text": "Ich habe ihn mit Handschuhen am Unterarm gestützt. Seine Hauttemperatur ist deutlich zu hoch für diesen Raum."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Sie tragen es ohnehin schon.“"
+          "text": "Er sagt, ich sei ohnehin bereits exponiert. Ich weiß nicht, ob das eine Beobachtung oder eine Drohung sein soll."
         },
         {
           "speaker": "mira",
-          "text": "Er löst sich aus meinem Griff und geht tiefer in den dunklen Gang."
+          "text": "Dann reißt er sich los und verschwindet im hinteren Gang. Ich gehe nicht hinterher."
         }
       ],
       "next": "k6_060_priority",

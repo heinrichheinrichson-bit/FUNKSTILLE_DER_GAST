@@ -96,15 +96,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Sender auf Notleistung."
+          "text": "Sender auf Notleistung. Wetterfenster, Koordinaten und medizinischer Bericht sind angehängt."
         },
         {
           "speaker": "mira",
-          "text": "Wetterdaten angehängt. Koordinaten angehängt. Bericht angehängt."
-        },
-        {
-          "speaker": "mira",
-          "text": "Senden."
+          "text": "Ich sende jetzt."
         }
       ],
       "next": "k8_011_signal_result",
@@ -159,11 +155,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Quittung."
+          "text": "Da ist eine Quittung."
         },
         {
           "speaker": "system",
-          "text": "RETTUNGSFLUG GESTARTET. ANKUNFT 43 MINUTEN. LANDEZONE NORD MARKIEREN."
+          "text": "RETTUNGSFLUG GESTARTET · ANKUNFT 43 MINUTEN · LANDEZONE NORD MARKIEREN"
         },
         {
           "speaker": "mira",
@@ -171,7 +167,7 @@
         },
         {
           "speaker": "mira",
-          "text": "Wir packen jetzt Probe, Beweise und Wärmezeug auf den Lastschlitten. Danach gehen wir gemeinsam zur Landezone."
+          "text": "Wir sichern jetzt Wärmeausrüstung, Beweise und die ausgewählte Probe auf dem Lastschlitten. Danach gehen wir gemeinsam zur Landezone."
         },
         {
           "speaker": "mira",
@@ -240,15 +236,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Erster Mast. Alle noch da."
+          "text": "Erster Leinenmast erreicht. Ich prüfe jetzt die Gruppe und den Schlitten."
         },
         {
           "speaker": "mira",
-          "text": "Aksel trägt die Probenkiste. Ingrid hat das Richtfunkgerät. Kader geht zwischen uns."
-        },
-        {
-          "speaker": "mira",
-          "text": "Noch etwa dreißig Minuten bis zum Anflug."
+          "text": "Noch ungefähr dreißig Minuten bis zum Anflug."
         }
       ],
       "variants": [
@@ -273,17 +265,12 @@
               "state": "evac_aksel",
               "operator": "eq",
               "value": true
-            },
-            {
-              "state": "aksel_treated",
-              "operator": "eq",
-              "value": false
             }
           ],
           "appendMessages": [
             {
               "speaker": "mira",
-              "text": "Aksel hat aufgehört zu zittern. Bei dieser Kälte sollte das keine gute Nachricht sein."
+              "text": "Aksel zieht den Lastschlitten. Ich sehe ihn bei jedem Mast an und lasse ihn laut antworten."
             }
           ]
         },
@@ -298,7 +285,22 @@
           "appendMessages": [
             {
               "speaker": "mira",
-              "text": "Ingrid sagt: „Ich habe Ihren Bericht geprüft. Nichts daran ist genug. Aber es muss reichen.“"
+              "text": "Ingrid trägt das Richtfunkgerät und prüft hinter uns jeden Sicherungsclip."
+            }
+          ]
+        },
+        {
+          "requires": [
+            {
+              "state": "evac_kader",
+              "operator": "eq",
+              "value": true
+            }
+          ],
+          "appendMessages": [
+            {
+              "speaker": "mira",
+              "text": "Kader geht zwischen uns, an einer eigenen Leine und ohne Zugriff auf die Probenkiste."
             }
           ]
         }
@@ -322,15 +324,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Landezone erreicht. Markierungsfeuer steht."
+          "text": "Landezone erreicht. Das Markierungsfeuer läuft."
         },
         {
           "speaker": "mira",
-          "text": "Wind aus Südwest. Sicht vielleicht hundert Meter."
+          "text": "Wind aus Südwest, Sicht ungefähr hundert Meter."
         },
         {
           "speaker": "mira",
-          "text": "Ich sehe noch nichts."
+          "text": "Noch kein Hubschrauber. Aber der Empfänger zeigt sein Peilsignal."
         }
       ],
       "next": "k8_041_group_check",
@@ -934,7 +936,7 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Seil ist unten. Einer nach dem anderen."
+          "text": "Die Winde ist unten. Wir gehen nacheinander hoch; ich kontrolliere jeden Karabiner."
         },
         {
           "speaker": "mira",
@@ -942,15 +944,11 @@
         },
         {
           "speaker": "mira",
-          "text": "Kabine. Wärme. Echte Wärme."
+          "text": "Ich bin in der Kabine. Wärme. Echte Wärme."
         },
         {
           "speaker": "mira",
-          "text": "Das Relais zeigt noch eine Minute."
-        },
-        {
-          "speaker": "mira",
-          "text": "Ich zähle jeden Namen laut, bevor die Tür schließt. Niemand ist einfach irgendwann in der Gruppe aufgetaucht."
+          "text": "Das Relais zeigt noch eine Minute Verbindung."
         }
       ],
       "next": "k8_080_goodbye",
@@ -972,18 +970,22 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Du hast mich zuerst gefragt, ob ich verletzt bin. Nicht, ob meine Geschichte glaubwürdig ist."
+          "text": "Am Anfang warst du nur ein fremder Name auf einem unmöglichen Kanal."
         },
         {
           "speaker": "mira",
-          "text": "Du bist geblieben."
+          "text": "Du hast mich nicht wie eine Spielfigur behandelt. Du hast nachgefragt, widersprochen und bist geblieben, wenn ich Angst hatte."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich weiß nicht, was die Untersuchungen ergeben. Aber ich bin nicht allein hier angekommen."
         },
         {
           "speaker": "mira",
           "text": "Danke."
         },
         {
-          "speaker": "system",
+          "speaker": "mira",
           "text": "[VERBINDUNG BEENDET]"
         }
       ],

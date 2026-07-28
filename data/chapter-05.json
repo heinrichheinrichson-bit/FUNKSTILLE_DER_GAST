@@ -76,11 +76,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Zum Bohrturm kann ich zwei große Ausrüstungsstücke tragen. Mit einer Begleitung vielleicht drei."
+          "text": "Für den Abstieg kann ich zwei große Ausrüstungsstücke tragen. Wenn mich jemand begleitet, schaffen wir drei."
         },
         {
           "speaker": "mira",
-          "text": "Was wir nicht mitnehmen, fehlt uns unten. Was wir mitnehmen, macht den Abstieg langsamer."
+          "text": "Ich will die Auswahl erst bestätigen, wenn wir sicher sind. Bis dahin können wir sie jederzeit ändern."
         }
       ],
       "choices": [
@@ -282,15 +282,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Bohrturm erreicht. Eine Seitenwand ist nach außen gebogen. Nicht nach innen."
+          "text": "Bohrturm erreicht. Die untere Seitenwand ist nach außen gewölbt."
         },
         {
           "speaker": "mira",
-          "text": "Als hätte der Druck im Gebäude gesessen."
+          "text": "Das spricht für einen Druckstoß im Inneren. Nicht für etwas, das von draußen eingedrungen ist."
         },
         {
           "speaker": "mira",
-          "text": "Die Luft riecht süßlich. Ozon und etwas Organisches. Schutz bleibt zu."
+          "text": "Der Luftsensor meldet Lösungsmitteldämpfe und Ozon. Visier bleibt geschlossen."
         }
       ],
       "next": "k5_030_accident_log",
@@ -312,15 +312,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Unfallbericht: Emil Varga. Schnitt an der linken Hand beim Bergen von Kern 14C."
+          "text": "Am Eingang hängt das digitale Unfallbuch. Letzter Eintrag: Emil Varga, Schnitt an der linken Hand beim Bergen von Kern 14C."
         },
         {
           "speaker": "mira",
-          "text": "Desinfiziert, vier Stiche, zur Arbeit zurück. Am Folgetag war die Wunde vollständig geschlossen."
+          "text": "Liv hat die Wunde desinfiziert und mit vier Stichen versorgt. Zwölf Stunden später fotografierte sie eine vollständig geschlossene Hautoberfläche."
         },
         {
           "speaker": "mira",
-          "text": "Dafür gibt es ein Foto. Nach zwölf Stunden."
+          "text": "Darunter steht: „Heilungsverlauf medizinisch nicht erklärbar. Weitere Arbeit untersagt.“ Jemand hat die Sperre am nächsten Morgen aufgehoben."
         }
       ],
       "variants": [
@@ -371,17 +371,21 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Lift ohne Strom. Wartungsleiter bis Ebene minus drei."
+          "text": "Der Lift hat keinen Strom. Bis Ebene minus drei führt nur die Wartungsleiter."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Kommen Sie allein.“"
+          "text": "Kader meldet sich über die Gegensprechanlage. Er will, dass ich allein herunterkomme."
+        },
+        {
+          "speaker": "mira",
+          "text": "Nach allem, was wir wissen, ist das keine Anweisung, der ich blind folgen werde."
         }
       ],
       "choices": [
         {
           "id": "descend_alone",
-          "label": "Allein hinuntergehen.",
+          "label": "Kaders Forderung folgen und allein hinuntergehen.",
           "next": "k5_050_kader_resolve",
           "requires": [],
           "effects": [
@@ -394,7 +398,7 @@
         },
         {
           "id": "companion_open",
-          "label": "Eine verfügbare Begleitung offen mitnehmen.",
+          "label": "Mit einer Begleitung hinuntergehen und Kader das vorher sagen.",
           "next": "k5_050_kader_resolve",
           "requires": [
             {
@@ -418,7 +422,7 @@
         },
         {
           "id": "companion_wait",
-          "label": "Thal oben warten lassen.",
+          "label": "Ingrid oben an der Leiter sichern lassen und in Rufweite bleiben.",
           "next": "k5_050_kader_resolve",
           "requires": [
             {
@@ -437,7 +441,7 @@
         },
         {
           "id": "companion_hidden",
-          "label": "Thal heimlich nachkommen lassen.",
+          "label": "Eine Begleitung unbemerkt bis zur Zwischenplattform folgen lassen.",
           "next": "k5_050_kader_resolve",
           "requires": [
             {
@@ -521,23 +525,19 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sitzt vor der Kernkammer. Schutzanzug, Visier offen."
+          "text": "Kader sitzt im Sicherheitsraum vor der Kernkammer. Schutzanzug geschlossen, Visier offen."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Ich habe den Bericht geändert. Wenn Sie eine Erklärung brauchen, bekommen Sie keine gute.“"
+          "text": "Er gibt zu, Thals Bericht geändert zu haben. Nicht stolz. Eher so, als hätte er den Satz seit Stunden vorbereitet."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Wir hatten drei Monate, bevor das Projekt gestrichen worden wäre. Ich wollte Gewissheit.“"
+          "text": "Er sagt, das Projekt wäre nach drei Monaten ohne eindeutigen Befund beendet worden. Er wollte noch eine Messreihe – und hielt deshalb die Warnung zurück."
         },
         {
           "speaker": "mira",
-          "text": "Kader bleibt im Sicherheitsraum, bis Aksel ihm die Steuerung sperrt."
-        },
-        {
-          "speaker": "mira",
-          "text": "Wenn wir ihn später untersuchen oder mitnehmen wollen, müssen wir ihn ausdrücklich vom Bohrturm ins Labor eskortieren. Von selbst geht er nirgends hin."
+          "text": "Ich habe ihm die Steuerung gesperrt. Er bleibt unter Beobachtung, bis wir entscheiden, ob wir ihn mitnehmen."
         }
       ],
       "next": "k5_060_truth",
@@ -559,11 +559,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader arbeitet am Bohrkopf. Werkzeug und Probenbehälter liegen offen."
+          "text": "Kader arbeitet allein am Bohrkopf. Werkzeug und Probenbehälter liegen offen."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Sie hätten nicht kommen sollen. Jetzt helfen Sie oder gehen wieder.“"
+          "text": "Er fragt nicht, ob ich verletzt bin. Er sagt nur, die Kammer werde instabil und wir müssten entweder helfen oder den Bereich verlassen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich bleibe hinter der markierten Sicherheitslinie, bis er erklärt, was er getan hat."
         }
       ],
       "next": "k5_060_truth",
@@ -585,15 +589,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader steht mit der Stirn an der Sichtscheibe."
+          "text": "Kader steht mit der Stirn an der Sichtscheibe. Sein Visier ist offen."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Es bildet keine Kolonie. Kolonie ist das falsche Wort.“"
+          "text": "Er redet über die Strukturen in der Probe und verliert mitten im Satz den Faden."
         },
         {
           "speaker": "mira",
-          "text": "Dann dreht er sich um und begrüßt mich, als wäre ich gerade erst angekommen."
+          "text": "Dann sieht er mich an und begrüßt mich ein zweites Mal, als hätte er die letzten zehn Sekunden nicht erlebt."
         }
       ],
       "next": "k5_060_truth",
@@ -615,11 +619,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Ich dachte, wir beobachten Reaktion. In Wahrheit beobachtete es uns.“"
+          "text": "Kader sagt, sie hätten zunächst nur eine Reaktion auf Wärme und Strom erwartet."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Das ist eine Metapher, Lindner. Schreiben Sie nicht, ich hätte Bewusstsein behauptet.“"
+          "text": "Dann begannen die Messmuster immer dann zu wechseln, wenn Menschen den Raum betraten."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er warnt mich ausdrücklich davor, daraus Bewusstsein abzuleiten. Gleichzeitig kann er keine harmlose Erklärung mehr nennen."
         }
       ],
       "choices": [
@@ -654,17 +662,12 @@
               "value": 3
             }
           ],
-        "effects": [
-          {
-            "state": "ice_coordinates_found",
-            "operation": "set",
-            "value": true
-          },
-          {
-            "state": "kader_escorted_to_lab",
-            "operation": "set",
-            "value": true
-          }
+          "effects": [
+            {
+              "state": "ice_coordinates_found",
+              "operation": "set",
+              "value": true
+            }
           ]
         }
       ],
@@ -685,11 +688,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Varga war verletzt. Er war auch der Einzige, der noch in den Schacht steigen wollte.“"
+          "text": "Ich habe ihn mit Emils Krankenakte konfrontiert."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Ich habe beides für Mut gehalten.“"
+          "text": "Kader sagt, Emil habe trotz Livs Arbeitsverbot darauf bestanden, noch einmal zum Schacht zu gehen. Kader ließ ihn, weil er dessen Entschlossenheit für Urteilsfähigkeit hielt."
+        },
+        {
+          "speaker": "mira",
+          "text": "Jetzt kann er mir nicht sagen, wann er Emil zuletzt zweifelsfrei gesehen hat."
         }
       ],
       "next": "k5_070_chamber",
@@ -711,11 +718,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Ich wollte vier Stunden. Nur vier. Für eine zweite Messung.“"
+          "text": "Kader wollte Thals Warnung um vier Stunden verzögern, um die Messreihe abzuschließen."
         },
         {
           "speaker": "mira",
-          "text": "Vier Stunden waren genug, damit niemand mehr wusste, wem er trauen konnte."
+          "text": "In diesen vier Stunden fielen der Uplink und Teile des Stationsnetzes aus. Danach fehlten mehreren Menschen Erinnerungen."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er nennt es eine Fehlentscheidung. Ingrid würde ein anderes Wort verwenden."
         }
       ],
       "next": "k5_070_chamber",
@@ -737,11 +748,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Eine Notunterkunft in einer Gletscherspalte. Elf Kilometer südöstlich.“"
+          "text": "Kader hat in den Projektdaten Koordinaten einer alten Notunterkunft gefunden, elf Kilometer südöstlich von Kaldstad."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Das Projekt ist älter als diese Station. Ich fand die Akte erst nach Vargas Unfall.“"
+          "text": "Dort wurde Jahre vor dieser Station mit Material aus derselben Eisschicht gearbeitet."
+        },
+        {
+          "speaker": "mira",
+          "text": "Er behauptet, die Akte erst nach Emils Unfall gefunden zu haben. Im Moment kann ich das weder beweisen noch widerlegen."
         }
       ],
       "next": "k5_070_chamber",
@@ -763,15 +778,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kernkammer. Der Bohrkopf steckt noch im Eis. Daneben ein handbreiter Riss."
+          "text": "Ich sehe in die Kernkammer. Der Bohrkopf steckt noch im Eis; neben der Führung verläuft ein handbreiter Riss."
         },
         {
           "speaker": "mira",
-          "text": "Auf der Oberfläche liegt etwas wie Reif. Es bildet Linien gegen die Schwerkraft."
+          "text": "Auf dem Eis liegt weißer Belag, durchzogen von dünnen dunklen Linien. Der Sensor zeigt einen langsamen Temperaturanstieg."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Wir können schließen, nehmen, was wir brauchen, oder tiefer gehen.“"
+          "text": "Wir können den Riss abdichten, eine kleine Probe in einem geschlossenen System entnehmen oder die Bohrung fortsetzen. Die letzte Möglichkeit belastet eine bereits beschädigte Anlage."
         }
       ],
       "choices": [
@@ -822,7 +837,7 @@
         },
         {
           "id": "drill_stable",
-          "label": "Bohre bis zur zweiten Grenzschicht.",
+          "label": "Trotz des Risikos bis zur zweiten Grenzschicht bohren.",
           "next": "k5_074_deep_resolve",
           "requires": [
             {
@@ -835,7 +850,7 @@
         },
         {
           "id": "drill_unstable",
-          "label": "Bohre bis zur zweiten Grenzschicht.",
+          "label": "Trotz des Risikos bis zur zweiten Grenzschicht bohren.",
           "next": "k5_075_drill_warning",
           "requires": [
             {
@@ -864,11 +879,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Schaum im Riss. Bolzen durch die Wartungsplatte."
+          "text": "Versiegelungsschaum im Riss. Wartungsplatte mit zwei Bolzen gesichert."
         },
         {
           "speaker": "mira",
-          "text": "Die Linien ziehen sich zurück, bevor der Schaum sie berührt. Wahrscheinlich Wärmegradient."
+          "text": "Der Druck bleibt stabil. Die dunklen Linien sind unter der Platte nicht mehr sichtbar."
+        },
+        {
+          "speaker": "mira",
+          "text": "Das beweist nichts über ihre Ursache. Aber die Kammer ist vorerst geschlossen."
         }
       ],
       "next": "k5_080_kader_resolution",
@@ -998,15 +1017,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Beim Schließen beschlägt mein Visier von innen."
+          "text": "Beim Schließen ist etwas aus der Kupplung ausgetreten. Mein Visier war offen."
         },
         {
           "speaker": "mira",
-          "text": "Ich trage kein Visier. Entschuldige. Für einen Moment dachte ich—"
+          "text": "Ich habe sofort abgebrochen, die Außenseite dekontaminiert und den Behälter geschlossen."
         },
         {
           "speaker": "mira",
-          "text": "Die Probe ist verschlossen."
+          "text": "Die Probe ist gesichert. Ich muss ab jetzt von einer möglichen Exposition ausgehen."
         }
       ],
       "next": "k5_080_kader_resolution",
@@ -1125,11 +1144,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Die Anlage ist nicht stabil. Der Bohrkopf läuft bereits unrund."
+          "text": "Der Bohrkopf läuft unrund und die Verriegelung zeigt bereits Überlast."
         },
         {
           "speaker": "mira",
-          "text": "Tieferbohren kann die Kammer öffnen."
+          "text": "Wenn wir tiefer bohren, kann sich der vorhandene Riss öffnen. Das ist kein kalkulierbares Probenrisiko mehr."
         }
       ],
       "choices": [
@@ -1165,11 +1184,11 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Die Verriegelung hält den nächsten Lastsprung wahrscheinlich nicht."
+          "text": "Die nächste Lastspitze kann die Kammerdichtung brechen."
         },
         {
           "speaker": "mira",
-          "text": "Wenn ich starte, können wir die Kammer nicht mehr kontrolliert schließen."
+          "text": "Wenn ich den Bohrer starte, haben wir möglicherweise keine Zeit mehr, den Bereich kontrolliert zu räumen."
         }
       ],
       "choices": [
@@ -1205,14 +1224,14 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Der Bohrkopf springt. Etwas trifft die Sichtscheibe von innen."
+          "text": "Der Bohrkopf schlägt seitlich aus."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt meinen Namen. Dann sagt er ihn noch einmal aus dem Funkgerät auf dem Boden."
+          "text": "Die Sichtscheibe reißt. Kader schreit, ich soll zur Leiter—"
         },
         {
-          "speaker": "system",
+          "speaker": "mira",
           "text": "[SIGNAL VERLOREN]"
         }
       ],
@@ -1238,11 +1257,11 @@
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Genug Material. Mehr als genug.“"
+          "text": "Wir haben genügend Material, aber der Riss ist größer geworden."
         },
         {
           "speaker": "mira",
-          "text": "Der Riss ist größer geworden. Die Kammer bleibt nicht dauerhaft dicht."
+          "text": "Die Kammer hält im Moment. Dauerhaft würde ich mich nicht darauf verlassen."
         }
       ],
       "next": "k5_080_kader_resolution",
@@ -1314,11 +1333,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader greift nach dem Probenverschluss. Nicht nach mir."
+          "text": "Kader greift nach dem Verschluss des Probenbehälters. Nicht nach mir."
         },
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Sie trennen etwas, das bereits verbunden ist.“"
+          "text": "Er sagt, wir würden etwas voneinander trennen, das längst verbunden sei."
+        },
+        {
+          "speaker": "mira",
+          "text": "Ich bin näher an der mechanischen Verriegelung. Wenn ich handle, dann jetzt."
         }
       ],
       "choices": [
@@ -1406,11 +1429,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Kader sagt über den lokalen Stationskanal: „Ich bleibe hier. Jemand muss wissen, ob die Kammer hält.“"
+          "text": "Kader weigert sich, den Bohrturm zu verlassen. Er will beobachten, ob die Kammer hält."
         },
         {
           "speaker": "mira",
-          "text": "Er gibt mir seine Notizen nicht. Nur einen Blick auf eine alte Koordinate."
+          "text": "Ich kann ihn nicht zwingen, ohne mich selbst und die Probe zu gefährden."
+        },
+        {
+          "speaker": "mira",
+          "text": "Bevor ich gehe, zeigt er mir die Koordinaten der alten Notunterkunft. Seine übrigen Aufzeichnungen behält er."
         }
       ],
       "effects": [
@@ -1439,11 +1466,15 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Gletscherspalte elf Kilometer südöstlich. Alte Notunterkunft. In keinem aktuellen Stationsplan."
+          "text": "Die Koordinaten führen zu einer alten Notunterkunft in einer Gletscherspalte, elf Kilometer südöstlich."
         },
         {
           "speaker": "mira",
-          "text": "Dort liegt Material aus dem früheren Projekt. Das Rettungsfenster wartet nicht."
+          "text": "Dort könnten frühere Proben und vollständige Projektunterlagen liegen. Das Wetterfenster wird deshalb nicht länger."
+        },
+        {
+          "speaker": "mira",
+          "text": "Wir müssen außerdem entscheiden, ob Kader unter Aufsicht mit ins Labor kommt oder im gesicherten Bohrturm bleibt."
         }
       ],
       "effects": [
@@ -1460,6 +1491,19 @@
       ],
       "choices": [
         {
+          "id": "escort_kader",
+          "label": "Kader entwaffnen und unter Aufsicht mit ins Labor nehmen.",
+          "next": "k5_090_to_seven",
+          "requires": [],
+          "effects": [
+            {
+              "state": "kader_escorted_to_lab",
+              "operation": "set",
+              "value": true
+            }
+          ]
+        },
+        {
           "id": "go_labor",
           "label": "Direkt zurück ins Labor. Hemmstoff vorbereiten.",
           "next": "k5_090_to_seven",
@@ -1468,7 +1512,7 @@
         },
         {
           "id": "risk_shelter",
-          "label": "Die alte Notunterkunft riskieren.",
+          "label": "Die alte Notunterkunft aufsuchen. Das kann das Rettungsfenster kosten.",
           "next": "k5_091_to_six",
           "requires": [],
           "effects": []
@@ -1515,7 +1559,7 @@
             }
           ]
         }
-  ],
+      ],
       "location": {
         "area": "tower",
         "room": "platform",

@@ -1253,19 +1253,19 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Bin drin. Mehr ein Erste-Hilfe-Raum als eine richtige Krankenstation."
+          "text": "Bin drin. Das ist nur ein kleiner Erste-Hilfe-Raum, keine richtige Krankenstation."
         },
         {
           "speaker": "mira",
-          "text": "Verbandskasten ist offen. Eine Packung Kompressen liegt daneben."
+          "text": "Der Verbandskasten steht offen. Daneben liegt eine Packung Kompressen."
         },
         {
           "speaker": "mira",
-          "text": "Die Folie ist an einer Ecke eingerissen. Könnte beim Sturz aus dem Schrank passiert sein."
+          "text": "Die Sterilnaht an einer Ecke hat sich gelöst. Die Kompressen sehen sauber aus, aber ich weiß nicht, wie lange die Packung schon offen ist."
         },
         {
           "speaker": "mira",
-          "text": "Ich benutze die lieber noch nicht."
+          "text": "Ich nehme sie als Reserve mit. Für meine Wunde suche ich etwas original Verschlossenes."
         },
         {
           "speaker": "mira",
@@ -1273,23 +1273,15 @@
         },
         {
           "speaker": "log",
-          "text": "Kader nennt die Probe inert. Im unbearbeiteten Sensorstream bewegt sie sich trotzdem. Habe Kopien gemacht. Wenn der Uplink morgen wieder ausfällt, ist das kein Wetter."
+          "text": "SCHICHTÜBERGABE · 14.04.\nKader hat nach den Fehlalarmen den Zugang zu Labor 3 vorläufig geändert: 0414. Bitte nach der Wartung wieder auf persönlichen Code umstellen.\n\nProbe 14C wurde als inert eingetragen. Im unbearbeiteten Sensorstream reagiert sie trotzdem auf Wärme und elektrische Felder. Rohdaten lokal gespiegelt. Wenn der Uplink erneut ausfällt, Störung nicht als Wetterfehler schließen."
         },
         {
           "speaker": "mira",
-          "text": "Der Uplink ist ausgefallen."
+          "text": "Der Uplink ist ausgefallen. Und niemand hat den provisorischen Zugang zurückgesetzt."
         },
         {
           "speaker": "mira",
-          "text": "Unter Thals Datenpad steckt ein ungesendeter Bericht."
-        },
-        {
-          "speaker": "mira",
-          "text": "Titel: WARNBERICHT · 14.04. Darin widerspricht sie Kaders Einstufung von Probe 14C als inert."
-        },
-        {
-          "speaker": "mira",
-          "text": "Ich speichere ihn im Archiv. Das Datum könnte wichtig sein."
+          "text": "Ich speichere Thals Schichtübergabe im Archiv. Das ist kein Beweis für Sabotage, aber wir brauchen die Rohdaten."
         }
       ],
       "effects": [
@@ -1679,19 +1671,19 @@
       "messages": [
         {
           "speaker": "mira",
-          "text": "Der Schatten steht einfach da."
+          "text": "Der Schatten bleibt vor der Tür stehen."
         },
         {
           "speaker": "mira",
-          "text": "Jetzt lehnt er sich gegen die Tür."
+          "text": "Jetzt lehnt sich die Person gegen die Wand."
         },
         {
           "speaker": "mira",
-          "text": "Ich sehe einen Ärmel durch das Fenster. Stationsjacke. Generator-Team."
+          "text": "Durch das Fenster sehe ich den grauen Ärmel einer Technikerjacke. Auf dem Oberarm ist das Generator-Symbol."
         },
         {
           "speaker": "mira",
-          "text": "Er hat mich bemerkt. Es ist Aksel."
+          "text": "Er hebt den Kopf. Es ist Aksel."
         }
       ],
       "next": "k1_100_aksel",
