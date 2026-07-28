@@ -26,6 +26,9 @@ const chapterFour = JSON.parse(
 const chapterFive = JSON.parse(
   await readFile(new URL("data/chapter-05.json", projectRoot), "utf8"),
 );
+const chapterSix = JSON.parse(
+  await readFile(new URL("data/chapter-06.json", projectRoot), "utf8"),
+);
 
 function makeSession() {
   return new StorySession({ schema, chapter });
@@ -153,6 +156,29 @@ function makeSession() {
     session.state.kader_state,
     "changed",
     "late arrival must resolve Kader's changed state",
+  );
+}
+
+{
+  const state = createInitialState(schema);
+  state.pack_heat = true;
+  state.item_generator_tool = true;
+  const session = new StorySession({
+    schema,
+    chapter: chapterSix,
+    snapshot: {
+      currentNodeId: "k6_020_descent_gate",
+      nodeEntered: false,
+      state,
+      history: [],
+    },
+  });
+
+  const view = session.enter();
+  assert.equal(
+    view.id,
+    "k6_030_descent_safe",
+    "heat and anchoring equipment must unlock the controlled descent",
   );
 }
 

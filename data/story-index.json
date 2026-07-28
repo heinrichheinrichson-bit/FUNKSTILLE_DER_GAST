@@ -31,6 +31,12 @@
       "number": 5,
       "title": "Der Ursprung",
       "file": "chapter-05.json"
+    },
+    {
+      "id": "chapter_06",
+      "number": 6,
+      "title": "Unter dem Eis",
+      "file": "chapter-06.json"
     }
   ]
 }

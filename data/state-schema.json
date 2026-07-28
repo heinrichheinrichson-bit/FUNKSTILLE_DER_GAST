@@ -155,6 +155,11 @@
       "default": false,
       "visibility": "hidden"
     },
+    "chapter_06_complete": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "hidden"
+    },
     "lab_visited": {
       "type": "boolean",
       "default": false,
@@ -381,6 +386,28 @@
       "visibility": "hidden"
     },
     "ice_coordinates_found": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "shelter_tasks": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 2,
+      "visibility": "hidden"
+    },
+    "old_sample_secured": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "old_evidence_secured": {
+      "type": "boolean",
+      "default": false,
+      "visibility": "visible"
+    },
+    "old_project_log": {
       "type": "boolean",
       "default": false,
       "visibility": "visible"

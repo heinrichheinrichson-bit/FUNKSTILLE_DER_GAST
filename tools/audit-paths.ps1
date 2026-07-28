@@ -8,6 +8,8 @@ param(
     [string]$ChapterFourPreset = 'default',
     [ValidateSet('default', 'cooperative', 'independent', 'changed')]
     [string]$ChapterFivePreset = 'default',
+    [ValidateSet('default', 'safe', 'thal', 'kader', 'unsafe')]
+    [string]$ChapterSixPreset = 'default',
     [int]$MaximumConfigurations = 50000
 )
 
@@ -111,6 +113,21 @@ if ($ChapterFivePreset -ne 'default') {
     }
     elseif ($ChapterFivePreset -eq 'changed') {
         $initialState['global_time'] = 8
+    }
+}
+if ($ChapterSixPreset -ne 'default') {
+    if ($ChapterSixPreset -ne 'unsafe') {
+        $initialState['pack_heat'] = $true
+        $initialState['item_generator_tool'] = $true
+    }
+    if ($ChapterSixPreset -eq 'thal') {
+        $initialState['thal_returning'] = $true
+    }
+    elseif ($ChapterSixPreset -eq 'kader') {
+        $initialState['kader_state'] = 'missing'
+        $initialState['clarity'] = 0
+        $initialState['relay_damaged'] = $true
+        $initialState['generator_state'] = 'unstable'
     }
 }
 

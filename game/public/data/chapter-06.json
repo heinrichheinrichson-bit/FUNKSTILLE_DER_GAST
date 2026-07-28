@@ -1,0 +1,590 @@
+{
+  "formatVersion": 1,
+  "chapter": {
+    "id": "chapter_06",
+    "number": 6,
+    "title": "Unter dem Eis",
+    "startNode": "k6_001_commit"
+  },
+  "nodes": [
+    {
+      "id": "k6_001_commit",
+      "chapter": 6,
+      "delaySeconds": 120,
+      "messages": [
+        { "speaker": "mira", "text": "Wenn wir zur Spalte gehen, gibt es keinen zweiten Versuch." },
+        { "speaker": "mira", "text": "Wir können genug finden, um mehr als eine Person zu behandeln. Oder wir verpassen den Hubschrauber für eine Probe, die vielleicht nichts wert ist." },
+        { "speaker": "mira", "text": "Die Koordinaten liegen elf Kilometer südöstlich." }
+      ],
+      "choices": [
+        {
+          "id": "confirm_shelter",
+          "label": "Geh zur alten Notunterkunft.",
+          "next": "k6_010_approach",
+          "requires": [],
+          "effects": [
+            { "state": "global_time", "operation": "add", "value": 3 }
+          ]
+        },
+        {
+          "id": "turn_back",
+          "label": "Zu riskant. Zurück ins Labor.",
+          "next": "k6_090_to_seven",
+          "requires": [],
+          "effects": [
+            { "state": "chapter_06_complete", "operation": "set", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k6_010_approach",
+      "chapter": 6,
+      "delaySeconds": 1080,
+      "messages": [
+        { "speaker": "mira", "text": "Koordinaten erreicht. Keine Hütte." },
+        { "speaker": "mira", "text": "Nur eine Markierung im Eis und ein Stahlring unter dem Schnee." },
+        { "speaker": "mira", "text": "Die Unterkunft liegt in der Spalte." }
+      ],
+      "next": "k6_020_descent_gate",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k6_020_descent_gate",
+      "chapter": 6,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "pack_heat", "operator": "eq", "value": true },
+            { "state": "item_generator_tool", "operator": "eq", "value": true }
+          ],
+          "effects": [],
+          "next": "k6_030_descent_safe"
+        },
+        {
+          "requires": [
+            { "state": "thal_returning", "operator": "eq", "value": true }
+          ],
+          "effects": [],
+          "next": "k6_030_descent_safe"
+        },
+        {
+          "requires": [
+            { "state": "expedition_companion", "operator": "eq", "value": "aksel" },
+            { "state": "item_generator_tool", "operator": "eq", "value": true }
+          ],
+          "effects": [],
+          "next": "k6_030_descent_safe"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k6_021_descent_warning"
+        }
+      ]
+    },
+    {
+      "id": "k6_021_descent_warning",
+      "chapter": 6,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Der Anker ist alt. Ohne zweites Sicherungsgerät oder Hilfe kann ich ihn nicht unter Last prüfen." },
+        { "speaker": "mira", "text": "Der Wärmeakku fehlt ebenfalls. Unten kann ich nicht abschätzen, wie schnell der Anzug auskühlt." }
+      ],
+      "choices": [
+        {
+          "id": "turn_around",
+          "label": "Umkehren. Das Risiko ist zu hoch.",
+          "next": "k6_090_to_seven",
+          "requires": [],
+          "effects": [
+            { "state": "chapter_06_complete", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "descend_anyway",
+          "label": "Versuch den Abstieg.",
+          "next": "k6_022_anchor_warning",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k6_022_anchor_warning",
+      "chapter": 6,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Der Anker bewegt sich. Noch trägt er." },
+        { "speaker": "mira", "text": "Wenn er auf halber Höhe rutscht, komme ich weder hoch noch sicher nach unten." }
+      ],
+      "choices": [
+        {
+          "id": "stop_descent",
+          "label": "Sofort wieder hoch.",
+          "next": "k6_090_to_seven",
+          "requires": [],
+          "effects": [
+            { "state": "chapter_06_complete", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "keep_descending",
+          "label": "Weiter absteigen.",
+          "next": "k6_023_final_warning",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k6_023_final_warning",
+      "chapter": 6,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "Das Seil rutscht. Über mir ist nur noch ein schmaler weißer Streifen." },
+        { "speaker": "mira", "text": "Sag nicht, ich soll weiter. Nicht, wenn du willst, dass ich zurückkomme." }
+      ],
+      "choices": [
+        {
+          "id": "climb_out",
+          "label": "Hoch. Jetzt.",
+          "next": "k6_090_to_seven",
+          "requires": [],
+          "effects": [
+            { "state": "chapter_06_complete", "operation": "set", "value": true }
+          ]
+        },
+        {
+          "id": "fatal_descent",
+          "label": "Weiter.",
+          "next": "k6_024_whiteout",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k6_024_whiteout",
+      "chapter": 6,
+      "delaySeconds": 180,
+      "messages": [
+        { "speaker": "mira", "text": "Seil frei." },
+        { "speaker": "mira", "text": "Ich falle nicht. Ich glaube, ich stehe auf etwas." },
+        { "speaker": "system", "text": "[SIGNAL VERLOREN]" }
+      ],
+      "ending": "ending_whiteout"
+    },
+    {
+      "id": "k6_030_descent_safe",
+      "chapter": 6,
+      "delaySeconds": 600,
+      "messages": [
+        { "speaker": "mira", "text": "Anker nachgesetzt. Zwei Sicherungspunkte. Wärmeakku läuft." },
+        { "speaker": "mira", "text": "Unten ist eine Tür im Eis. Von außen verriegelt." }
+      ],
+      "variants": [
+        {
+          "requires": [
+            { "state": "thal_returning", "operator": "eq", "value": true }
+          ],
+          "appendMessages": [
+            { "speaker": "thal", "text": "Ich bleibe am oberen Anker. Wenn Lindner zweimal zieht, hole ich sie hoch." }
+          ]
+        }
+      ],
+      "next": "k6_040_shelter",
+      "nextDelaySeconds": 90
+    },
+    {
+      "id": "k6_040_shelter",
+      "chapter": 6,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Provisorisches Labor. Alt. Mindestens mehrere Jahre." },
+        { "speaker": "mira", "text": "Dieselben Probenbehälter wie auf Kaldstad, aber eine andere Projektnummer." },
+        { "speaker": "mira", "text": "Sie wussten es. Nicht Kader. Jemand vor ihm." }
+      ],
+      "effects": [
+        { "state": "old_project_log", "operation": "set", "value": true }
+      ],
+      "next": "k6_041_recording",
+      "nextDelaySeconds": 40
+    },
+    {
+      "id": "k6_041_recording",
+      "chapter": 6,
+      "delaySeconds": 40,
+      "messages": [
+        { "speaker": "log", "text": "Es übernimmt nichts. Das ist die falsche Vorstellung." },
+        { "speaker": "log", "text": "Es verbindet." },
+        { "speaker": "log", "text": "Nach einer Weile weiß keiner mehr, welcher Gedanke zuerst da war." }
+      ],
+      "next": "k6_050_kader_gate",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k6_050_kader_gate",
+      "chapter": 6,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "kader_state", "operator": "eq", "value": "missing" }
+          ],
+          "effects": [],
+          "next": "k6_051_kader_found"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k6_060_priority"
+        }
+      ]
+    },
+    {
+      "id": "k6_051_kader_found",
+      "chapter": 6,
+      "delaySeconds": 60,
+      "messages": [
+        { "speaker": "mira", "text": "In der hinteren Kammer sitzt Kader. Keine Außenkleidung." },
+        { "speaker": "mira", "text": "Er müsste tot sein." },
+        { "speaker": "kader", "text": "Sie haben lange gebraucht." }
+      ],
+      "choices": [
+        {
+          "id": "close_door",
+          "label": "Abstand halten und die Tür schließen.",
+          "next": "k6_060_priority",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "talk",
+          "label": "Frag, was dieses Labor wirklich war.",
+          "next": "k6_052_kader_talk",
+          "requires": [],
+          "effects": [
+            { "state": "containment", "operation": "set", "value": "ready" }
+          ]
+        },
+        {
+          "id": "help",
+          "label": "Hilf ihm aufzustehen.",
+          "next": "k6_053_contact_resolve",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k6_052_kader_talk",
+      "chapter": 6,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "kader", "text": "Sie haben den Schacht nicht aufgegeben. Sie haben nur gelernt, ihn aus der Ferne zu beobachten." },
+        { "speaker": "kader", "text": "Der Sprengplan im Hauptterminal ist keine Evakuierungsanweisung. Er ist eine Eindämmung." },
+        { "speaker": "mira", "text": "Als ich wieder in die Kammer sehe, ist Kader nicht mehr dort." }
+      ],
+      "next": "k6_060_priority",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k6_053_contact_resolve",
+      "chapter": 6,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "infection_source", "operator": "eq", "value": "none" }
+          ],
+          "effects": [
+            { "state": "infection_source", "operation": "set", "value": "kader_contact" }
+          ],
+          "next": "k6_054_kader_contact"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k6_054_kader_contact"
+        }
+      ]
+    },
+    {
+      "id": "k6_054_kader_contact",
+      "chapter": 6,
+      "delaySeconds": 45,
+      "messages": [
+        { "speaker": "mira", "text": "Seine Hand ist warm. Zu warm." },
+        { "speaker": "kader", "text": "Sie tragen es ohnehin schon." },
+        { "speaker": "mira", "text": "Er löst sich aus meinem Griff und geht tiefer in den dunklen Gang." }
+      ],
+      "next": "k6_060_priority",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k6_060_priority",
+      "chapter": 6,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "mira", "text": "Eine stabilisierte Altprobe. Vollständige Projektunterlagen. Ein Sprengplan für den Bohrschacht." },
+        { "speaker": "mira", "text": "Für eine gründliche Aufgabe reicht die Zeit. Mit Thals Hilfe vielleicht für zwei." }
+      ],
+      "choices": [
+        {
+          "id": "secure_sample",
+          "label": "Sichere die alte Probe.",
+          "next": "k6_061_sample",
+          "requires": [
+            { "state": "old_sample_secured", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "old_sample_secured", "operation": "set", "value": true },
+            { "state": "cure_material", "operation": "add", "value": 2 },
+            { "state": "shelter_tasks", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "secure_evidence",
+          "label": "Übertrage die vollständigen Beweise.",
+          "next": "k6_062_evidence",
+          "requires": [
+            { "state": "old_evidence_secured", "operator": "eq", "value": false }
+          ],
+          "effects": [
+            { "state": "old_evidence_secured", "operation": "set", "value": true },
+            { "state": "evidence_level", "operation": "add", "value": 2 },
+            { "state": "shelter_tasks", "operation": "add", "value": 1 }
+          ]
+        },
+        {
+          "id": "prepare_containment",
+          "label": "Bereite den Eindämmungsplan vor.",
+          "next": "k6_063_containment",
+          "requires": [
+            { "state": "containment", "operator": "neq", "value": "ready" }
+          ],
+          "effects": [
+            { "state": "containment", "operation": "set", "value": "ready" },
+            { "state": "shelter_tasks", "operation": "add", "value": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k6_061_sample",
+      "chapter": 6,
+      "delaySeconds": 600,
+      "messages": [
+        { "speaker": "mira", "text": "Altprobe in Transporthülle. Das Material ist stabiler als alles aus Kern 14C." },
+        { "speaker": "mira", "text": "Damit können wir mehr als einen Hemmstoffansatz herstellen." }
+      ],
+      "next": "k6_064_task_gate",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k6_062_evidence",
+      "chapter": 6,
+      "delaySeconds": 600,
+      "messages": [
+        { "speaker": "mira", "text": "Projektdateien übertragen. Auftraggeber, Messreihen, Abbruchprotokolle." },
+        { "speaker": "mira", "text": "Kaldstad war kein erster Fund. Es war ein Wiederholungsversuch." }
+      ],
+      "next": "k6_064_task_gate",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k6_063_containment",
+      "chapter": 6,
+      "delaySeconds": 600,
+      "messages": [
+        { "speaker": "mira", "text": "Sprengfolge entschlüsselt. Drei Ladungen unter dem Bohrturm, eine im alten Schacht." },
+        { "speaker": "mira", "text": "Man kann das Eis kontrolliert schließen. Jemand muss die Sequenz vor Ort bestätigen." }
+      ],
+      "next": "k6_064_task_gate",
+      "nextDelaySeconds": 30
+    },
+    {
+      "id": "k6_064_task_gate",
+      "chapter": 6,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "thal_returning", "operator": "eq", "value": true },
+            { "state": "shelter_tasks", "operator": "lt", "value": 2 }
+          ],
+          "effects": [],
+          "next": "k6_065_second_task"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k6_070_return"
+        }
+      ]
+    },
+    {
+      "id": "k6_065_second_task",
+      "chapter": 6,
+      "delaySeconds": 30,
+      "messages": [
+        { "speaker": "thal", "text": "Ich kann die Winde halten oder Daten sichern. Nicht beides lange." },
+        { "speaker": "mira", "text": "Wir haben Zeit für genau eine zweite Aufgabe." }
+      ],
+      "next": "k6_060_priority",
+      "nextDelaySeconds": 20
+    },
+    {
+      "id": "k6_070_return",
+      "chapter": 6,
+      "delaySeconds": 1200,
+      "messages": [
+        { "speaker": "mira", "text": "Wieder oben. Der Wind hat gedreht. Unsere Spuren sind weg." }
+      ],
+      "next": "k6_071_navigation_gate",
+      "nextDelaySeconds": 60
+    },
+    {
+      "id": "k6_071_navigation_gate",
+      "chapter": 6,
+      "delaySeconds": 0,
+      "messages": [],
+      "redirects": [
+        {
+          "requires": [
+            { "state": "clarity", "operator": "gte", "value": 2 }
+          ],
+          "effects": [],
+          "next": "k6_080_hub"
+        },
+        {
+          "requires": [],
+          "effects": [],
+          "next": "k6_072_false_lights"
+        }
+      ]
+    },
+    {
+      "id": "k6_072_false_lights",
+      "chapter": 6,
+      "delaySeconds": 90,
+      "messages": [
+        { "speaker": "mira", "text": "Ich sehe zwei Stationen. Eine links, eine rechts." },
+        { "speaker": "mira", "text": "Kaldstad hat nur einen Lichtmast." }
+      ],
+      "choices": [
+        {
+          "id": "relay_bearing",
+          "label": "Nutze die Funkpeilung des Relais.",
+          "next": "k6_073_bearing",
+          "requires": [
+            { "state": "relay_damaged", "operator": "eq", "value": false }
+          ],
+          "effects": []
+        },
+        {
+          "id": "generator_hum",
+          "label": "Orientiere dich am Generatorbrummen.",
+          "next": "k6_073_bearing",
+          "requires": [
+            { "state": "generator_state", "operator": "eq", "value": "stable" }
+          ],
+          "effects": []
+        },
+        {
+          "id": "trust_thal",
+          "label": "Thal soll den Kurs bestimmen.",
+          "next": "k6_073_bearing",
+          "requires": [
+            { "state": "thal_returning", "operator": "eq", "value": true }
+          ],
+          "effects": []
+        },
+        {
+          "id": "follow_right_light",
+          "label": "Folge dem näheren Licht rechts.",
+          "next": "k6_074_light_warning",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k6_073_bearing",
+      "chapter": 6,
+      "delaySeconds": 900,
+      "messages": [
+        { "speaker": "mira", "text": "Kurs steht. Nicht den Lichtern folgen." },
+        { "speaker": "mira", "text": "Der echte Mast verschwindet, sobald wir uns ihm nähern. Die Peilung bleibt." }
+      ],
+      "next": "k6_080_hub",
+      "nextDelaySeconds": 120
+    },
+    {
+      "id": "k6_074_light_warning",
+      "chapter": 6,
+      "delaySeconds": 300,
+      "messages": [
+        { "speaker": "mira", "text": "Das Licht bleibt immer gleich weit entfernt." },
+        { "speaker": "mira", "text": "Kompasskurs führt davon weg. Wenn wir ihm weiter folgen, verlassen wir den Rückweg." }
+      ],
+      "choices": [
+        {
+          "id": "correct_course",
+          "label": "Abbrechen. Folge dem Kompasskurs.",
+          "next": "k6_073_bearing",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "follow_light",
+          "label": "Das Licht ist näher. Weiter.",
+          "next": "k6_075_whiteout",
+          "requires": [],
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "k6_075_whiteout",
+      "chapter": 6,
+      "delaySeconds": 600,
+      "messages": [
+        { "speaker": "mira", "text": "Das Licht ist aus." },
+        { "speaker": "mira", "text": "Nein. Es steht jetzt hinter mir." },
+        { "speaker": "system", "text": "[SIGNAL VERLOREN]" }
+      ],
+      "ending": "ending_whiteout"
+    },
+    {
+      "id": "k6_080_hub",
+      "chapter": 6,
+      "delaySeconds": 300,
+      "messages": [
+        { "speaker": "mira", "text": "Wohntrakt. Labor läuft noch." },
+        { "speaker": "mira", "text": "Das Wetterfenster beginnt bald." },
+        { "speaker": "mira", "text": "Jetzt müssen wir entscheiden, wem wir glauben. Und wem wir eine Dosis geben." }
+      ],
+      "effects": [
+        { "state": "chapter_06_complete", "operation": "set", "value": true }
+      ],
+      "handoff": "chapter_07"
+    },
+    {
+      "id": "k6_090_to_seven",
+      "chapter": 6,
+      "delaySeconds": 300,
+      "messages": [
+        { "speaker": "mira", "text": "Zurück in Kaldstad. Die Spalte bleibt geschlossen." },
+        { "speaker": "mira", "text": "Wir arbeiten im Labor mit dem Material, das wir bereits haben." }
+      ],
+      "handoff": "chapter_07"
+    }
+  ]
+}
