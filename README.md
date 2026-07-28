@@ -23,7 +23,7 @@ Chatbasiertes Antarktis-Horrorspiel über Dr. Mira Lindner und eine zufällige V
 - Vollständige Story-Erstfassung für acht Kapitel
 - acht definierte Enden
 - alle acht Kapitel als maschinenlesbare Storydaten
-- 240 strukturierte Nodes in Kapitel 1 bis 8
+- 242 strukturierte Nodes in Kapitel 1 bis 8
 - alle Nodes erreichbar
 - das Finale mit sieben Ausgangslagen und 224 Node-/State-Konfigurationen geprüft
 - keine ungültigen Übergänge oder Deadlocks
@@ -40,6 +40,8 @@ Chatbasiertes Antarktis-Horrorspiel über Dr. Mira Lindner und eine zufällige V
 - sequenzielle Einzelzustellung mit längenabhängiger Tipp- und Lesedauer; Antwortmöglichkeiten erst nach Miras letzter Nachricht
 - dezente Zeitmarken nach längeren Pausen, Ungelesen-Hinweis beim Zurückscrollen und zustandsabhängige Signalstatus
 - optionale lokale Einstellungen für Nachrichtenton und Vibration
+- natürliche Namensfrage im laufenden Chat sowie Zustell- und Lesestatus an Spielerantworten
+- Aktivitätshinweise ohne Countdown; freiwillige Rückfragen erst nach zehn Minuten Funkstille
 - nahtlose, gespeicherte Übergänge zwischen allen spielbaren Kapiteln
 
 ## Prüfkommandos

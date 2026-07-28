@@ -16,21 +16,11 @@
         { "speaker": "mira", "text": "Das zeigt verbunden an." },
         { "speaker": "mira", "text": "Bitte schreib irgendwas, wenn du das lesen kannst." }
       ],
-      "variants": [
-        {
-          "requires": [
-            { "state": "player_name_known", "operator": "eq", "value": true }
-          ],
-          "appendMessages": [
-            { "speaker": "mira", "text": "Dein Gerät nennt dich {{player_name}}. Ist das in Ordnung?" }
-          ]
-        }
-      ],
       "choices": [
         {
           "id": "check_self",
           "label": "Ich kann dich lesen. Bist du verletzt?",
-          "next": "k1_010_check_self",
+          "next": "k1_009_check_notice",
           "requires": [],
           "effects": []
         },
@@ -51,9 +41,19 @@
       ]
     },
     {
+      "id": "k1_009_check_notice",
+      "chapter": 1,
+      "delaySeconds": 2,
+      "messages": [
+        { "speaker": "mira", "text": "Warte kurz. Ich schaue nach." }
+      ],
+      "next": "k1_010_check_self",
+      "nextDelaySeconds": 18
+    },
+    {
       "id": "k1_010_check_self",
       "chapter": 1,
-      "delaySeconds": 60,
+      "delaySeconds": 0,
       "messages": [
         { "speaker": "mira", "text": "Vermutlich." },
         { "speaker": "mira", "text": "Blut an der Schläfe. Nicht viel. Pupillen reagieren gleich, soweit ich das mit der Frontkamera beurteilen kann." },
@@ -65,13 +65,13 @@
         { "state": "mira_wound_known", "operation": "set", "value": true },
         { "state": "trust_mira", "operation": "add", "value": 1 }
       ],
-      "next": "k1_030_identity",
-      "nextDelaySeconds": 20
+      "next": "k1_025_name",
+      "nextDelaySeconds": 8
     },
     {
       "id": "k1_020_check_room",
       "chapter": 1,
-      "delaySeconds": 60,
+      "delaySeconds": 12,
       "messages": [
         { "speaker": "mira", "text": "Station Kaldstad. Antarktis." },
         { "speaker": "mira", "text": "Ich sitze im Verbindungsgang vom Wohntrakt. Ein Teil der Deckenverkleidung ist runtergekommen." },
@@ -82,13 +82,13 @@
       "effects": [
         { "state": "mira_wound_known", "operation": "set", "value": true }
       ],
-      "next": "k1_030_identity",
-      "nextDelaySeconds": 20
+      "next": "k1_025_name",
+      "nextDelaySeconds": 8
     },
     {
       "id": "k1_021_identity_first",
       "chapter": 1,
-      "delaySeconds": 30,
+      "delaySeconds": 8,
       "messages": [
         { "speaker": "mira", "text": "Dr. Mira Lindner. Glaziologie." },
         { "speaker": "mira", "text": "Station Kaldstad, Antarktis. Ich sitze im Verbindungsgang vom Wohntrakt." },
@@ -98,8 +98,40 @@
       "effects": [
         { "state": "mira_wound_known", "operation": "set", "value": true }
       ],
-      "next": "k1_030_identity",
-      "nextDelaySeconds": 20
+      "next": "k1_025_name",
+      "nextDelaySeconds": 8
+    },
+    {
+      "id": "k1_025_name",
+      "chapter": 1,
+      "delaySeconds": 0,
+      "messages": [
+        { "speaker": "mira", "text": "Mit wem schreibe ich eigentlich?" },
+        { "speaker": "mira", "text": "Wie soll ich dich nennen?" }
+      ],
+      "input": {
+        "kind": "text",
+        "prompt": "Dein Name oder Rufzeichen",
+        "placeholder": "Name eingeben",
+        "answers": [],
+        "choiceId": "share_name"
+      },
+      "choices": [
+        {
+          "id": "share_name",
+          "label": "Namen senden",
+          "next": "k1_030_identity",
+          "requires": [],
+          "effects": []
+        },
+        {
+          "id": "withhold_name",
+          "label": "Das sage ich dir vorerst nicht.",
+          "next": "k1_030_identity",
+          "requires": [],
+          "effects": []
+        }
+      ]
     },
     {
       "id": "k1_030_identity",

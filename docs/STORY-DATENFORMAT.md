@@ -155,6 +155,10 @@ Leerzeichen, Bindestriche, Punkte und Unterstriche werden beim Vergleich
 ignoriert. Die zugehörige Choice darf weiterhin Voraussetzungen besitzen, damit
 ein erratener Code keinen Fund vortäuscht, den der Spieler nie gemacht hat.
 
+Für Namen und andere offene Angaben wird `"kind": "text"` verwendet.
+`answers` bleibt dabei leer; die Eingabe wird als Beschriftung der zugehörigen
+Choice in den Chatverlauf übernommen.
+
 ## Enden
 
 Ending-Nodes besitzen statt `next`:

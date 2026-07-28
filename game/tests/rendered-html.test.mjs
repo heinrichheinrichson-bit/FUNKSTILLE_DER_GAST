@@ -62,7 +62,7 @@ test("ships chapter data and production metadata", async () => {
   const schemaData = JSON.parse(schema);
 
   assert.equal(chapterData.chapter.startNode, "k1_001_signal");
-  assert.equal(chapterData.nodes.length, 31);
+  assert.equal(chapterData.nodes.length, 33);
   assert.equal(chapterTwoData.nodes.length, 36);
   assert.deepEqual(
     chapterTwoData.nodes.find(({ id }) => id === "k2_l_020_locked").input.answers,

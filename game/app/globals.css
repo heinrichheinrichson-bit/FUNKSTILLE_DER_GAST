@@ -228,6 +228,19 @@ button {
   box-shadow: 0 6px 24px rgba(78, 142, 152, 0.15);
 }
 
+.receipt {
+  margin-top: 4px;
+  display: block;
+  color: #39747c;
+  font: 9px var(--font-geist-mono), monospace;
+  line-height: 1;
+  text-align: right;
+}
+
+.receipt-read {
+  color: #087d95;
+}
+
 .bubble-log {
   color: #bacbcc;
   background: rgba(50, 65, 62, 0.55);
@@ -336,6 +349,28 @@ button {
 .wait-composer > div {
   display: grid;
   gap: 6px;
+}
+
+.activity-status {
+  padding: 10px 12px;
+  display: flex !important;
+  grid-template-columns: none !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px !important;
+  color: #789599;
+  background: rgba(12, 31, 36, 0.45);
+  border: 1px solid rgba(158, 232, 240, 0.08);
+  border-radius: 8px;
+  font-size: 9px;
+}
+
+.activity-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6f9296;
+  box-shadow: 0 0 7px rgba(158, 232, 240, 0.35);
 }
 
 .wait-composer button {
@@ -661,6 +696,30 @@ button.map-room.known {
   cursor: pointer;
 }
 
+.shape-wing {
+  clip-path: polygon(0 25%, 24% 25%, 24% 0, 76% 0, 76% 25%, 100% 25%, 100% 75%, 76% 75%, 76% 100%, 24% 100%, 24% 75%, 0 75%);
+}
+
+.shape-cluster {
+  clip-path: polygon(0 0, 68% 0, 68% 18%, 100% 18%, 100% 82%, 72% 82%, 72% 100%, 0 100%);
+}
+
+.shape-industrial {
+  clip-path: polygon(10% 0, 90% 0, 100% 24%, 100% 100%, 0 100%, 0 24%);
+}
+
+.shape-capsule {
+  border-radius: 999px;
+}
+
+.shape-octagon {
+  clip-path: polygon(28% 0, 72% 0, 100% 28%, 100% 72%, 72% 100%, 28% 100%, 0 72%, 0 28%);
+}
+
+.shape-bunker {
+  border-radius: 50% 50% 5px 5px;
+}
+
 .mountain {
   position: absolute;
   inset: 2% -8% auto 54%;
@@ -733,6 +792,23 @@ button.map-room.known {
   height: 13px;
   background: #020807;
   border-block: 1px solid #7ef0aa;
+}
+
+.interior-room.room-analysis,
+.interior-room.room-control {
+  clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%, 0 18%);
+}
+
+.interior-room.room-plant {
+  border-radius: 45% 12% 12% 45%;
+}
+
+.interior-room.room-fuel {
+  border-radius: 999px;
+}
+
+.interior-room.room-chamber {
+  clip-path: polygon(0 0, 86% 0, 100% 18%, 100% 100%, 0 100%);
 }
 
 .north, .door {

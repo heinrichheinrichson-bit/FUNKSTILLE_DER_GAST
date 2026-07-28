@@ -32,7 +32,7 @@ type Redirect = {
   next: string;
 };
 type InputSpec = {
-  kind: "code";
+  kind: "code" | "text";
   prompt: string;
   placeholder?: string;
   answers: string[];
@@ -77,7 +77,7 @@ type StateSchema = { states: Record<string, StateDefinition> };
 type GameState = Record<string, unknown>;
 type TimelineItem =
   | { kind: "message"; id: string; speaker: string; text: string; time?: number }
-  | { kind: "reply"; id: string; text: string; time?: number; sending?: boolean };
+  | { kind: "reply"; id: string; text: string; time?: number; status?: "sent" | "delivered" | "read"; waitCheckIn?: boolean };
 type DecisionSnapshot = {
   id: string;
   chapterId: string;
@@ -108,12 +108,12 @@ const ARCHIVE_ITEMS = [
   { id: "old", title: "ALTES PROJEKT", state: "old_project_log", text: "Es übernimmt nichts. Es verbindet. Nach einer Weile weiß keiner mehr, welcher Gedanke zuerst da war." },
 ];
 const MAP_AREAS = [
-  { id: "quarters", label: "WOHNTRAKT", x: 9, y: 35, w: 27, h: 14, state: null },
-  { id: "labor", label: "LABOR", x: 39, y: 18, w: 20, h: 17, state: "lab_visited" },
-  { id: "generator", label: "GENERATOR", x: 42, y: 57, w: 16, h: 12, state: "generator_visited" },
-  { id: "outpost", label: "AUSSENPOSTEN", x: 73, y: 12, w: 15, h: 10, state: "weather_window_known" },
-  { id: "tower", label: "BOHRTURM", x: 75, y: 52, w: 12, h: 12, state: "bohrturm_access" },
-  { id: "shelter", label: "NOTUNTERKUNFT", x: 65, y: 79, w: 19, h: 9, state: "old_project_log" },
+  { id: "quarters", label: "WOHNTRAKT", x: 9, y: 35, w: 27, h: 14, state: null, shape: "wing" },
+  { id: "labor", label: "LABOR", x: 39, y: 18, w: 20, h: 17, state: "lab_visited", shape: "cluster" },
+  { id: "generator", label: "GENERATOR", x: 42, y: 57, w: 16, h: 12, state: "generator_visited", shape: "industrial" },
+  { id: "outpost", label: "AUSSENPOSTEN", x: 73, y: 12, w: 15, h: 10, state: "weather_window_known", shape: "capsule" },
+  { id: "tower", label: "BOHRTURM", x: 75, y: 52, w: 12, h: 12, state: "bohrturm_access", shape: "octagon" },
+  { id: "shelter", label: "NOTUNTERKUNFT", x: 65, y: 79, w: 19, h: 9, state: "old_project_log", shape: "bunker" },
 ];
 const BUILDING_ROOMS: Record<Exclude<MapView, "station">, Array<{ id: string; label: string; x: number; y: number; w: number; h: number }>> = {
   quarters: [
@@ -248,6 +248,17 @@ function formatMessageTime(time: number) {
   }).format(time);
 }
 
+function waitingActivity(nodeId: string | null, chapterId: string, disconnected: boolean) {
+  if (disconnected) return "Keine Verbindung zu Mira";
+  const id = (nodeId ?? "").toLowerCase();
+  if (id.includes("generator") || chapterId === "chapter_02") return "Mira arbeitet an der Station";
+  if (id.includes("lab")) return "Mira untersucht das Labor";
+  if (id.includes("tower") || id.includes("bohr") || chapterId === "chapter_05") return "Mira ist unterwegs";
+  if (id.includes("shelter") || chapterId === "chapter_06") return "Mira ist unter dem Eis unterwegs";
+  if (chapterId === "chapter_08") return "Mira wartet auf das Rettungsteam";
+  return "Mira ist beschäftigt";
+}
+
 function currentMapLocation(chapterId: string, nodeId: string) {
   const text = nodeId.toLowerCase();
   if (text.includes("lab")) return { area: "labor", left: 46, top: 27 };
@@ -279,6 +290,8 @@ export default function Home() {
   const [pendingNode, setPendingNode] = useState<string | null>(null);
   const [waitUntil, setWaitUntil] = useState<number | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
+  const [waitStartedAt, setWaitStartedAt] = useState<number | null>(null);
+  const [waitDurationSeconds, setWaitDurationSeconds] = useState(0);
   const [waitMessageSent, setWaitMessageSent] = useState(false);
   const [deferredWaitSeconds, setDeferredWaitSeconds] = useState<number | null>(null);
   const [deliveryQueue, setDeliveryQueue] = useState<Array<Extract<TimelineItem, { kind: "message" }>>>([]);
@@ -357,6 +370,8 @@ export default function Home() {
       setPendingNode(null);
       setWaitUntil(null);
       setRemainingSeconds(0);
+      setWaitStartedAt(null);
+      setWaitDurationSeconds(0);
       setWaitMessageSent(false);
       setDeferredWaitSeconds(null);
     },
@@ -408,6 +423,8 @@ export default function Home() {
           setPendingNode(snapshot.pendingNode);
           setWaitUntil(Math.max(snapshot.waitUntil, Date.now()));
           setRemainingSeconds(Math.max(0, Math.ceil((snapshot.waitUntil - Date.now()) / 1000)));
+          setWaitStartedAt(snapshot.waitStartedAt ?? snapshot.waitUntil - (snapshot.waitDurationSeconds ?? 0) * 1000);
+          setWaitDurationSeconds(snapshot.waitDurationSeconds ?? 0);
           setWaiting(true);
           setWaitMessageSent(snapshot.waitMessageSent ?? false);
         }
@@ -424,7 +441,7 @@ export default function Home() {
     setRestored(true);
     setGameState(initialState);
     setTimeline([]);
-    setProfileReady(false);
+    setProfileReady(true);
   }, [restored, schema, storyIndex]);
 
   useEffect(() => {
@@ -455,11 +472,13 @@ export default function Home() {
         pendingNode,
         waitUntil,
         waitMessageSent,
+        waitStartedAt,
+        waitDurationSeconds,
         deliveryQueue,
         deferredWaitSeconds,
       }),
     );
-  }, [currentChapterId, currentNodeId, decisionHistory, deferredWaitSeconds, deliveryQueue, gameState, pendingNode, playerName, restored, timeline, waitMessageSent, waitUntil]);
+  }, [currentChapterId, currentNodeId, decisionHistory, deferredWaitSeconds, deliveryQueue, gameState, pendingNode, playerName, restored, timeline, waitDurationSeconds, waitMessageSent, waitStartedAt, waitUntil]);
 
   useEffect(() => {
     setSoundEnabled(localStorage.getItem("funkstille-sound") === "1");
@@ -501,6 +520,59 @@ export default function Home() {
     }
   }, [timeline]);
 
+  useEffect(() => {
+    const sent = timeline.filter(
+      (item): item is Extract<TimelineItem, { kind: "reply" }> =>
+        item.kind === "reply" && item.status === "sent",
+    );
+    if (!sent.length) return;
+    const disconnected =
+      gameState.relay_confiscated === true && gameState.relay_recovered !== true;
+    if (disconnected) return;
+    const weak = gameState.relay_damaged === true;
+    const deliveredTimer = window.setTimeout(() => {
+      setTimeline((current) =>
+        current.map((item) =>
+          item.kind === "reply" && item.status === "sent"
+            ? { ...item, status: "delivered" }
+            : item,
+        ),
+      );
+    }, weak ? 2600 : 650);
+    return () => window.clearTimeout(deliveredTimer);
+  }, [gameState.relay_confiscated, gameState.relay_damaged, gameState.relay_recovered, timeline]);
+
+  useEffect(() => {
+    const delivered = timeline.some(
+      (item) =>
+        item.kind === "reply" &&
+        item.status === "delivered" &&
+        !item.waitCheckIn,
+    );
+    if (!delivered) return;
+    const timer = window.setTimeout(() => {
+      setTimeline((current) =>
+        current.map((item) =>
+          item.kind === "reply" && item.status === "delivered" && !item.waitCheckIn
+            ? { ...item, status: "read" }
+            : item,
+        ),
+      );
+    }, gameState.relay_damaged === true ? 1600 : 550);
+    return () => window.clearTimeout(timer);
+  }, [gameState.relay_damaged, timeline]);
+
+  useEffect(() => {
+    if (deliveryPhase !== "typing") return;
+    setTimeline((current) =>
+      current.map((item) =>
+        item.kind === "reply" && item.status === "delivered"
+          ? { ...item, status: "read" }
+          : item,
+      ),
+    );
+  }, [deliveryPhase]);
+
   const availableChoices = useMemo(
     () =>
       (currentNode?.choices ?? []).filter((choice) =>
@@ -514,6 +586,8 @@ export default function Home() {
     if (!deferredWaitSeconds || delivering || !pendingNode || waiting) return;
     setWaiting(true);
     setWaitUntil(Date.now() + deferredWaitSeconds * 1000);
+    setWaitStartedAt(Date.now());
+    setWaitDurationSeconds(deferredWaitSeconds);
     setRemainingSeconds(deferredWaitSeconds);
     setDeferredWaitSeconds(null);
   }, [deferredWaitSeconds, delivering, pendingNode, waiting]);
@@ -621,6 +695,7 @@ export default function Home() {
         id: `reply-${currentNode.id}-${choice.id}-${timeline.length}`,
         text: choice.label,
         time: Date.now(),
+        status: "sent",
       },
     ];
     const target = nodeMap.get(choice.next);
@@ -648,6 +723,8 @@ export default function Home() {
       } else {
         setWaiting(true);
         setWaitUntil(Date.now() + delay * 1000);
+        setWaitStartedAt(Date.now());
+        setWaitDurationSeconds(delay);
         setRemainingSeconds(delay);
       }
     } else {
@@ -681,6 +758,8 @@ export default function Home() {
       } else {
         setWaiting(true);
         setWaitUntil(Date.now() + delay * 1000);
+        setWaitStartedAt(Date.now());
+        setWaitDurationSeconds(delay);
         setRemainingSeconds(delay);
       }
     } else {
@@ -720,6 +799,8 @@ export default function Home() {
         id: `wait-message-${Date.now()}`,
         text,
         time: Date.now(),
+        status: "sent",
+        waitCheckIn: true,
       },
     ]);
     setWaitMessageSent(true);
@@ -755,12 +836,22 @@ export default function Home() {
 
   function submitNodeInput() {
     if (!currentNode?.input) return;
-    const valid = currentNode.input.answers.some(
-      (answer) => normalizeCode(answer) === normalizeCode(textInput),
-    );
-    if (!valid) {
-      setInputError(currentNode.input.errorText ?? "Code abgelehnt.");
-      return;
+    if (currentNode.input.kind === "text") {
+      const name = textInput.trim().slice(0, 24);
+      if (!name) {
+        setInputError("Bitte gib einen Namen oder ein Rufzeichen ein.");
+        return;
+      }
+      setPlayerName(name);
+      setGameState((state) => ({ ...state, player_name_known: true }));
+    } else {
+      const valid = currentNode.input.answers.some(
+        (answer) => normalizeCode(answer) === normalizeCode(textInput),
+      );
+      if (!valid) {
+        setInputError(currentNode.input.errorText ?? "Code abgelehnt.");
+        return;
+      }
     }
     const choice = availableChoices.find(
       ({ id }) => id === currentNode.input?.choiceId,
@@ -771,7 +862,18 @@ export default function Home() {
     }
     setTextInput("");
     setInputError("");
-    selectChoice(choice);
+    selectChoice(
+      currentNode.input.kind === "text"
+        ? {
+            ...choice,
+            label: textInput.trim(),
+            effects: [
+              ...(choice.effects ?? []),
+              { state: "player_name_known", operation: "set", value: true },
+            ],
+          }
+        : choice,
+    );
   }
 
   function toggleGear(id: string) {
@@ -813,6 +915,8 @@ export default function Home() {
         kind: "reply",
         id: `gear-${timeline.length}`,
         text: `Ausrüstung bestätigen (${gearDraft.length} Gegenstände).`,
+        time: Date.now(),
+        status: "sent",
       },
     ];
     setGameState(nextState);
@@ -915,7 +1019,7 @@ export default function Home() {
     setCurrentNodeId("");
     setPlayerName("");
     setDecisionHistory([]);
-    setProfileReady(false);
+    setProfileReady(true);
   }
 
   function continueChapter() {
@@ -969,6 +1073,12 @@ export default function Home() {
       : gameState.relay_damaged === true
         ? "SCHWACHES SIGNAL"
         : "VERBUNDEN";
+  const disconnected =
+    gameState.relay_confiscated === true && gameState.relay_recovered !== true;
+  const canSendCheckIn =
+    waiting &&
+    waitStartedAt !== null &&
+    Date.now() - waitStartedAt >= 600000;
 
   return (
     <main className="app-shell">
@@ -1024,7 +1134,16 @@ export default function Home() {
                 )}
               {item.kind === "reply" ? (
               <div className="row row-player">
-                <div className="bubble bubble-player">{item.text}</div>
+                <div className="bubble bubble-player">
+                  {item.text}
+                  {item.status && (
+                    <small className={`receipt receipt-${item.status}`} aria-label={
+                      item.status === "read" ? "Gelesen" : item.status === "delivered" ? "Zugestellt" : "Gesendet"
+                    }>
+                      {item.status === "sent" ? "✓" : "✓✓"}
+                    </small>
+                  )}
+                </div>
               </div>
             ) : (
               <div
@@ -1091,8 +1210,16 @@ export default function Home() {
         <footer className="response-panel">
           {waiting && (
             <div className="wait-composer">
-              <span>{waitMessageSent ? "Nachricht gesendet" : "Mira kann möglicherweise nicht sofort antworten."}</span>
-              {!waitMessageSent && (
+              {waitDurationSeconds >= 120 && (
+                <div className="activity-status">
+                  <span className="activity-pulse" />
+                  {waitingActivity(pendingNode, currentChapterId, disconnected)}
+                </div>
+              )}
+              {canSendCheckIn && (
+                <span>{waitMessageSent ? "Nachricht gesendet" : "Du kannst eine Nachricht hinterlassen."}</span>
+              )}
+              {canSendCheckIn && !waitMessageSent && (
                 <div>
                   {["Geht es dir gut?", "Melde dich, wenn du kannst.", "Bitte antworte."].map((text) => (
                     <button type="button" key={text} onClick={() => sendWaitMessage(text)}>{text}</button>
@@ -1239,7 +1366,7 @@ export default function Home() {
                       return (
                         <button
                           type="button"
-                          className={known ? "map-room known" : "map-room"}
+                          className={`${known ? "map-room known" : "map-room"} shape-${area.shape}`}
                           key={area.id}
                           style={{ left: `${area.x}%`, top: `${area.y}%`, width: `${area.w}%`, height: `${area.h}%` }}
                           onClick={() => known && ["quarters", "labor", "generator"].includes(area.id) && setMapView(area.id as MapView)}
@@ -1255,7 +1382,7 @@ export default function Home() {
                   <div className="map-grid interior-map">
                     <div className="north">N ↑</div>
                     {BUILDING_ROOMS[mapView].map((room) => (
-                      <div className="interior-room" key={room.id} style={{ left: `${room.x}%`, top: `${room.y}%`, width: `${room.w}%`, height: `${room.h}%` }}>
+                      <div className={`interior-room room-${room.id}`} key={room.id} style={{ left: `${room.x}%`, top: `${room.y}%`, width: `${room.w}%`, height: `${room.h}%` }}>
                         <span>{room.label}</span>
                       </div>
                     ))}

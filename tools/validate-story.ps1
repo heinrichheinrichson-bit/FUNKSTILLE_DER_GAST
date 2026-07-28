@@ -170,10 +170,10 @@ foreach ($file in $storyFiles) {
         }
 
         if ($node.input) {
-            if ($node.input.kind -ne 'code') {
+            if ($node.input.kind -notin @('code', 'text')) {
                 Add-ValidationError "$context verwendet unbekannte Eingabeart '$($node.input.kind)'."
             }
-            if (-not $node.input.prompt -or $node.input.answers.Count -eq 0) {
+            if (-not $node.input.prompt -or ($node.input.kind -eq 'code' -and $node.input.answers.Count -eq 0)) {
                 Add-ValidationError "$context benoetigt Prompt und mindestens eine gueltige Eingabe."
             }
             if (-not $choiceIds.ContainsKey($node.input.choiceId)) {

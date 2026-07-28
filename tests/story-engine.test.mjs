@@ -60,11 +60,17 @@ function makeSession() {
   assert.equal(view.choices.length, 3);
 
   view = session.choose("check_self");
+  assert.equal(view.id, "k1_009_check_notice");
+
+  view = session.advance();
   assert.equal(view.id, "k1_010_check_self");
   assert.equal(session.state.mira_wound_known, true);
   assert.equal(session.state.trust_mira, 1);
 
   view = session.advance();
+  assert.equal(view.id, "k1_025_name");
+
+  view = session.choose("withhold_name");
   assert.equal(view.id, "k1_030_identity");
 }
 
@@ -243,6 +249,7 @@ function makeSession() {
   session.enter();
   session.choose("check_room");
   session.advance();
+  session.choose("withhold_name");
   session.choose("location_not_helpful");
   session.advance();
   session.choose("supportive");
@@ -268,6 +275,7 @@ function makeSession() {
   session.enter();
   session.choose("check_room");
   session.advance();
+  session.choose("withhold_name");
   session.choose("location_not_helpful");
   session.advance();
   session.choose("supportive");
